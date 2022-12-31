@@ -1,21 +1,21 @@
-const socket = io();
-const messages = [];
-let current_page_index = 0;
+const socket = io()
+const messages = []
+let current_page_index = 0
 
 document.addEventListener("DOMContentLoaded", function(e) {
-    const __sidebar = document.getElementById('sidebar');
+    const __sidebar = document.getElementById('sidebar')
 
-    socket.on('REFRESH_MESSAGES', refreshMessages);
-    socket.on('BUTTON_PUSHED', handleRemBtnPush);
-    socket.emit('GET_MESSAGES');
+    socket.on('REFRESH_MESSAGES', refreshMessages)
+    socket.on('BUTTON_PUSHED', handleRemBtnPush)
+    socket.emit('GET_MESSAGES')
 
-    getWeather();
+    getWeather()
 
-    __sidebar.focus();
+    __sidebar.focus()
 
     // handle modal closing
     document.querySelector('.modal-close').onclick = function() {
-        document.querySelector('.modal').style.display = 'none';
+        document.querySelector('.modal').style.display = 'none'
     }
 
     // document.onkeydown = function(e) {
@@ -47,105 +47,105 @@ document.addEventListener("DOMContentLoaded", function(e) {
     //     }      
     // }
 
-    
-    __sidebar.onkeydown = function(e) {
-        let a = getActiveSidebarButton();
+    __sidebar.onfocus = function() {
+        let a = getActiveSidebarButton()
 
-        switch(e.key) {
-            case 'ArrowDown':
-                if (a === 'nav_home') {
-                    triggerEvent(document.getElementById('nav_pictures'), 'click');
-                }
+        __sidebar.onkeydown = function(e) {
+            switch(e.key) {
+                case 'ArrowDown':
+                    if (a === 'nav_home') {
+                        triggerEvent(document.getElementById('nav_pictures'), 'click')
+                    }
 
-                if (a === 'nav_pictures') {
-                    triggerEvent(document.getElementById('nav_games'), 'click');
-                } 
-                break;
-            case 'ArrowUp':
-                if (a === 'nav_games') {
-                    triggerEvent(document.getElementById('nav_pictures'), 'click');
-                }
+                    if (a === 'nav_pictures') {
+                        triggerEvent(document.getElementById('nav_games'), 'click')
+                    } 
+                    break
+                case 'ArrowUp':
+                    if (a === 'nav_games') {
+                        triggerEvent(document.getElementById('nav_pictures'), 'click')
+                    }
 
-                if (a === 'nav_pictures') {
-                    triggerEvent(document.getElementById('nav_home'), 'click');
-                }  
-                break;
+                    if (a === 'nav_pictures') {
+                        triggerEvent(document.getElementById('nav_home'), 'click')
+                    }  
+                    break
+            }
         }
     }
-  
 })
 
 function getActiveSidebarButton() {
-    let b = document.querySelector('#sidebar .active');
-    let c = b.id;
+    let b = document.querySelector('#sidebar .active')
+    let c = b.id
    // let p = document.getElementById('sidebar').id
     //let c = p.children
-    return c;
+    return c
 }
 
 function show(sel_el) {
     // clear all the sectiions first
     Array.from(document.querySelectorAll("[id^='section_']")).forEach(function(element) {
-        element.classList.add('hidden');
+        element.classList.add('hidden')
     })
 
     // clear active nav selections
     Array.from(document.querySelectorAll("[id^='nav_']")).forEach(function(element) {
-        element.classList.remove('active');
+        element.classList.remove('active')
     })
 
-    document.getElementById(sel_el.id).classList.add('active');
-    document.getElementById(sel_el.id).focus();
-    document.getElementById(sel_el.id.replace('nav_', 'section_')).classList.remove('hidden');
+    document.getElementById(sel_el.id).classList.add('active')
+    document.getElementById(sel_el.id).focus()
+    document.getElementById(sel_el.id.replace('nav_', 'section_')).classList.remove('hidden')
     //alert(document.activeElement.id)
 }
 
 function handleRemBtnPush(data) {
     //alert('yo' + data.button)
-    triggerEvent(document.getElementById('nav_games'), 'click');
+    triggerEvent(document.getElementById('nav_games'), 'click')
 }
 
 function openModal(mo) {
-    document.getElementById(mo).style.display = 'block';
+    document.getElementById(mo).style.display = 'block'
 }
 
 function triggerEvent(elem, event) {
-    let clickEvent = new Event(event);
-    elem.dispatchEvent(clickEvent);
+    let clickEvent = new Event(event)
+    elem.dispatchEvent(clickEvent)
 }
 
 function refreshMessages(data) {
-    const message_block = document.querySelector('#message_block');
+    const message_block = document.querySelector('#message_block')
 
     for (let i = 0; i < data.length; i++) {
-        const con = document.createElement('div');
-        con.classList.add('msg-box');
+        const con = document.createElement('div')
+        con.classList.add('msg-box')
 
-        const sender = document.createElement('div');
-        sender.classList.add('sender');
-        sender.innerHTML = `${data[i].from} <br /> ${data[i].date}`;
+        const sender = document.createElement('div')
+        sender.classList.add('sender')
+        sender.innerHTML = `${data[i].from} <br /> ${data[i].date}`
 
-        const message = document.createElement('div');
-        message.classList.add('message');
-        message.innerHTML = data[i].message;
+        const message = document.createElement('div')
+        message.classList.add('message')
+        message.innerHTML = data[i].message
 
-        con.appendChild(sender);
-        con.appendChild(message);
+        con.appendChild(sender)
+        con.appendChild(message)
 
-        message_block.appendChild(con);
+        message_block.appendChild(con)
     }
 }
 
 async function getWeather() {
-    const key = '8815275c285e40149bd222225222712';
-    const url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=30236&aqi=no`;
+    const key = '8815275c285e40149bd222225222712'
+    const url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=30236&aqi=no`
 
-    let response = await fetch(url);
-    let data = await response.json();
+    let response = await fetch(url)
+    let data = await response.json()
     const {
         location,
         current
-    } = data;
+    } = data
 
     const markup = ` 
     <h2><span>${location.name}, ${location.region}</span></h2> 
@@ -156,7 +156,7 @@ async function getWeather() {
     <td style="font-size: 2em;">${Math.round(current.temp_f)}<sup style="font-size: .6em">°F</sup></td>
     <td style="font-size: 2em;">${current.humidity}%</td>
     </tr>
-    </table>`;
+    </table>`
 
     weather_block.innerHTML = markup
 }
