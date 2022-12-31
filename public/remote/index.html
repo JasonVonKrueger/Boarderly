@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="A board for the elderly.">
+  <meta name="author" content="Mr Monster">
+  <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="icon" href="../resources/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="../resources/images/boarderly.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="../resources/images/boarderly.png" />
+  <link rel="apple-touch-startup-image" href="images/launch.png" />
+  <link rel="stylesheet" href="../resources/css/main.css" />
+  <style>
+    
+    #header {
+      background-color: var(--title-bgcolor);
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      font-size: 1.5em;
+      text-align: center;
+    }
+
+    .grid-container {
+      xwidth: 55%;
+      xmax-width: 55%;
+      margin-top: 4em;
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      column-gap: 2em;
+      row-gap: 4em;
+    }
+
+    .grid-item {
+      text-align: center;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .push-button {
+      padding: 1.5em;
+      background-color: #f25022;
+      box-shadow: 0 0 0 1px #f25022 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #c93a12, 0 8px 0 1px rgba(0, 0, 0, 0.4), 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+      transition: 0.15s;
+    }
+
+    .push-button:hover,
+    .push-button:focus {
+      background-color: #ff451a;
+      box-shadow: 0 0 0 1px #FF3000 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 10px 0 0 #e62b00, 0 10px 0 1px rgba(0, 0, 0, 0.4), 0 10px 8px 1px rgba(0, 0, 0, 0.6);
+    }
+
+    .push-button:active,
+    .push-button.activated {
+      box-shadow: 0 0 0 1px #ff5c36 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 0 0 1px rgba(0, 0, 0, 0.4);
+      background-color: #ff5c36;
+      transform: translateY(10px);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header">Boarderly :: Remote Control</div>
+
+  <div class="grid-container">
+    <div></div>
+    <div class="grid-item">
+      <div class="push-button" onclick="sendPush('up')">
+        <img src="../resources/images/up-arrow.svg" />
+      </div>
+    </div>
+    <div></div>
+    <div class="grid-item">
+      <div class="push-button" onclick="sendPush('left')">
+        <img src="../resources/images/left-arrow.svg" />
+      </div>
+    </div>
+    <div></div>
+    <div class="grid-item">
+      <div class="push-button" onclick="sendPush('right')">
+        <img src="../resources/images/right-arrow.svg" />
+      </div>
+    </div>
+    <div></div>
+    <div class="grid-item">
+      <div class="push-button" onclick="sendPush('down')">
+        <img src="../resources/images/down-arrow.svg" />
+      </div>
+    </div>
+    <div></div>
+    <div class="grid-item">
+      <div class="push-button" style="padding: 1em; background-color: #cfeedd;" onclick="sendPush('enter')">
+        <span style="font-size: 2.5em;">❌</span>
+      </div>
+    </div>
+    <div></div>
+    <div class="grid-item">
+      <div class="push-button"style="background-color: #cfeedd; padding: 1em;" onclick="sendPush('enter')">
+        <span style="font-size: 2.5em; color: green;">✔</span>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    const socket = io()
+
+    function sendPush(btn) {
+      socket.emit('BUTTON_PUSHED', {
+        button: btn
+      })
+    }
+
+  </script>
+
+</body>
+</html>

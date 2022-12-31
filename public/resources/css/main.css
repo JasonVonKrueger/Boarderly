@@ -1,0 +1,236 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Titillium+Web&display=swap');
+
+:root {
+  --font-main: 'Titillium Web', sans-serif;
+  --content-bgcolor: #313131;
+  --card-bgcolor: #f1f1f1;
+  --title-bgcolor: #414141;
+  --sidebar-bgcolor: #414141;
+  --button-bgcolor: #CA3E47;
+  --brand-font: 'Shadows Into Light Two', cursive;
+  --brand-font-size: 1.7em;
+  --active-element: #CA3E47;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--content-bgcolor);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Float 4 columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+  margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the counter cards */
+.content-cards {
+  margin-left: 200px;
+}
+
+.card {
+  margin-top: 2em;
+  box-shadow: 0 4px 8px 0 rgb(0, 0, 0);
+  text-align: center;
+  background-color: var(--card-bgcolor);
+  height: 400px;
+  max-height: 500px;
+  overflow-y: scroll;
+  transition: transform .2s;
+}
+
+.card:hover,
+.card:focus {
+  transform: scale(1.10);
+}
+
+.card-title {
+  background-color: var(--title-bgcolor);
+  color: #fff;
+  font-size: 1.25em;
+  padding: .25em;
+  margin-bottom: .35em;
+}
+
+#sidebar {
+  margin: 0;
+  padding: 0;
+  width: 12%;
+  background-color: var(--sidebar-bgcolor);
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  font-size: 1.2em;
+}
+
+#sidebar div {
+  display: block;
+  color: #fff;
+  padding: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#sidebar div.active {
+  background-color: var(--active-element);
+  color: white;
+}
+
+#sidebar div:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+#sidebar div span {
+  vertical-align: middle;
+}
+
+.brand {
+  font-family: var(--brand-font);
+  font-size: var(--brand-font-size);
+}
+
+.brand:hover {
+  cursor: default;
+}
+
+.material-symbols-outlined {
+  padding-right: .4em;
+}
+
+button {
+  background-color: var(--button-bgcolor);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+#section_pictures img {
+  border: 1px solid #ddd;
+  border-radius: 4px; 
+  padding: .5em;
+  width: 200px;
+}
+
+#section_pictures img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1; 
+  xpadding-top: 2em;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-caption {
+  color: #fff;
+  font-size: 1.6em;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.msg-box {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: left;
+}
+
+.msg-box .sender {
+  color:#666;
+  font-size: .9em;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.msg-box .message {
+  font-size: 1.2em;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+
+
