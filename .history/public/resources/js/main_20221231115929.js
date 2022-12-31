@@ -2,10 +2,8 @@ const socket = io();
 const messages = [];
 let current_page_index = 0;
 
-let __sidebar = null;
-
 document.addEventListener("DOMContentLoaded", function(e) {
-    __sidebar = document.getElementById('sidebar');
+    const __sidebar = document.getElementById('sidebar');
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
@@ -100,8 +98,7 @@ function show(el) {
 }
 
 function handleRemBtnPush(data) {
-    __sidebar.dispatchEvent(new Event('focus'));
-    __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
+    triggerEvent(document.getElementById('sidebar'), 'click');
 }
 
 function openModal(mo) {
@@ -109,7 +106,12 @@ function openModal(mo) {
 }
 
 function triggerEvent(el, event) {
-    el.dispatchEvent(new Event(event));
+    //el.dispatchEvent(new Event(event));
+    //alert('yo')
+    el.dispatchEvent(new Event('focus'));
+    el.dispatchEvent(new KeyboardEvent('keydown', { 'key': 'ArrowDown' }));
+
+
 }
 
 function refreshMessages(data) {

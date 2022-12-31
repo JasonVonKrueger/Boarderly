@@ -100,8 +100,11 @@ function show(el) {
 }
 
 function handleRemBtnPush(data) {
-    __sidebar.dispatchEvent(new Event('focus'));
-    __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
+    //triggerEvent(document.getElementById('sidebar'), 'click');
+
+    console.log('got keydown')
+    document.getElementById('sidebar').dispatchEvent(new Event('focus'));
+    document.getElementById('sidebar').dispatchEvent(new KeyboardEvent('keydown', { 'key': 'ArrowDown' }));  
 }
 
 function openModal(mo) {

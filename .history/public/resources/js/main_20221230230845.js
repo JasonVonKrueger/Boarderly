@@ -2,10 +2,8 @@ const socket = io();
 const messages = [];
 let current_page_index = 0;
 
-let __sidebar = null;
-
 document.addEventListener("DOMContentLoaded", function(e) {
-    __sidebar = document.getElementById('sidebar');
+    const __sidebar = document.getElementById('sidebar');
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
@@ -97,11 +95,12 @@ function show(el) {
     document.getElementById(el.id).classList.add('active');
     document.getElementById(el.id).focus();
     document.getElementById(el.id.replace('nav_', 'section_')).classList.remove('hidden');
+    //alert(document.activeElement.id)
 }
 
 function handleRemBtnPush(data) {
-    __sidebar.dispatchEvent(new Event('focus'));
-    __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
+    //alert('yo' + data.button)
+    triggerEvent(document.getElementById('nav_games'), 'click');
 }
 
 function openModal(mo) {
@@ -109,7 +108,8 @@ function openModal(mo) {
 }
 
 function triggerEvent(el, event) {
-    el.dispatchEvent(new Event(event));
+    let clickEvent = new Event(event);
+    el.dispatchEvent(clickEvent);
 }
 
 function refreshMessages(data) {

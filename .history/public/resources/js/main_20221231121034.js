@@ -100,6 +100,8 @@ function show(el) {
 }
 
 function handleRemBtnPush(data) {
+    //triggerEvent(document.getElementById('sidebar'), 'click');
+    console.log(data.button)
     __sidebar.dispatchEvent(new Event('focus'));
     __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
 }

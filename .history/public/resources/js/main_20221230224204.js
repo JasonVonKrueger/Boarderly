@@ -2,10 +2,8 @@ const socket = io();
 const messages = [];
 let current_page_index = 0;
 
-let __sidebar = null;
-
 document.addEventListener("DOMContentLoaded", function(e) {
-    __sidebar = document.getElementById('sidebar');
+    const __sidebar = document.getElementById('sidebar');
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
@@ -62,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 if (a === 'nav_pictures') {
                     triggerEvent(document.getElementById('nav_games'), 'click');
                 } 
-            break;
+                break;
             case 'ArrowUp':
                 if (a === 'nav_games') {
                     triggerEvent(document.getElementById('nav_pictures'), 'click');
@@ -71,10 +69,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 if (a === 'nav_pictures') {
                     triggerEvent(document.getElementById('nav_home'), 'click');
                 }  
-            break;
+                break;
         }
     }
-});
+  
+})
 
 function getActiveSidebarButton() {
     let b = document.querySelector('#sidebar .active');
@@ -97,23 +96,25 @@ function show(el) {
     document.getElementById(el.id).classList.add('active');
     document.getElementById(el.id).focus();
     document.getElementById(el.id.replace('nav_', 'section_')).classList.remove('hidden');
+    //alert(document.activeElement.id)
 }
 
 function handleRemBtnPush(data) {
-    __sidebar.dispatchEvent(new Event('focus'));
-    __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
+    //alert('yo' + data.button)
+    triggerEvent(document.getElementById('nav_games'), 'click');
 }
 
 function openModal(mo) {
     document.getElementById(mo).style.display = 'block';
 }
 
-function triggerEvent(el, event) {
-    el.dispatchEvent(new Event(event));
+function triggerEvent(elem, event) {
+    let clickEvent = new Event(event);
+    elem.dispatchEvent(clickEvent);
 }
 
 function refreshMessages(data) {
-    const __message_block = document.querySelector('#message_block');
+    const message_block = document.querySelector('#message_block');
 
     for (let i = 0; i < data.length; i++) {
         const con = document.createElement('div');
@@ -130,7 +131,7 @@ function refreshMessages(data) {
         con.appendChild(sender);
         con.appendChild(message);
 
-        __message_block.appendChild(con);
+        message_block.appendChild(con);
     }
 }
 
