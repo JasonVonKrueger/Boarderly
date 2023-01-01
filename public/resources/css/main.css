@@ -32,10 +32,10 @@ body {
   display: none;
 }
 
-/* Float 4 columns side by side */
+/* Float 3 columns side by side */
 .column {
   float: left;
-  width: 25%;
+  width: 33.33%;
   padding: 0 10px;
 }
 
@@ -83,7 +83,7 @@ body {
 #sidebar {
   margin: 0;
   padding: 0;
-  width: 12%;
+  width: 15%;
   background-color: var(--sidebar-bgcolor);
   position: fixed;
   height: 100%;

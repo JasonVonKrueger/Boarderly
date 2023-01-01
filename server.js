@@ -48,23 +48,23 @@ io.on('connection', function(socket) {
 
 
 
-app.get('/getMessages', function(req, res) {
-  res.send(JSON.stringify(messages)) 
-});
+// app.get('/getMessages', function(req, res) {
+//   res.send(JSON.stringify(messages)) 
+// });
 
-app.post('/sendmessage', function(req, res) {
-  let msg = {
-    from: req.body.from,
-    message: req.body.message
-  }
+// app.post('/sendmessage', function(req, res) {
+//   let msg = {
+//     from: req.body.from,
+//     message: req.body.message
+//   }
 
-  messages.push(msg)
-  //socket.broadcast.emit('REFRESH_MESSAGES', messages)
-  console.log(messages)
-});
+//   messages.push(msg)
+//   //socket.broadcast.emit('REFRESH_MESSAGES', messages)
+//   console.log(messages)
+// });
 
-server.listen(9520, '0.0.0.0', () =>
-  console.log('Boarderly app listening on port 9520!'),
+server.listen(9980, '0.0.0.0', () =>
+  console.log('Boarderly app is now listening for connections...'),
 );
 
 
