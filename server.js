@@ -92,8 +92,8 @@ io.on('connection', function(socket) {
 //   console.log(messages)
 // });
 
-server.listen(9980, '0.0.0.0', () =>
-  console.log('Boarderly app is now listening for connections...'),
-);
+server.listen(9980, function() {
+  console.log('Boarderly app is now listening for connections...');
+});
 
 
