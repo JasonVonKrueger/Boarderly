@@ -14,14 +14,13 @@
   <link rel="apple-touch-startup-image" href="images/launch.png" />
   <link rel="stylesheet" href="../resources/css/main.css" />
   <style>
-
     body {
-      background: rgb(3,4,6);
-      background: linear-gradient(124deg, rgba(3,4,6,1) 0%, rgba(64,76,99,1) 42%);
+      background: rgb(3, 4, 6);
+      background: linear-gradient(124deg, rgba(3, 4, 6, 1) 0%, rgba(64, 76, 99, 1) 42%);
     }
-    
+
     #header {
-      background-color: var(--title-bgcolor);
+      background-color: #000;
       color: #fff;
       position: fixed;
       top: 0;
@@ -47,7 +46,6 @@
       width: 50%;
       color: #fff;
       font-size: 2em;
-      padding: .5em;
       margin-left: auto;
       margin-right: auto;
     }
@@ -72,12 +70,13 @@
     }
 
     .push-button {
-      padding: 1em;
+      padding: .5em;
       background-color: #f25022;
       box-shadow: 0 0 0 1px #f25022 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #c93a12, 0 8px 0 1px rgba(0, 0, 0, 0.4), 0 8px 8px 1px rgba(0, 0, 0, 0.5);
       transition: 0.15s;
     }
 
+    .push-button
     .push-button:hover,
     .push-button:focus {
       background-color: #ff451a;
@@ -119,83 +118,35 @@
       </div>
     </div>
     <div class="grid-item">
-      <div class="push-button" style="padding: 1em; background-color: #cfeedd;" onclick="sendPush('cancel')">
+      <div class="push-button" style="padding: .5em; background-color: #cfeedd;" onclick="sendPush('cancel')">
         <span style="font-size: 2.5em;">❌</span>
       </div>
     </div>
     <div></div>
     <div class="grid-item">
-      <div class="push-button"style="background-color: #cfeedd; padding: 1em;" onclick="sendPush('enter')">
+      <div class="push-button" style="background-color: #cfeedd; padding: .5em;" onclick="sendPush('enter')">
         <span style="font-size: 2.5em; color: green;">✔</span>
       </div>
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-  
-
-  <div class="grid-container" style="display: none;">
-    <div></div>
-    <div class="grid-item">
-      <div class="push-button" onclick="sendPush('ArrowUp')">
-        <img src="../resources/images/up-arrow.svg" />
-      </div>
-    </div>
-    <div></div>
-    <div class="grid-item">
-      <div class="push-button" onclick="sendPush('ArrowLeft')">
-        <img src="../resources/images/left-arrow.svg" />
-      </div>
-    </div>
-    <div></div>
-    <div class="grid-item">
-      <div class="push-button" onclick="sendPush('ArrowRight')">
-        <img src="../resources/images/right-arrow.svg" />
-      </div>
-    </div>
-    <div></div>
-    <div class="grid-item">
-      <div class="push-button" onclick="sendPush('ArrowDown')">
-        <img src="../resources/images/down-arrow.svg" />
-      </div>
-    </div>
-    <div></div>
-    <div class="grid-item">
-      <div class="push-button" style="padding: 1em; background-color: #cfeedd;" onclick="sendPush('cancel')">
-        <span style="font-size: 2.5em;">❌</span>
-      </div>
-    </div>
-    <div></div>
-    <div class="grid-item">
-      <div class="push-button"style="background-color: #cfeedd; padding: 1em;" onclick="sendPush('enter')">
-        <span style="font-size: 2.5em; color: green;">✔</span>
-      </div>
-    </div>
-  </div>
 
   <script src="/socket.io/socket.io.js"></script>
 
   <script>
     const socket = io();
 
+    document.querySelector('.push-button').addEventListener('touchstart', function() {
+
+    });
+
     function sendPush(btn) {
       document.getElementById('clicker').play();
 
-      socket.emit('BUTTON_PUSHED', {
-        button: btn
-      });
+      socket.emit('BUTTON_PUSHED', { button: btn });
     }
-
   </script>
 
 </body>
+
 </html>

@@ -16,7 +16,6 @@
   --hightlight: rgb(122, 117, 117);
 }
 
-
 * {
   box-sizing: border-box;
 }
@@ -60,6 +59,11 @@ body {
   transition: transform .2s;
 }
 
+.content-grid-item.taller {
+  min-height: 480px;
+  max-height: 480px;
+}
+
 .selected,
 .content-grid-item:hover,
 .content-grid-item:focus {
@@ -71,11 +75,6 @@ body {
   text-align: center;
   background-color: var(--card-bgcolor);
   height: 100%;
-}
-
-.card .taller {
-  xheight: 480px;
-  xmax-height: 480px;
 }
 
 .card-title {
@@ -154,6 +153,9 @@ iframe {
   width: 100%;
   height: 100%;
   border: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
 }
 
 #section_pictures img {
