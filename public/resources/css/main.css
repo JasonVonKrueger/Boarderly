@@ -13,7 +13,7 @@
   --brand-font: 'Shadows Into Light Two', cursive;
   --brand-font-size: 1.7em;
   --active-element: #ed1010;
-  --hightlight: #77d5ec;
+  --hightlight: rgb(122, 117, 117);
 }
 
 * {
@@ -51,6 +51,7 @@ body {
 }
 
 .content-grid-item {
+  min-height: 350px;
   max-height: 350px;
   background-color: var(--card-bgcolor);
   overflow: hidden;
