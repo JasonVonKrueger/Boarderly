@@ -29,7 +29,7 @@ body {
   height: 100vh;
   font-family: var(--font-main);
   background-color: var(--content-bgcolor);
-  background-image: url('../images/wall-1.jpeg');
+  background-image: url('../images/background1.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -51,31 +51,29 @@ body {
 }
 
 .content-grid-item {
-  min-height: 400px;
+  max-height: 350px;
   background-color: var(--card-bgcolor);
-  border: 2px solid green;
+  overflow: hidden;
+  border-bottom: 6px inset var(--card-bgcolor);
+  transition: transform .2s;
+}
+
+.selected,
+.content-grid-item:hover,
+.content-grid-item:focus {
+  border: 2px solid var(--hightlight);
+  transform: scale(1.07);
 }
 
 .card {
   text-align: center;
   background-color: var(--card-bgcolor);
   height: 100%;
-  xmax-height: 350px;
-  xoverflow: hidden;
-  transition: transform .2s;
-  xborder-bottom: 5px inset var(--card-bgcolor);
 }
 
 .card .taller {
   xheight: 480px;
   xmax-height: 480px;
-}
-
-.selected,
-.card:hover,
-.card:focus {
-  border: 2px solid var(--hightlight);
-  transform: scale(1.1);
 }
 
 .card-title {
