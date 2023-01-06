@@ -15,41 +15,137 @@
 </head>
 
 <body>
-  <div id="sidebar" tabindex="0">
+  <div id="sidebar" tabindex="-1">
     <div class="brand"><span class="material-symbols-outlined" style="font-size: 1em;">dashboard</span>Boarderly</div>
-    <div id="nav_home" order="0" class="active" onclick="return show(this)"><span class="material-symbols-outlined">home</span>Home</div>
-    <div id="nav_pictures" order="1" onclick="return show(this)"><span class="material-symbols-outlined">photo_library</span>Pictures</div>
-    <div id="nav_games" order="2" onclick="return show(this)"><span class="material-symbols-outlined">sports_esports</span>Games</div>
+    <div id="nav_home" class="active" onclick="return show(this)"><span class="material-symbols-outlined">home</span>Home</div>
+    <div id="nav_pictures" onclick="return show(this)"><span class="material-symbols-outlined">photo_library</span>Pictures</div>
+    <div id="nav_games" onclick="return show(this)"><span class="material-symbols-outlined">sports_esports</span>Games</div>
   </div>
 
-  <div class="content-cards">
+  <div id="content" class="content-cards">
 
     <!-- Home section -->
-    <div id="section_home">
+    <div id="section_home" class="section">
+      <div class="content-grid">
+        
+          <div class="content-grid-item">
+            <div class="card taller" tabindex="-1">
+              <div class="card-title">Messages</div>
+              <div id="message_block"></div>
+            </div>
+          </div>
+
+          <div class="content-grid-item">
+            <div class="card" tabindex="-1">
+              <div class="card-title">Time</div>
+              <iframe src="resources/widgets/clock.html" title="Time"></iframe>
+            </div>          
+          </div>
+
+          <div class="content-grid-item">
+            <div class="card taller" tabindex="-1">
+              <div class="card-title">Weather</div>
+              <div id="weather_block"></div>
+            </div>            
+          </div>
+        
+      </div>
+    </div>
+    <!-- End section -->
+
+
+    <!-- Pictures section -->
+    <div id="section_pictures" class="section hidden">
+      <div class="content-grid">
+
+        <div class="content-grid-item">
+          <div class="card" tabindex="0">
+            <div class="card-title">Diane and family</div>
+            <img src="resources/pictures/2016-01-31 20.30.37.png" />
+          </div>           
+        </div>    
+        
+        <div class="content-grid-item">
+          <div class="card" tabindex="0">
+            <div class="card-title">Rick and family</div>
+            <img src="resources/pictures/IMG_3824.jpg" />
+          </div>            
+        </div>  
+
+        <div class="content-grid-item">
+          <div class="card" tabindex="0">
+            <div class="card-title">Roger and family</div>
+            <img src="resources/pictures/2013-01-02 20.35.44.jpg" onclick="openModal('pictures_modal')" style="cursor: pointer;" />
+          </div>           
+        </div>  
+
+        <div class="content-grid-item">
+          <div class="card" tabindex="0">
+            <div class="card-title">Old 8mm films</div>
+            <img src="resources/pictures/Screenshot 2022-12-28 at 11.36.46 AM.png" />
+          </div>            
+        </div>  
+
+      </div>
+    </div>
+    <!-- End section -->
+
+
+    <!-- Games section -->
+    <div id="section_games" class="section hidden">
+      <div class="content-grid">
+
+        <div class="content-grid-item">
+          <div class="card" tabindex="0">
+            <div class="card-title">Simon Says</div>
+            <img src="resources/images/simon_thumb.png" onclick="openModal('simon_modal')" style="cursor: pointer;"/>
+          </div>           
+        </div>  
+
+
+        <img src="resources/images/unknown-person.png" style="width: 100%; display: none;"/>
+
+        <div class="content-grid-item">
+          <div class="card" tabindex="0">
+            <div class="card-title">Name that Face</div>
+            <iframe src="resources/widgets/facename.html" title="Name that Face"></iframe>
+          </div>           
+        </div>  
+
+      </div>
+    </div>
+    <!-- End section -->
+
+
+
+
+
+    <!-- Home section -->
+<!--     <div id="section_home">
       <div class="column">
-        <div class="card" tabindex="0">
+        <div class="card taller" tabindex="-1">
           <div class="card-title">Messages</div>
           <div id="message_block"></div>
         </div>
       </div>
 
       <div class="column">
-        <div class="card" tabindex="0">
+        <div class="card" tabindex="-1">
           <div class="card-title">Time</div>
           <iframe src="resources/widgets/clock.html" title="Time"></iframe>
         </div>
       </div>
 
       <div class="column">
-        <div class="card" tabindex="0">
+        <div class="card taller" tabindex="-1">
           <div class="card-title">Weather</div>
           <div id="weather_block"></div>
         </div>
       </div>
-    </div>  
+    </div>   -->
 
      <!-- Pictures section -->
-     <div id="section_pictures" class="hidden">
+     <!-- <div id="section_pictures" class="hidden">
       <div class="column">
         <div class="card" tabindex="0">
           <div class="card-title">Diane and family</div>
@@ -67,7 +163,7 @@
       <div class="column">
         <div class="card" tabindex="0">
           <div class="card-title">Roger and family</div>
-          <img src="resources/pictures/2013-01-02 20.35.44.jpg" />
+          <img src="resources/pictures/2013-01-02 20.35.44.jpg" onclick="openModal('pictures_modal')" style="cursor: pointer;" />
         </div>
       </div>
 
@@ -78,10 +174,10 @@
         </div>
       </div>      
 
-    </div>  
+    </div>   -->
 
     <!-- Games section -->
-    <div id="section_games" class="hidden">
+<!--     <div id="section_games" class="hidden">
       <div class="column">
         <div class="card" tabindex="0">
           <div class="card-title">Simon Says</div>
@@ -92,11 +188,25 @@
       <div class="column">
         <div class="card" tabindex="0">
           <div class="card-title">Name that Face</div>
-          <img src="resources/images/unknown-person.png" />
+
+
+
+          <div class="flip-container">
+            <div class="flip-inner">
+              <div class="front">
+                <img src="resources/images/unknown-person.png" style="width: 100%;"/>
+              </div>
+              <div class="back">
+                <h1>Wilma Rubble</h1> 
+              </div>
+            </div>
+          </div>
+
         </div>
+
       </div>
 
-    </div>  
+    </div>  --> 
 
   </div>
 
@@ -108,12 +218,24 @@
 
   <!-- Other stuff-->
   <div id="simon_modal" class="modal">
-    <span class="modal-close">&times;</span>
+    <span class="modal-close" onclick="return closeModal('simon_modal');">&times;</span>
 
     <!-- Modal content -->
     <iframe src="resources/widgets/simon.html" title="Simon"></iframe>
   </div>
 
+  <div id="pictures_modal" class="modal">
+    <span class="modal-close" onclick="return closeModal('pictures_modal');">&times;</span>
+
+    <!-- Modal content -->
+    <iframe src="resources/widgets/pictures.html" title="Pictures"></iframe>
+  </div>
+
+
+
+
+
+  
 </body>
 
 </html>

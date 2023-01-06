@@ -1,11 +1,16 @@
 const socket = io();
 const messages = [];
-let current_page_index = 0;
+let selected_card_index = -1;
 
 let __sidebar = null;
+let __content = null;
 
 document.addEventListener("DOMContentLoaded", function(e) {
     __sidebar = document.getElementById('sidebar');
+    __content = document.getElementById('content');
+
+    // set margin of content pane
+    __content.style.marginLeft =  __sidebar.clientWidth + 20 + 'px';
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
@@ -13,67 +18,58 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     getWeather();
 
-    __sidebar.focus();
-
-    // handle modal closing
-    document.querySelector('.modal-close').onclick = function() {
-        document.querySelector('.modal').style.display = 'none';
-    }
-
-    // document.onkeydown = function(e) {
-    //     let a = getActiveSidebarButton()
-
+    //__sidebar.focus();
+    
+    // handle remote button presses
+    // __content.onkeydown = function(e) {
+    //     let a = getActiveSidebarButton();
+        
+       
     //     switch(e.key) {
     //         case 'ArrowDown':
-    //             if (document.activeElement.id === 'sidebar') {
-    //                 if (a === 'nav_home') {
-    //                     triggerEvent(document.getElementById('nav_pictures'), 'click')
-    //                 }
-
-    //                 if (a === 'nav_pictures') {
-    //                     triggerEvent(document.getElementById('nav_games'), 'click')
-    //                 }   
+    //             if (a === 'nav_home') {
+    //                 triggerEvent(document.getElementById('nav_pictures'), 'click');
     //             }
-    //             break
+
+    //             if (a === 'nav_pictures') {
+    //                 triggerEvent(document.getElementById('nav_games'), 'click');
+    //             } 
+    //         break;
     //         case 'ArrowUp':
-    //             if (document.activeElement.id === 'sidebar') {
-    //                 if (a === 'nav_games') {
-    //                     triggerEvent(document.getElementById('nav_pictures'), 'click')
-    //                 }
-
-    //                 if (a === 'nav_pictures') {
-    //                     triggerEvent(document.getElementById('nav_home'), 'click')
-    //                 }   
+    //             if (a === 'nav_games') {
+    //                 triggerEvent(document.getElementById('nav_pictures'), 'click');
     //             }
-    //             break
-    //     }      
+
+    //             if (a === 'nav_pictures') {
+    //                 triggerEvent(document.getElementById('nav_home'), 'click');
+    //             }  
+    //         break;
+    //         case 'ArrowRight':
+
+    //             __content.dispatchEvent(new Event('focus'));
+    //             __content.dispatchEvent(new KeyboardEvent('keydown', { 'key': 'Tab' })); 
+
+    //             if (a === 'nav_games') {
+    //                 //triggerEvent(document.getElementById('nav_pictures'), 'click');
+
+
+    //             }
+
+    //             if (a === 'nav_pictures') {
+    //                 triggerEvent(document.getElementById('nav_home'), 'click');
+    //             }  
+    //         break;
+    //         case 'ArrowLeft':
+    //             if (a === 'nav_games') {
+    //                 triggerEvent(document.getElementById('nav_pictures'), 'click');
+    //             }
+
+    //             if (a === 'nav_pictures') {
+    //                 triggerEvent(document.getElementById('nav_home'), 'click');
+    //             }  
+    //         break;
+    //     }
     // }
-
-    
-    __sidebar.onkeydown = function(e) {
-        let a = getActiveSidebarButton();
-
-        switch(e.key) {
-            case 'ArrowDown':
-                if (a === 'nav_home') {
-                    triggerEvent(document.getElementById('nav_pictures'), 'click');
-                }
-
-                if (a === 'nav_pictures') {
-                    triggerEvent(document.getElementById('nav_games'), 'click');
-                } 
-            break;
-            case 'ArrowUp':
-                if (a === 'nav_games') {
-                    triggerEvent(document.getElementById('nav_pictures'), 'click');
-                }
-
-                if (a === 'nav_pictures') {
-                    triggerEvent(document.getElementById('nav_home'), 'click');
-                }  
-            break;
-        }
-    }
 });
 
 function getActiveSidebarButton() {
@@ -84,6 +80,9 @@ function getActiveSidebarButton() {
 }
 
 function show(el) {
+    // reset selected card
+    selected_card_index = -1;
+
     // clear all the sectiions first
     Array.from(document.querySelectorAll("[id^='section_']")).forEach(function(element) {
         element.classList.add('hidden');
@@ -100,12 +99,60 @@ function show(el) {
 }
 
 function handleRemBtnPush(data) {
-    __sidebar.dispatchEvent(new Event('focus'));
-    __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
+    let section = getActiveSidebarButton().replace('nav', 'section');
+    let cards = document.getElementById(section).querySelectorAll('.card');
+
+    switch (data.button) {
+        case 'home':
+            triggerEvent(document.getElementById('nav_home'), 'click');
+            __content.focus();
+            break;
+        case 'pictures':
+            triggerEvent(document.getElementById('nav_pictures'), 'click');
+            __content.focus();
+            break;
+        case 'games':
+            triggerEvent(document.getElementById('nav_games'), 'click');
+            __content.focus();
+            break;
+        case 'ArrowRight':
+                if (selected_card_index >= cards.length) return;
+
+                if (selected_card_index >= 0) {
+                    cards[selected_card_index].classList.remove('selected');
+                }
+
+                selected_card_index++;
+                cards[selected_card_index].classList.add('selected');
+            break;
+        case 'ArrowLeft':        
+            if (selected_card_index <= 0) return;
+            
+            //if (selected_card_index >=0) {
+                cards[selected_card_index].classList.remove('selected');
+            //}
+
+            selected_card_index--;
+            cards[selected_card_index].classList.add('selected');
+            break;
+        case 'enter':
+            //alert('enter');
+            break;
+        case 'cancel':
+            //alert('cancel');
+            break;
+    }
+
+    // __sidebar.dispatchEvent(new Event('focus'));
+    // __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
 }
 
 function openModal(mo) {
     document.getElementById(mo).style.display = 'block';
+}
+
+function closeModal(mo) {
+    document.getElementById(mo).style.display = 'none';
 }
 
 function triggerEvent(el, event) {
@@ -136,25 +183,37 @@ function refreshMessages(data) {
 
 async function getWeather() {
     const key = '8815275c285e40149bd222225222712';
-    const url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=30236&aqi=no`;
+    //const url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=30236&aqi=no`;
+    const url = `http://api.weatherapi.com/v1/forecast.json?key=${key}&q=30236&days=3&aqi=no&alerts=no`;
 
     let response = await fetch(url);
     let data = await response.json();
-    const {
-        location,
-        current
-    } = data;
+    const { location, current, forecast } = data;
 
-    const markup = ` 
-    <h2><span>${location.name}, ${location.region}</span></h2> 
-    <img src=${current.condition.icon} style="width: 100px">
-    <table style="width: 100%">
-    <tr>
-    <td></td>
-    <td style="font-size: 2em;">${Math.round(current.temp_f)}<sup style="font-size: .6em">°F</sup></td>
-    <td style="font-size: 2em;">${current.humidity}%</td>
-    </tr>
-    </table>`;
+    let markup = ` 
+        <h2><span>${location.name}, ${location.region}</span></h2> 
+        <img src=${current.condition.icon} style="width: 100px">
+        <table style="width: 100%">
+        <tr>
+        <td></td>
+        <td style="font-size: 2em;">${Math.round(current.temp_f)}<sup style="font-size: .6em">°F</sup></td>
+        <td style="font-size: 2em;">${current.humidity}%</td>
+        </tr>
+        </table>`;
+
+    markup += '<table style="width: 100%">';
+
+    for (let i=0; i<forecast.forecastday.length; i++) {
+        let d = forecast.forecastday[i];
+        //let dow = new Date(d.date).toLocaleString('default', {weekday: 'long'});
+       
+        markup += `<tr><td>${d.date}</td>
+            <td><img src="${d.day.condition.icon}" style="width: 50px" /></td>
+            <td>${Math.round(d.day.maxtemp_f)}</td>
+            <td>${d.day.avghumidity}%</td></tr>`;
+    }
+
+    markup += '</table>';
 
     weather_block.innerHTML = markup
 }

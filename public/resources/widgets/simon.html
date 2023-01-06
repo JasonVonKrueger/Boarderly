@@ -310,9 +310,7 @@
         return;
       }
 
-      info.textContent = `Your turn: ${remainingTaps} Tap${
-    remainingTaps > 1 ? 's' : ''
-  }`;
+      info.textContent = `Your turn: ${remainingTaps} Tap${remainingTaps > 1 ? 's' : ''}`;
     }
 
     function startGame() {
@@ -324,10 +322,7 @@
 
     startButton.addEventListener('click', startGame);
     tileContainer.addEventListener('click', event => {
-      const {
-        tile
-      } = event.target.dataset;
-
+      const { tile } = event.target.dataset;
       if (tile) handleClick(tile);
     })
   </script>
