@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     __content = document.getElementById('content');
 
     // set margin of content pane
-    __content.style.marginLeft =  __sidebar.clientWidth + 20 + 'px';
+    __content.style.marginLeft =  __sidebar.clientWidth + 15 + 'px';
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
