@@ -184,7 +184,7 @@ function refreshMessages(data) {
 async function getWeather() {
     const key = '8815275c285e40149bd222225222712';
     //const url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=30236&aqi=no`;
-    const url = `http://api.weatherapi.com/v1/forecast.json?key=${key}&q=30236&days=3&aqi=no&alerts=no`;
+    const url = `https://api.weatherapi.com/v1/forecast.json?key=${key}&q=30236&days=3&aqi=no&alerts=no`;
 
     let response = await fetch(url);
     let data = await response.json();
