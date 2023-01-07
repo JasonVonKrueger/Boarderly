@@ -27,6 +27,7 @@ getMessages().then(function(results) {
 	//console.log(messages);
 });
 
+
 const app = express();
 app.use('/', express.static('../webclients/board'));
 app.use('/remote', express.static('../webclients/remote'));
