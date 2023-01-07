@@ -9,22 +9,18 @@ const fs = require('fs');
 let messages = [];
 let albums = [];
 
-// get a list of albums and store in an array for future use
-const { statSync } = require('fs');
-const { readdir } = require('fs').promises;
+// load up the messages
+console.log('Fetching message list...');
+getSavedContent('messages').then(function(results) {
+	messages = results;
+	//console.log(messages);
+});
 
 // load up the photo albums
 console.log('Fetching photo album list...');
-getAlbums().then(function(results) {
+getSavedContent('albums').then(function(results) {
 	albums = results;
 	//console.log(albums);
-});
-
-// load up the messages
-console.log('Fetching message list...');
-getMessages().then(function(results) {
-	messages = results;
-	//console.log(messages);
 });
 
 const app = express();
@@ -32,9 +28,6 @@ app.use('/', express.static('./webclients/board'));
 app.use('/remote', express.static('./webclients/remote'));
 app.use('/message', express.static('./webclients/message'));
 app.use('/resources', express.static('./resources'));
-
-//app.use('/', express.static(path.join(__dirname, './webclients')))
-//console.log(path.join(__dirname, './webclients'))
 app.use(express.json());
 
 const server = http.Server(app);
@@ -46,6 +39,8 @@ io.on('connection', function(socket) {
 	socket.on('GET_MESSAGES', function() {
 		io.emit('REFRESH_MESSAGES', messages);
 		//socket.broadcast.emit('REFRESH_MESSAGES', messages)
+
+		console.log(messages);
 	});
 
 	socket.on('REFRESH_MESSAGES', function() {
@@ -83,49 +78,40 @@ io.on('connection', function(socket) {
 
 });
 
-async function getAlbums() {
-	const ap = __dirname + path.join('/_ALBUMS_/');
-	const results = [];
-	const items = await readdir(ap);
 
-	for (const item of items) {
-		if (statSync(`${ap}/${item}`).isDirectory()) {
-			results.push(item.replaceAll('_', ' '));
+async function getSavedContent(c) {
+	const { readdir } = require('fs').promises;
+	const { statSync } = require('fs');
+	const results = [];
+	let dir = null, items = null;
+
+	if (c === 'messages') {
+		dir = __dirname + path.join('/_MESSAGES_/');
+
+		items = await readdir(dir);
+		for (const item of items) {
+			fs.readFile(dir + item, 'utf8', function(err, message) {
+				if (err) {
+				  return console.log(err);
+				}
+	
+				results.push(JSON.parse(message));
+			  });
 		}
 	}
 
-	return results;
-}
+	if (c === 'albums') {
+		dir = __dirname + path.join('/_ALBUMS_/');
 
-async function getMessages() {
-	const mp = __dirname + path.join('/_MESSAGES_/');
-	const results = [];
-	const items = await readdir(mp);
-
-	for (const item of items) {
-		fs.readFile(mp + item, 'utf8', function(err, message) {
-			if (err) {
-			  return console.log(err);
+		items = await readdir(dir);
+		for (const item of items) {
+			if (statSync(`${dir}/${item}`).isDirectory()) {
+				results.push(item.replaceAll('_', ' '));
 			}
-
-			results.push(message);
-		  });
+		}
 	}
-
+	
 	return results;
-
-	// fs.readdir(mp, (err, files) => {
-	//   files.forEach(file => {
-	// 	console.log(file);
-
-	// 	fs.readFile(mp + file, 'utf8', function(err, data) {
-	// 		if (err) {
-	// 		  return console.log(err);
-	// 		}
-	// 		console.log(data);
-	// 	  });
-	//   });
-	// });
 }
 
 function getRandomFileName() {
