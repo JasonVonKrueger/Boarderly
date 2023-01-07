@@ -8,12 +8,19 @@
     <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="manifest" href="./manifest.json">
     <link rel="icon" href="/resources/images/favicon.ico" />
     <link rel="apple-touch-icon" href="/resources/images/boarderly.png" />
     <link rel="apple-touch-icon" sizes="152x152" href="/resources/images/boarderly.png" />
-    <link rel="apple-touch-startup-image" href="images/launch.png">
+    <link rel="apple-touch-startup-image" href="/resources/images/launch.png">
     <link rel="stylesheet" href="/resources/css/main.css" />
     <style>
+        body {
+            background: rgb(3, 4, 6);
+            background: linear-gradient(124deg, rgba(3, 4, 6, 1) 0%, rgba(64, 76, 99, 1) 42%);
+            padding: 2em;
+        }
+
         input[type=text],
         textarea {
             font-family: var(--font-main);
@@ -23,7 +30,6 @@
             border: 1px solid #ccc;
             margin-top: 6px;
             margin-bottom: 16px;
-            resize: vertical;
         }
 
         .box {
@@ -34,7 +40,7 @@
         }
 
         #top {
-            width: 90%;
+            width: 100%;
             margin-left: auto;
             margin-right: auto;
             margin-top: 3em;
@@ -50,12 +56,16 @@
             font-size: 1.5em;
             text-align: center;
         }
+
+        button {
+            font-size: 1.2em;
+        }
     </style>
 </head>
 
 <body>
     <div id="top">
-        <div id="header">Boarderly :: Message App</div>
+        <div id="header">Boarderly::Message App</div>
 
         <div class="box">
             <label for="from">From</label>
@@ -75,11 +85,24 @@
     <script>
         const socket = io()
 
+        // see if the sender has used it before
+        let name = getCookie('name');
+        if (name) {
+            document.getElementById('from').value = getCookie('name');
+            document.getElementById('message').focus();
+        }
+        else {
+            document.getElementById('from').focus();
+        }
+        
         function sendMessage() {
             let from = document.getElementById('from').value
             let message = document.getElementById('message').value
 
             if (!from || !message) return false
+
+            // save the sender's name
+            setCookie('name', from, 90);
 
             let d = new Date()
             socket.emit('POST_MESSAGE', {
@@ -88,26 +111,34 @@
                 date: d.toLocaleString()
             })
 
-            // postData('/sendmessage', { from: from, message: message })
-
             document.getElementById('btnSend').classList.add('hidden')
             document.getElementById('answer').innerHTML = 'Message sent!'
         }
 
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
 
-        // ****************************************************************
-        // AJAX posting
-        async function postData(url = '', data = {}) {
-            const response = await fetch(url, {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data),
-            })
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+
+            for (let i = 0; i <ca.length; i++) { 
+                let c = ca[i]; 
+                while (c.charAt(0) == ' ' ) { 
+                    c = c.substring(1); 
+                } 
+                
+                if (c.indexOf(name) == 0) { 
+                    return c.substring(name.length, c.length); 
+                } 
+            } 
+                
+            return false; 
         }
     </script>
 
