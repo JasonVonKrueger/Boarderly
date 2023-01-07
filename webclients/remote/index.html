@@ -21,19 +21,20 @@
       padding: 2em;
     }
 
-    #header {
+    #footer {
       background-color: #000;
       color: #fff;
       position: fixed;
-      top: 0;
+      bottom: 0;
       left: 0;
+      margin: 0;
       width: 100%;
       font-size: 1.5em;
       text-align: center;
     }
 
     #grid-top {
-      margin-top: 4em;
+      margin-top: 3em;
       width: 100%;
       text-align: center;
       display: grid;
@@ -95,8 +96,6 @@
 </head>
 
 <body>
-  <div id="header">Boarderly :: Remote Control</div>
-
   <div class="hidden">
     <audio src="../resources/sounds/cork-85200.mp3" id="clicker"></audio>
   </div>
@@ -132,6 +131,7 @@
     </div>
   </div>
 
+  <div id="footer">Boarderly :: Remote Control</div>
 
   <script src="/socket.io/socket.io.js"></script>
 

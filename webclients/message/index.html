@@ -46,12 +46,13 @@
             margin-top: 3em;
         }
 
-        #header {
+        #footer {
             background-color: var(--title-bgcolor);
             color: #fff;
             position: fixed;
-            top: 0;
+            bottom: 0;
             left: 0;
+            margin: 0;
             width: 100%;
             font-size: 1.5em;
             text-align: center;
@@ -65,8 +66,6 @@
 
 <body>
     <div id="top">
-        <div id="header">Boarderly::Message App</div>
-
         <div class="box">
             <label for="from">From</label>
             <input type="text" id="from" name="from" placeholder="Your name..">
@@ -79,6 +78,7 @@
         </div>
     </div>
 
+    <div id="footer">Boarderly::Message App</div>
 
     <script src="/socket.io/socket.io.js"></script>
 
