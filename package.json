@@ -1,10 +1,10 @@
 {
   "name": "boarderly",
   "version": "1.0.0",
-  "description": "Memory board for the elderly",
-  "main": "src/app.js",
+  "description": "Message board for the elderly",
+  "main": "webserver/app_server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node webserver/app_server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mr. Monster",

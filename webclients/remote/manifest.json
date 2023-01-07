@@ -1,0 +1,26 @@
+{
+    "short_name": "Boarderly::Remote",
+    "name": "Message board for the elderly.",
+    "icons": [
+      {
+        "src": "./images/favicon.ico",
+        "type": "image/png",
+        "sizes": "200x200"
+      }
+    ],
+    "id": "./remote/index.html",
+    "start_url": "./remote/index.html",
+    "background_color": "#3367D6",
+    "display": "fullscreen",
+    "scope": "/",
+    "theme_color": "#3367D6",
+    "description": "Message board for the elderly.",
+    "screenshots": [
+      {
+        "src": "/images/screenshot1.png",
+        "type": "image/png",
+        "sizes": "540x720",
+        "form_factor": "narrow"
+      }
+    ]
+  }
