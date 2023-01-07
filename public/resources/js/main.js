@@ -47,7 +47,7 @@ function show(el) {
 
 function handleRemBtnPush(data) {
     let section = getActiveSidebarButton().replace('nav', 'section');
-    let cards = document.getElementById(section).querySelectorAll('.card');
+    let cards = document.getElementById(section).querySelectorAll('.content-grid-item');
 
     switch (data.button) {
         case 'home':
