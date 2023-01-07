@@ -17,6 +17,7 @@
     body {
       background: rgb(3, 4, 6);
       background: linear-gradient(124deg, rgba(3, 4, 6, 1) 0%, rgba(64, 76, 99, 1) 42%);
+      padding: 1em;
     }
 
     #header {
@@ -45,7 +46,7 @@
     #grid-top div {
       width: 50%;
       color: #fff;
-      font-size: 2em;
+      font-size: 1.5em;
       margin-left: auto;
       margin-right: auto;
     }
@@ -119,13 +120,13 @@
     </div>
     <div class="grid-item">
       <div class="push-button" style="padding: .5em; background-color: #cfeedd;" onclick="sendPush('cancel')">
-        <span style="font-size: 2.5em;">❌</span>
+        <span style="font-size: 2em;">❌</span>
       </div>
     </div>
     <div></div>
     <div class="grid-item">
       <div class="push-button" style="background-color: #cfeedd; padding: .5em;" onclick="sendPush('enter')">
-        <span style="font-size: 2.5em; color: green;">✔</span>
+        <span style="font-size: 2em; color: green;">✔</span>
       </div>
     </div>
   </div>
@@ -135,10 +136,6 @@
 
   <script>
     const socket = io();
-
-    document.querySelector('.push-button').addEventListener('touchstart', function() {
-
-    });
 
     function sendPush(btn) {
       document.getElementById('clicker').play();

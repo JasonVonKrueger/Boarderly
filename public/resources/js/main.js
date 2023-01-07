@@ -17,59 +17,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
     socket.emit('GET_MESSAGES');
 
     getWeather();
-
-    //__sidebar.focus();
-    
-    // handle remote button presses
-    // __content.onkeydown = function(e) {
-    //     let a = getActiveSidebarButton();
-        
-       
-    //     switch(e.key) {
-    //         case 'ArrowDown':
-    //             if (a === 'nav_home') {
-    //                 triggerEvent(document.getElementById('nav_pictures'), 'click');
-    //             }
-
-    //             if (a === 'nav_pictures') {
-    //                 triggerEvent(document.getElementById('nav_games'), 'click');
-    //             } 
-    //         break;
-    //         case 'ArrowUp':
-    //             if (a === 'nav_games') {
-    //                 triggerEvent(document.getElementById('nav_pictures'), 'click');
-    //             }
-
-    //             if (a === 'nav_pictures') {
-    //                 triggerEvent(document.getElementById('nav_home'), 'click');
-    //             }  
-    //         break;
-    //         case 'ArrowRight':
-
-    //             __content.dispatchEvent(new Event('focus'));
-    //             __content.dispatchEvent(new KeyboardEvent('keydown', { 'key': 'Tab' })); 
-
-    //             if (a === 'nav_games') {
-    //                 //triggerEvent(document.getElementById('nav_pictures'), 'click');
-
-
-    //             }
-
-    //             if (a === 'nav_pictures') {
-    //                 triggerEvent(document.getElementById('nav_home'), 'click');
-    //             }  
-    //         break;
-    //         case 'ArrowLeft':
-    //             if (a === 'nav_games') {
-    //                 triggerEvent(document.getElementById('nav_pictures'), 'click');
-    //             }
-
-    //             if (a === 'nav_pictures') {
-    //                 triggerEvent(document.getElementById('nav_home'), 'click');
-    //             }  
-    //         break;
-    //     }
-    // }
 });
 
 function getActiveSidebarButton() {
@@ -206,7 +153,7 @@ async function getWeather() {
     for (let i=0; i<forecast.forecastday.length; i++) {
         let d = forecast.forecastday[i];
         //let dow = new Date(d.date).toLocaleString('default', {weekday: 'long'});
-       
+
         markup += `<tr><td>${d.date}</td>
             <td><img src="${d.day.condition.icon}" style="width: 50px" /></td>
             <td>${Math.round(d.day.maxtemp_f)}</td>
