@@ -1,0 +1,173 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Titillium+Web&display=swap');
+
+:root {
+  --font-main: 'Titillium Web', sans-serif;
+  --content-bgcolor: #313131;
+  --card-bgcolor: #f1f1f1;
+  --title-bgcolor: #414141;
+  --sidebar-bgcolor: #414141;
+  --sidebar-inactive: #555;
+  --button-bgcolor: #ed1010;
+  --brand-font: 'Shadows Into Light Two', cursive;
+  --brand-font-size: 1.7em;
+  --active-element: #ed1010;
+  --hightlight: rgb(122, 117, 117);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+  font-family: var(--font-main);
+  color: var(--card-bgcolor);
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  background: rgb(3, 4, 6);
+  background: linear-gradient(124deg, rgba(3, 4, 6, 1) 0%, rgba(64, 76, 99, 1) 42%);
+  padding: 2em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#footer {
+  background-color: #000;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  width: 100%;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+#c_top {
+  margin-top: 3em;
+  width: 100%;
+  text-align: center;
+  display: grid;
+  grid-template-columns: auto;
+  column-gap: 2em;
+  row-gap: 4em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#c_top div {
+  width: 90%;
+  color: #fff;
+  font-size: 1.5em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.grid-container {
+  margin-top: 4em;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 2em;
+  row-gap: 4em;
+}
+
+.grid-item {
+  text-align: center;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+}
+
+button {
+  background-color: var(--button-bgcolor);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.push-button {
+  padding: .5em;
+  background-color: #f25022;
+  box-shadow: 0 0 0 1px #f25022 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #c93a12, 0 8px 0 1px rgba(0, 0, 0, 0.4), 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+  transition: 0.15s;
+}
+
+.push-button .push-button:hover,
+.push-button:focus {
+  background-color: #ff451a;
+  box-shadow: 0 0 0 1px #FF3000 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 10px 0 0 #e62b00, 0 10px 0 1px rgba(0, 0, 0, 0.4), 0 10px 8px 1px rgba(0, 0, 0, 0.6);
+}
+
+.push-button:active,
+.push-button.activated {
+  box-shadow: 0 0 0 1px #ff5c36 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 0 0 1px rgba(0, 0, 0, 0.4);
+  background-color: #ff5c36;
+  transform: translateY(10px);
+}
+
+input[type=text],
+textarea {
+    font-family: var(--font-main);
+    font-size: 1em;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+#btn_back {
+  color: var(--card-bgcolor);
+  position: absolute;
+  top: 1%;
+  left: 1%;
+}
+
+#btn_back:hover {
+  cursor: pointer;
+}
+
+#tasks {
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
+  xpadding: 30px 20px;
+  margin-top: 10px;
+}
+
+.task {
+border-radius: 5px;
+align-items: center;
+justify-content: space-between;
+xborder: 1px solid #939697;
+cursor: pointer;
+xbackground-color: #c5e1e6;
+height: 50px;
+margin-bottom: 8px;
+padding: 5px 10px;
+display: flex;
+}
+
+
+.task button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  height: 100%;
+  xwidth: 40px;
+  border-radius: 5px;
+}
+
+

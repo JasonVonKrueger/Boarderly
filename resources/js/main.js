@@ -13,10 +13,12 @@ document.addEventListener("DOMContentLoaded", function(e) {
     __content.style.marginLeft =  __sidebar.clientWidth + 15 + 'px';
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
+    socket.on('REFRESH_TASKS', refreshTasks);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
     socket.emit('GET_MESSAGES');
 
     getWeather();
+    showTime();
 });
 
 function getActiveSidebarButton() {
@@ -107,7 +109,7 @@ function triggerEvent(el, event) {
 }
 
 function refreshMessages(data) {
-    const __message_block = document.querySelector('#message_block');
+    const message_block = document.getElementById('message_block');
 
     for (let i = 0; i < data.length; i++) {
         const con = document.createElement('div');
@@ -124,7 +126,28 @@ function refreshMessages(data) {
         con.appendChild(sender);
         con.appendChild(message);
 
-        __message_block.appendChild(con);
+        message_block.appendChild(con);
+        
+       // __message_block.scrollTo(0,9999);
+    }
+}
+
+function refreshTasks(data) {
+    const task_block = document.getElementById('task_block');
+
+    for (let i = 0; i < data.length; i++) {
+        const task = document.createElement('div');
+        const l = document.createElement('span');
+        const r = document.createElement('span');
+
+        l.innerHTML = data[i].task;
+        r.innerHTML = '<span class="material-symbols-outlined">check_box_outline_blank</span>';
+        //r.innerHTML = '<span class="material-symbols-outlined">check_box</span>';
+        task.appendChild(l);
+        task.appendChild(r);
+        task.classList.add('task');
+        
+        task_block.appendChild(task);
     }
 }
 
@@ -164,6 +187,40 @@ async function getWeather() {
 
     weather_block.innerHTML = markup
 }
+
+function showTime() {
+    var date = new Date();
+    var h = date.getHours(); // 0 - 23
+    var m = date.getMinutes(); // 0 - 59
+    var s = date.getSeconds(); // 0 - 59
+    var session = "AM";
+    
+    if (h == 0) {
+        h = 12;
+    }
+    
+    if (h > 12) { 
+        h = h - 12;
+        session = "PM";
+    }
+    
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+    
+    var time = h + ":" + m + ":" + s + " " + session;
+    document.getElementById("MyClockDisplay").innerText = time;
+    document.getElementById("MyClockDisplay").textContent = time;
+    
+    setTimeout(showTime, 1000);
+}
+
+
+
+
+
+
+
 
 async function getAlbums() {
     const url = 'https://photoslibrary.googleapis.com/v1/albums'

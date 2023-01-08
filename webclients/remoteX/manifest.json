@@ -1,0 +1,16 @@
+{
+    "short_name": "Remote",
+    "name": "Remote control for your Boarderly.",
+    "icons": [
+      {
+        "src": "/resources/images/favicon.ico",
+        "type": "image/png",
+        "sizes": "200x200"
+      }
+    ],
+    "id": "/remote/index.html",
+    "start_url": "/remote/index.html",
+    "display": "fullscreen",
+    "scope": "/",
+    "description": "Remote control for your Boarderly."
+  }

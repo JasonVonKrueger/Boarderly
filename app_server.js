@@ -7,20 +7,31 @@ const path = require('path');
 const fs = require('fs');
 
 let messages = [];
+let tasks = [];
 let albums = [];
+
+// initialize the content folders
+console.log('Initializing content directories...');
+initContentDir('_ALBUMS_');
+initContentDir('_TASKS_');
+initContentDir('_MESSAGES_');
 
 // load up the messages
 console.log('Fetching message list...');
 getSavedContent('messages').then(function(results) {
 	messages = results;
-	//console.log(messages);
+});
+
+// load up the tasks
+console.log('Fetching task list...');
+getSavedContent('tasks').then(function(results) {
+	tasks = results;
 });
 
 // load up the photo albums
 console.log('Fetching photo album list...');
 getSavedContent('albums').then(function(results) {
 	albums = results;
-	//console.log(albums);
 });
 
 const app = express();
@@ -38,9 +49,10 @@ io.on('connection', function(socket) {
 
 	socket.on('GET_MESSAGES', function() {
 		io.emit('REFRESH_MESSAGES', messages);
+		io.emit('REFRESH_TASKS', tasks);
 		//socket.broadcast.emit('REFRESH_MESSAGES', messages)
 
-		console.log(messages);
+		console.log(tasks);
 	});
 
 	socket.on('REFRESH_MESSAGES', function() {
@@ -50,6 +62,25 @@ io.on('connection', function(socket) {
 	socket.on('BUTTON_PUSHED', function(data) {
 		console.log('button pushed ' + data.button);
 		socket.broadcast.emit('BUTTON_PUSHED', data);
+	});
+
+	socket.on('POST_TASK', function(data) {
+		let task = {
+			task: data.task,
+			status: 'new',
+			date: data.date
+		}
+
+		tasks.push(task);
+		socket.broadcast.emit('REFRESH_TASKS', tasks);
+
+		// write task to filesystem
+		const fs = require('fs');
+		fs.writeFile(`./_TASKS_/${getRandomFileName()}`, JSON.stringify(task), err => {
+			if (err) {
+				console.error(err);
+			}
+		});
 	});
 
 	socket.on('POST_MESSAGE', function(data) {
@@ -100,6 +131,21 @@ async function getSavedContent(c) {
 		}
 	}
 
+	if (c === 'tasks') {
+		dir = __dirname + path.join('/_TASKS_/');
+
+		items = await readdir(dir);
+		for (const item of items) {
+			fs.readFile(dir + item, 'utf8', function(err, message) {
+				if (err) {
+				  return console.log(err);
+				}
+	
+				results.push(JSON.parse(message));
+			  });
+		}
+	}
+
 	if (c === 'albums') {
 		dir = __dirname + path.join('/_ALBUMS_/');
 
@@ -122,6 +168,25 @@ function getRandomFileName() {
 	return random_number;
 }
 
+function initContentDir(dir) {
+	const path = `./${dir}`
+	fs.access(path, (error) => {
+		if (error) {
+			// if directory doesn't exist, create it
+			fs.mkdir(path, (error) => {
+				if (error) {
+					console.log(error);
+				} else {
+					console.log(`Created directory ${dir}`);
+				}
+			});
+		} 
+		else {
+			console.log(`${dir} already exists`);
+		}
+	});
+
+}
 
 
 

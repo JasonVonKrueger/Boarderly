@@ -40,7 +40,7 @@ body {
 }
 
 .content-cards {
-  margin-top: 1.5em;
+  padding-top: 1.5em;
 }
 
 .content-grid {
@@ -207,7 +207,28 @@ iframe {
   cursor: pointer;
 }
 
+.task {
+  xborder-radius: 5px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #939697;
+  cursor: pointer;
+  background-color: #d6d13e;
+  height: 50px;
+  margin-bottom: 8px;
+  padding: 5px 10px;
+  display: flex;
+  color: #333;
+  width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.xxtask span {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+}
 
 
 
@@ -241,3 +262,14 @@ iframe {
 
 
 
+
+
+.clock {
+  position: absolute;
+  bottom: 1%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  color: #0be23a;
+  font-size: 2em;
+  letter-spacing: 2px;
+}
