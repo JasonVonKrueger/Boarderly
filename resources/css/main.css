@@ -29,10 +29,13 @@ body {
   height: 100vh;
   font-family: var(--font-main);
   background-color: var(--content-bgcolor);
-  background-image: url('../images/background1.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  xbackground-image: url('https://wallpaperaccess.com/full/84248.png');
+  xbackground-position: center;
+  xbackground-repeat: no-repeat;
+  xbackground-size: cover;
+
+  background: rgb(107,97,97);
+  background: linear-gradient(155deg, rgba(107,97,97,1) 0%, rgba(9,13,64,1) 35%, rgba(11,11,11,1) 100%);
 }
 
 .hidden {

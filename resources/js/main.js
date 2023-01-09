@@ -64,6 +64,10 @@ function handleRemBtnPush(data) {
             triggerEvent(document.getElementById('nav_games'), 'click');
             __content.focus();
             break;
+        case 'tools':
+            triggerEvent(document.getElementById('nav_tools'), 'click');
+            __content.focus();
+            break;
         case 'ArrowRight':
                 if (selected_card_index >= cards.length) return;
 

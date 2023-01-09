@@ -61,7 +61,6 @@ function getCookie(cname) {
 function showSection(section) {
     document.getElementById('c_top').classList.add('hidden');
     document.getElementById(section).classList.remove('hidden');
-
     document.getElementById('btn_back').classList.remove('hidden');
 
     return false;
@@ -88,8 +87,7 @@ function showSection(section) {
         <button class="delete">
             <i class="far fa-trash-alt"></i>
         </button>
-    </div>
-`;
+    </div>`;
 
     var current_tasks = document.querySelectorAll(".delete");
     for (var i = 0; i < current_tasks.length; i++) {

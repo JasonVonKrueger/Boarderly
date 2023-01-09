@@ -38,46 +38,56 @@ body {
   display: none !important;
 }
 
-#footer {
+#header {
   background-color: #000;
   color: #fff;
+  border-bottom: 2px solid rgb(255, 255, 255);
+  border-bottom-left-radius: 5em;
+  border-bottom-right-radius: 5em;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   margin: 0;
+  padding: .3em;
   width: 100%;
   font-size: 1.5em;
   text-align: center;
 }
 
-#c_top {
-  margin-top: 3em;
+.section {
+  margin-top: 15%;
+}
+
+.section-buttons {
   width: 100%;
-  text-align: center;
   display: grid;
   grid-template-columns: auto;
   column-gap: 2em;
   row-gap: 4em;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: auto; 
 }
 
-#c_top div {
-  width: 90%;
+.section-buttons div {
   color: #fff;
   font-size: 1.5em;
   margin-left: auto;
   margin-right: auto;
 }
 
+#c_dpad .section-buttons {
+  grid-template-columns: auto auto; 
+  row-gap: 2em;
+}
+
 .grid-container {
-  margin-top: 4em;
+  margin-top: 5%;
   margin-left: auto;
   margin-right: auto;
   display: grid;
   grid-template-columns: auto auto auto;
-  column-gap: 2em;
-  row-gap: 4em;
+  column-gap: 1em;
+  row-gap: 2em;
 }
 
 .grid-item {
@@ -95,6 +105,7 @@ button {
   padding: 12px 20px;
   border: none;
   cursor: pointer;
+  font-size: 1em;
 }
 
 .push-button {
@@ -102,6 +113,12 @@ button {
   background-color: #f25022;
   box-shadow: 0 0 0 1px #f25022 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #c93a12, 0 8px 0 1px rgba(0, 0, 0, 0.4), 0 8px 8px 1px rgba(0, 0, 0, 0.5);
   transition: 0.15s;
+}
+
+.push-button > span {
+  font-size: 1em;
+  vertical-align: middle;
+  padding-right: .5em;
 }
 
 .push-button .push-button:hover,
@@ -131,8 +148,8 @@ textarea {
 #btn_back {
   color: var(--card-bgcolor);
   position: absolute;
-  top: 1%;
-  left: 1%;
+  top: 2%;
+  left: 6%;
 }
 
 #btn_back:hover {

@@ -18,12 +18,14 @@
 </head>
 
 <body>
+  <div id="header">Boarderly :: Remote Control</div>
+
   <div class="hidden">
     <audio src="/resources/sounds/cork-85200.mp3" id="clicker"></audio>
   </div>
 
-  <div id="c_top">
-    <div id="btn_remote" class="push-button" onclick="showSection('c_remote')">
+  <div id="c_top" class="section-buttons section">
+    <div id="btn_remote" class="push-button" onclick="showSection('c_dpad')">
       <span class="material-symbols-outlined">remote_gen</span>
       <span>D-Pad</span>
     </div>
@@ -40,32 +42,52 @@
   </div>
 
   <!-- Section -->
-  <div id="c_remote" class="hidden">
-    <div id="grid-top">
+  <div id="c_dpad" class="section hidden">
+    <div class="section-buttons">
       <div id="btn_home" class="push-button" onclick="sendPush('home')">🏠 Home</div>
       <div id="btn_pictures" class="push-button" onclick="sendPush('pictures')">🖼 Pictures</div>
       <div id="btn_games" class="push-button" onclick="sendPush('games')">🕹 Games</div>
+      <div id="btn_tools" class="push-button" onclick="sendPush('tools')">🔧 Tools</div>
     </div>
+
     <div class="grid-container">
+      <div></div>
       <div class="grid-item">
-        <div class="push-button" onclick="sendPush('ArrowLeft')">
-          <img src="../resources/images/left-arrow.svg" />
+        <div class="push-button" onclick="sendPush('ArrowUp')">
+          <img src="/resources/images/up-arrow.svg" />
         </div>
       </div>
       <div></div>
+
       <div class="grid-item">
-        <div class="push-button" onclick="sendPush('ArrowRight')">
-          <img src="../resources/images/right-arrow.svg" />
+        <div class="push-button" onclick="sendPush('ArrowLeft')">
+          <img src="/resources/images/left-arrow.svg" />
         </div>
       </div>
+      <div></div>
+      
       <div class="grid-item">
-        <div class="push-button" style="padding: .5em; background-color: #cfeedd;" onclick="sendPush('cancel')">
+        <div class="push-button" onclick="sendPush('ArrowRight')">
+          <img src="/resources/images/right-arrow.svg" />
+        </div>
+      </div>
+      <div></div>
+
+      <div class="grid-item">
+        <div class="push-button" onclick="sendPush('ArrowDown')">
+          <img src="/resources/images/down-arrow.svg" />
+        </div>
+      </div>
+      <div></div>
+
+      <div class="grid-item">
+        <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('cancel')">
           <span style="font-size: 2em;">❌</span>
         </div>
       </div>
       <div></div>
       <div class="grid-item">
-        <div class="push-button" style="background-color: #cfeedd; padding: .5em;" onclick="sendPush('enter')">
+        <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('enter')">
           <span style="font-size: 2em; color: green;">✔</span>
         </div>
       </div>
@@ -74,7 +96,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_todo" class="hidden">
+  <div id="c_todo" class="section hidden">
     <div id="newtask">
         <input id="new_task" type="text" placeholder="Add a task">
         <button id="push" onclick="addTask()">Add</button>
@@ -84,7 +106,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_message" class="hidden">
+  <div id="c_message" class="section hidden">
     <label for="from">From</label>
     <input type="text" id="from" name="from" placeholder="Your name..">
 
@@ -97,7 +119,6 @@
   <!-- End section -->
 
   <div id="btn_back" class="hidden" onclick="window.location.reload();"><span class="material-symbols-outlined">arrow_back</span></div>
-  <div id="footer">Boarderly :: Remote Control</div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="./remote.js"></script>
