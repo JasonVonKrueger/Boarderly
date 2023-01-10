@@ -49,10 +49,14 @@ io.on('connection', function(socket) {
 
 	socket.on('GET_MESSAGES', function() {
 		io.emit('REFRESH_MESSAGES', messages);
-		io.emit('REFRESH_TASKS', tasks);
+		//io.emit('REFRESH_TASKS', tasks);
 		//socket.broadcast.emit('REFRESH_MESSAGES', messages)
 
 		console.log(tasks);
+	});
+
+	socket.on('REFRESH_TASKS', function() {
+		socket.emit('REFRESH_TASKS', tasks);
 	});
 
 	socket.on('REFRESH_MESSAGES', function() {

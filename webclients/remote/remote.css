@@ -168,15 +168,15 @@ textarea {
 border-radius: 5px;
 align-items: center;
 justify-content: space-between;
-xborder: 1px solid #939697;
+border: 1px solid #939697;
 cursor: pointer;
-xbackground-color: #c5e1e6;
-height: 50px;
+background-color: #fcff9e;
+xheight: 50px;
 margin-bottom: 8px;
 padding: 5px 10px;
 display: flex;
+color: #333;
 }
-
 
 .task button {
   border: none;

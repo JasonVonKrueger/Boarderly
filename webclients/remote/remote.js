@@ -12,6 +12,11 @@ else {
     document.getElementById('from').focus();
 }
 
+socket.emit('REFRESH_TASKS');
+socket.on('REFRESH_TASKS', refreshTasks);
+
+
+
 function sendMessage() {
     let from = document.getElementById('from').value
     let message = document.getElementById('message').value
@@ -73,6 +78,26 @@ function showSection(section) {
       button: btn
     });
   }
+
+  function refreshTasks(data) {
+    const task_block = document.getElementById('task_block');
+
+    for (let i = 0; i < data.length; i++) {
+        const task = document.createElement('div');
+        const l = document.createElement('span');
+        const r = document.createElement('span');
+
+        l.innerHTML = data[i].task;
+        r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px; "/>';
+        //r.innerHTML = '<span class="material-symbols-outlined">check_box_outline_blank</span>';
+        //r.innerHTML = '<span class="material-symbols-outlined">check_box</span>';
+        task.appendChild(l);
+        task.appendChild(r);
+        task.classList.add('task');
+        
+        task_block.appendChild(task);
+    }
+}
 
   function addTask() {
     const new_task = document.getElementById('new_task');

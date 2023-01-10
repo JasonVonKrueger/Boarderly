@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
     socket.on('REFRESH_TASKS', refreshTasks);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
     socket.emit('GET_MESSAGES');
+    socket.emit('REFRESH_TASKS');
 
     getWeather();
     showTime();
@@ -145,7 +146,8 @@ function refreshTasks(data) {
         const r = document.createElement('span');
 
         l.innerHTML = data[i].task;
-        r.innerHTML = '<span class="material-symbols-outlined">check_box_outline_blank</span>';
+        r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px; "/>';
+        //r.innerHTML = '<span class="material-symbols-outlined">check_box_outline_blank</span>';
         //r.innerHTML = '<span class="material-symbols-outlined">check_box</span>';
         task.appendChild(l);
         task.appendChild(r);

@@ -28,14 +28,16 @@ body {
   width: 100vw;
   height: 100vh;
   font-family: var(--font-main);
-  background-color: var(--content-bgcolor);
-  xbackground-image: url('https://wallpaperaccess.com/full/84248.png');
+  xbackground-color: var(--content-bgcolor);
+  xbackground-image: url('https://wallpapercave.com/wp/wp7563506.jpg');
   xbackground-position: center;
   xbackground-repeat: no-repeat;
   xbackground-size: cover;
 
-  background: rgb(107,97,97);
-  background: linear-gradient(155deg, rgba(107,97,97,1) 0%, rgba(9,13,64,1) 35%, rgba(11,11,11,1) 100%);
+  xbackground: rgb(107,97,97);
+  xbackground: linear-gradient(155deg, rgba(107,97,97,1) 0%, rgba(9,13,64,1) 35%, rgba(11,11,11,1) 100%);
+
+  background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
 }
 
 .hidden {
@@ -95,7 +97,7 @@ body {
   width: auto;
   xbackground-color: var(--sidebar-bgcolor);
   xbackground-color: transparent;
-
+  border-right: 2px solid #000;
   background: rgb(3,4,6);
   background: linear-gradient(124deg, rgba(3,4,6,1) 0%, rgba(64,76,99,1) 42%);
   position: fixed;
@@ -216,7 +218,7 @@ iframe {
   justify-content: space-between;
   border: 1px solid #939697;
   cursor: pointer;
-  background-color: #d6d13e;
+  background-color: #fcff9e;
   height: 50px;
   margin-bottom: 8px;
   padding: 5px 10px;
