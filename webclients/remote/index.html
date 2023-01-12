@@ -14,17 +14,13 @@
   <link rel="apple-touch-icon" href="/resources/images/boarderly.png" />
   <link rel="apple-touch-icon" sizes="152x152" href="/resources/images/boarderly.png" />
   <link rel="apple-touch-startup-image" href="/resources/images/launch.png" />
-  <link rel="stylesheet" href="./remote.css" />
+  <link rel="stylesheet" href="/resources/css/remote.css" />
 </head>
 
 <body>
   <div id="header">Boarderly :: Remote Control</div>
 
-  <div class="hidden">
-    <audio src="/resources/sounds/cork-85200.mp3" id="clicker"></audio>
-  </div>
-
-  <div id="c_top" class="section-buttons section">
+  <div id="c_top" class="section-buttons section" style="padding-top: 25%;">
     <div id="btn_remote" class="push-button" onclick="showSection('c_dpad')">
       <span class="material-symbols-outlined">remote_gen</span>
       <span>D-Pad</span>
@@ -50,7 +46,7 @@
       <div id="btn_tools" class="push-button" onclick="sendPush('tools')">🔧 Tools</div>
     </div>
 
-    <div class="grid-container">
+    <div class="grid-container" style="padding-top: 20%;">
       <div></div>
       <div class="grid-item">
         <div class="push-button" onclick="sendPush('ArrowUp')">
@@ -97,12 +93,16 @@
 
   <!-- Section -->
   <div id="c_todo" class="section hidden">
-    <div id="newtask">
-        <input id="new_task" type="text" placeholder="Add a task">
-        <button id="push" onclick="addTask()">Add</button>
+    <div id="newtask" class="fc-tasks">
+        <div style="flex: 100%;">
+          <input id="new_task" type="text" placeholder="Add a task">
+        </div>
+        <div style="margin-left: auto; order: 2;">
+          <button onclick="addTask()">Add</button>
+        </div>
     </div>
-    <div id="tasks"></div>
-    <div id="task_block"></div>
+
+    <div id="task_block" style="padding-top: 2em;"></div>
   </div>
   <!-- End section -->
 
@@ -122,7 +122,8 @@
   <div id="btn_back" class="hidden" onclick="window.location.reload();"><span class="material-symbols-outlined">arrow_back</span></div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="./remote.js"></script>
+  <script src="/resources/js/howler.js"></script>
+  <script src="/resources/js/remote.js"></script>
 </body>
 
 </html>

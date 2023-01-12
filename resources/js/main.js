@@ -5,7 +5,7 @@ let selected_card_index = -1;
 let __sidebar = null;
 let __content = null;
 
-document.addEventListener("DOMContentLoaded", function(e) {
+document.addEventListener('DOMContentLoaded', function(e) {
     __sidebar = document.getElementById('sidebar');
     __content = document.getElementById('content');
 
@@ -20,6 +20,19 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     getWeather();
     showTime();
+
+    btn_playsound.addEventListener('click', function(e) {
+        var snd_newmessage = new Howl({
+            src: ['/resources/sounds/wrong-answer-129254.mp3'],
+            onplayerror: function() {
+                snd_newmessage.once('unlock', function() {
+                    //snd_newmessage.play();
+              });
+            }
+          });
+
+        //snd_newmessage.play();
+    });
 });
 
 function getActiveSidebarButton() {
@@ -109,12 +122,17 @@ function closeModal(mo) {
     document.getElementById(mo).style.display = 'none';
 }
 
-function triggerEvent(el, event) {
-    el.dispatchEvent(new Event(event));
+function triggerEvent(el, e) {
+    el.dispatchEvent(new Event(e));
 }
 
 function refreshMessages(data) {
     const message_block = document.getElementById('message_block');
+
+    // clear the list and rebuild
+    while (message_block.firstChild) {
+        message_block.removeChild(message_block.firstChild);
+    }
 
     for (let i = 0; i < data.length; i++) {
         const con = document.createElement('div');
@@ -132,6 +150,8 @@ function refreshMessages(data) {
         con.appendChild(message);
 
         message_block.appendChild(con);
+
+        triggerEvent(btn_playsound, 'click');
         
        // __message_block.scrollTo(0,9999);
     }
@@ -140,13 +160,27 @@ function refreshMessages(data) {
 function refreshTasks(data) {
     const task_block = document.getElementById('task_block');
 
+    // clear the list and rebuild
+    while (task_block.firstChild) {
+        task_block.removeChild(task_block.firstChild);
+    }
+
     for (let i = 0; i < data.length; i++) {
         const task = document.createElement('div');
         const l = document.createElement('span');
         const r = document.createElement('span');
 
         l.innerHTML = data[i].task;
-        r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px; "/>';
+
+        if (data[i].status === 'complete') {
+            l.style.textDecoration = 'line-through';
+            r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
+        }
+        else {
+            r.innerHTML = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
+        }
+
+       // r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px; "/>';
         //r.innerHTML = '<span class="material-symbols-outlined">check_box_outline_blank</span>';
         //r.innerHTML = '<span class="material-symbols-outlined">check_box</span>';
         task.appendChild(l);
@@ -210,13 +244,13 @@ function showTime() {
         session = "PM";
     }
     
-    h = (h < 10) ? "0" + h : h;
+    //h = (h < 10) ? "0" + h : h;
     m = (m < 10) ? "0" + m : m;
     s = (s < 10) ? "0" + s : s;
     
     var time = h + ":" + m + ":" + s + " " + session;
-    document.getElementById("MyClockDisplay").innerText = time;
-    document.getElementById("MyClockDisplay").textContent = time;
+    document.getElementById("time").innerText = time;
+    document.getElementById("time").textContent = time;
     
     setTimeout(showTime, 1000);
 }
@@ -249,3 +283,7 @@ async function fetchContent(page) {
     //let response = fetch(page)
 
 }
+
+
+
+

@@ -2,6 +2,8 @@
 
 const socket = io()
 
+const snd_button_push = new Howl({ src: ['/resources/sounds/cork-85200.mp3'] });
+
 // see if the sender has used it before
 let name = getCookie('name');
 if (name) {
@@ -64,6 +66,8 @@ function getCookie(cname) {
 }
 
 function showSection(section) {
+    snd_button_push.play();
+
     document.getElementById('c_top').classList.add('hidden');
     document.getElementById(section).classList.remove('hidden');
     document.getElementById('btn_back').classList.remove('hidden');
@@ -72,11 +76,9 @@ function showSection(section) {
   }
 
   function sendPush(btn) {
-    document.getElementById('clicker').play();
+   snd_button_push.play();
 
-    socket.emit('BUTTON_PUSHED', {
-      button: btn
-    });
+    socket.emit('BUTTON_PUSHED', { button: btn });
   }
 
   function refreshTasks(data) {
@@ -88,9 +90,15 @@ function showSection(section) {
         const r = document.createElement('span');
 
         l.innerHTML = data[i].task;
-        r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px; "/>';
-        //r.innerHTML = '<span class="material-symbols-outlined">check_box_outline_blank</span>';
-        //r.innerHTML = '<span class="material-symbols-outlined">check_box</span>';
+
+        if (data[i].status === 'complete') {
+            l.style.textDecoration = 'line-through';
+            r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
+        }
+        else {
+            r.innerHTML = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
+        }
+        
         task.appendChild(l);
         task.appendChild(r);
         task.classList.add('task');
@@ -100,35 +108,40 @@ function showSection(section) {
 }
 
   function addTask() {
+    // clear the list and rebuild
+    while (document.getElementById('task_block').firstChild) {
+        document.getElementById('task_block').removeChild(document.getElementById('task_block').firstChild);
+    }
+
     const new_task = document.getElementById('new_task');
 
     if (new_task.value.length == 0) return;
    
-    document.querySelector('#tasks').innerHTML += `
-    <div class="task">
-        <span id="taskname">
-            ${new_task.value}
-        </span>
-        <button class="delete">
-            <i class="far fa-trash-alt"></i>
-        </button>
-    </div>`;
+    // document.querySelector('#task_block').innerHTML += `
+    // <div class="task">
+    //     <span id="taskname">
+    //         ${new_task.value}
+    //     </span>
+    // </div>`;
 
-    var current_tasks = document.querySelectorAll(".delete");
-    for (var i = 0; i < current_tasks.length; i++) {
-        current_tasks[i].onclick = function () {
-            this.parentNode.remove();
-        }
-    }
+    // var current_tasks = document.querySelectorAll(".delete");
+    // for (var i = 0; i < current_tasks.length; i++) {
+    //     current_tasks[i].onclick = function () {
+    //         this.parentNode.remove();
+    //     }
+    // }
 
     let d = new Date()
     socket.emit('POST_TASK', {
         task: new_task.value,
         date: d.toLocaleString()
     })
-    
+
+    socket.emit('REFRESH_TASKS');
   }
 
-  function completeTask() {
-    
+  function completeTask(id) {
+    socket.emit('COMPLETE_TASK', { id: id });
   }
+
+

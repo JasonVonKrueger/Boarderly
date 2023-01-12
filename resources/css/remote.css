@@ -2,6 +2,13 @@
 @import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Titillium+Web&display=swap');
 
+/* *****************************************
+Various prefixes
+
+c = container
+fc = flex container
+
+***************************************** */
 :root {
   --font-main: 'Titillium Web', sans-serif;
   --content-bgcolor: #313131;
@@ -73,6 +80,8 @@ body {
   font-size: 1.5em;
   margin-left: auto;
   margin-right: auto;
+  width: 80%;
+  text-align: center;
 }
 
 #c_dpad .section-buttons {
@@ -109,6 +118,7 @@ button {
 }
 
 .push-button {
+  cursor: pointer;
   padding: .5em;
   background-color: #f25022;
   box-shadow: 0 0 0 1px #f25022 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #c93a12, 0 8px 0 1px rgba(0, 0, 0, 0.4), 0 8px 8px 1px rgba(0, 0, 0, 0.5);
@@ -148,12 +158,20 @@ textarea {
 #btn_back {
   color: var(--card-bgcolor);
   position: absolute;
-  top: 2%;
-  left: 6%;
+  top: 1.8%;
+  left: 12%;
 }
 
 #btn_back:hover {
   cursor: pointer;
+}
+
+
+.fc-tasks {
+  display: flex;
+  flex-direction: column;
+
+  xtext-align: center;
 }
 
 #tasks {
@@ -169,13 +187,13 @@ border-radius: 5px;
 align-items: center;
 justify-content: space-between;
 border: 1px solid #939697;
-cursor: pointer;
 background-color: #fcff9e;
 xheight: 50px;
 margin-bottom: 8px;
 padding: 5px 10px;
 display: flex;
-color: #333;
+color: #ddd;
+background: rgba(255,255,255,0.1);
 }
 
 .task button {
@@ -185,6 +203,7 @@ color: #333;
   height: 100%;
   xwidth: 40px;
   border-radius: 5px;
+
 }
 
 

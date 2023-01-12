@@ -1,7 +1,3 @@
-<!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/css/main.css" />
 <style>
     body {
         margin: 0;
@@ -15,12 +11,18 @@
         perspective: 700px;
     }
 
+    .scene:hover {
+        cursor: pointer;
+    }
+
     .flip-card {
         width: 100%;
         height: 350px;
         position: relative;
         transition: transform 1s;
         transform-style: preserve-3d;
+        margin: 0;
+        top: 0;
     }
 
     .card__face {
@@ -32,14 +34,14 @@
 
     .card__face--front {
         background-color: var(--card-bgcolor);
-        background-image: url('../images/unknown-person.png');
+        background-image: url('/resources/images/unknown-person.png');
         background-repeat: no-repeat;
         background-size: cover;
     }
 
     .card__face--back {
         color: #fff;
-        background: var(--active-element);
+        background: rgb(128, 113, 113);
         transform: rotateY(180deg);
     }
 
@@ -48,24 +50,19 @@
     }
 </style>
 
-<body>
+<script>
+    function facenameFlip() {
+        let card = document.querySelector('.flip-card');
+        card.classList.toggle('is-flipped');
+    }
+</script>
 
-    <div class="scene">
-        <div class="flip-card">
-            <div class="card__face card__face--front"></div>
-            <div class="card__face card__face--back">
-                <h2>Sum Yun Chick</h2>
-            </div>
+<div class="scene" onclick="facenameFlip()">
+    <div class="flip-card">
+        <div class="card__face card__face--front"></div>
+        <div class="card__face card__face--back">
+            <h2>Sum Yun Chick</h2>
         </div>
     </div>
+</div>
 
-    <script>
-        let card = document.querySelector('.flip-card');
-        card.addEventListener('click', function () {
-            card.classList.toggle('is-flipped');
-        });
-    </script>
-
-</body>
-
-</html>

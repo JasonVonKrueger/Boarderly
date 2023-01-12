@@ -2,10 +2,18 @@
 @import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Titillium+Web&display=swap');
 
+/* *****************************************
+Various prefixes
+
+c = container
+fc = flex container
+
+***************************************** */
+
 :root {
   --font-main: 'Titillium Web', sans-serif;
   --content-bgcolor: #313131;
-  --card-bgcolor: #f1f1f1;
+  --card-bgcolor: #fff;
   --title-bgcolor: #414141;
   --sidebar-bgcolor: #414141;
   --sidebar-inactive: #555;
@@ -21,27 +29,22 @@
 }
 
 html {
-  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   font-family: var(--font-main);
-  xbackground-color: var(--content-bgcolor);
-  xbackground-image: url('https://wallpapercave.com/wp/wp7563506.jpg');
-  xbackground-position: center;
-  xbackground-repeat: no-repeat;
-  xbackground-size: cover;
-
-  xbackground: rgb(107,97,97);
-  xbackground: linear-gradient(155deg, rgba(107,97,97,1) 0%, rgba(9,13,64,1) 35%, rgba(11,11,11,1) 100%);
-
-  background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+  background-color: var(--content-bgcolor);
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .content-cards {
@@ -65,8 +68,8 @@ body {
 }
 
 .content-grid-item.taller {
-  min-height: 480px;
-  max-height: 480px;
+  min-height: 520px;
+  max-height: 520px;
 }
 
 .selected,
@@ -95,11 +98,8 @@ body {
   left: 0;
   padding: 0;
   width: auto;
-  xbackground-color: var(--sidebar-bgcolor);
-  xbackground-color: transparent;
+  background-color: var(--sidebar-bgcolor);
   border-right: 2px solid #000;
-  background: rgb(3,4,6);
-  background: linear-gradient(124deg, rgba(3,4,6,1) 0%, rgba(64,76,99,1) 42%);
   position: fixed;
   height: 100%;
   font-size: 1.2em;
@@ -212,6 +212,12 @@ iframe {
   cursor: pointer;
 }
 
+
+.fc-tasks {
+  display: flex;
+  flex-direction: column;
+}
+
 .task {
   xborder-radius: 5px;
   align-items: center;
@@ -227,6 +233,7 @@ iframe {
   width: 98%;
   margin-left: auto;
   margin-right: auto;
+  xbackground: rgba(255,255,255,0.1);
 }
 
 .xxtask span {
@@ -270,11 +277,8 @@ iframe {
 
 
 .clock {
-  position: absolute;
-  bottom: 1%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  color: #0be23a;
-  font-size: 2em;
-  letter-spacing: 2px;
+  position: fixed;
+  bottom: 0;
+  font-size: 1.15em;
+  letter-spacing: .15em;
 }

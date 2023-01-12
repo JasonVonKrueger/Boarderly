@@ -5,6 +5,9 @@ const express = require('express');
 const socket_io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
+const {
+	json
+} = require('express');
 
 let messages = [];
 let tasks = [];
@@ -18,19 +21,19 @@ initContentDir('_MESSAGES_');
 
 // load up the messages
 console.log('Fetching message list...');
-getSavedContent('messages').then(function(results) {
+getSavedContent('messages').then(function (results) {
 	messages = results;
 });
 
 // load up the tasks
 console.log('Fetching task list...');
-getSavedContent('tasks').then(function(results) {
+getSavedContent('tasks').then(function (results) {
 	tasks = results;
 });
 
 // load up the photo albums
 console.log('Fetching photo album list...');
-getSavedContent('albums').then(function(results) {
+getSavedContent('albums').then(function (results) {
 	albums = results;
 });
 
@@ -44,10 +47,10 @@ app.use(express.json());
 const server = http.Server(app);
 const io = socket_io(server);
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
 	console.log('a user connected');
 
-	socket.on('GET_MESSAGES', function() {
+	socket.on('GET_MESSAGES', function () {
 		io.emit('REFRESH_MESSAGES', messages);
 		//io.emit('REFRESH_TASKS', tasks);
 		//socket.broadcast.emit('REFRESH_MESSAGES', messages)
@@ -55,36 +58,61 @@ io.on('connection', function(socket) {
 		console.log(tasks);
 	});
 
-	socket.on('REFRESH_TASKS', function() {
+	socket.on('REFRESH_TASKS', function () {
 		socket.emit('REFRESH_TASKS', tasks);
 	});
 
-	socket.on('REFRESH_MESSAGES', function() {
+	socket.on('REFRESH_MESSAGES', function () {
 		socket.broadcast.emit('REFRESH_MESSAGES', messages);
 	});
 
-	socket.on('BUTTON_PUSHED', function(data) {
+	socket.on('BUTTON_PUSHED', function (data) {
 		console.log('button pushed ' + data.button);
 		socket.broadcast.emit('BUTTON_PUSHED', data);
 	});
 
-	socket.on('POST_TASK', function(data) {
+	socket.on('POST_TASK', function (data) {
+		const id = getRandomFileName();
 		let task = {
 			task: data.task,
 			status: 'new',
-			date: data.date
+			date: data.date,
+			id: id
 		}
 
 		tasks.push(task);
 		socket.broadcast.emit('REFRESH_TASKS', tasks);
 
 		// write task to filesystem
-		const fs = require('fs');
-		fs.writeFile(`./_TASKS_/${getRandomFileName()}`, JSON.stringify(task), err => {
+		fs.writeFile(`./_TASKS_/${id}`, JSON.stringify(task), function (err) {
 			if (err) {
 				console.error(err);
 			}
 		});
+	});
+
+	socket.on('COMPLETE_TASK', function(data) {
+		// update the task file task status
+		const task_file = __dirname + path.join(`/_TASKS_/${data.id}`);
+
+		fs.readFile(task_file, 'utf8', function (err, t) {
+			if (err) {
+				return console.log(err);
+			}
+
+			let task = JSON.parse(t);
+			task.status = 'complete';
+
+			fs.writeFile(task_file, JSON.stringify(task), function(err) {
+				if (err) {
+					console.error(err);
+				}
+			});
+
+		});
+
+		tasks = getSavedContent('tasks');
+		socket.broadcast.emit('REFRESH_TASKS', tasks);
 	});
 
 	socket.on('POST_MESSAGE', function(data) {
@@ -99,7 +127,7 @@ io.on('connection', function(socket) {
 
 		// write message to filesystem
 		const fs = require('fs');
-		fs.writeFile(`./_MESSAGES_/${getRandomFileName()}`, JSON.stringify(msg), err => {
+		fs.writeFile(`./_MESSAGES_/${getRandomFileName()}`, JSON.stringify(msg), function(err) {
 			if (err) {
 				console.error(err);
 			}
@@ -125,28 +153,31 @@ async function getSavedContent(c) {
 
 		items = await readdir(dir);
 		for (const item of items) {
-			fs.readFile(dir + item, 'utf8', function(err, message) {
+			fs.readFile(dir + item, 'utf8', function (err, message) {
 				if (err) {
-				  return console.log(err);
+					return console.log(err);
 				}
-	
+
 				results.push(JSON.parse(message));
-			  });
+			});
 		}
 	}
 
 	if (c === 'tasks') {
 		dir = __dirname + path.join('/_TASKS_/');
 
+		// empty the tasks array
+		tasks.length = 0;
+
 		items = await readdir(dir);
 		for (const item of items) {
-			fs.readFile(dir + item, 'utf8', function(err, message) {
+			fs.readFile(dir + item, 'utf8', function (err, message) {
 				if (err) {
-				  return console.log(err);
+					return console.log(err);
 				}
-	
+
 				results.push(JSON.parse(message));
-			  });
+			});
 		}
 	}
 
@@ -160,7 +191,7 @@ async function getSavedContent(c) {
 			}
 		}
 	}
-	
+
 	return results;
 }
 
@@ -184,8 +215,7 @@ function initContentDir(dir) {
 					console.log(`Created directory ${dir}`);
 				}
 			});
-		} 
-		else {
+		} else {
 			console.log(`${dir} already exists`);
 		}
 	});
@@ -210,6 +240,6 @@ function initContentDir(dir) {
 //   console.log(messages)
 // });
 
-server.listen(config.server.port, function() {
+server.listen(config.server.port, function () {
 	console.log('Boarderly app is now listening for connections...');
 });
