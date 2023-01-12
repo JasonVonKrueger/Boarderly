@@ -159,7 +159,7 @@ textarea {
   color: var(--card-bgcolor);
   position: absolute;
   top: 1.8%;
-  left: 12%;
+  left: 10%;
 }
 
 #btn_back:hover {
