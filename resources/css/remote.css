@@ -77,10 +77,10 @@ body {
 
 .section-buttons div {
   color: #fff;
-  font-size: 1.2em;
+  font-size: 1.3em;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
+  width: 90%;
   text-align: center;
 }
 
@@ -118,7 +118,6 @@ button {
 }
 
 .push-button {
-  font-size: 1em;
   cursor: pointer;
   padding: .5em;
   background-color: #f25022;
