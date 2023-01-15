@@ -21,19 +21,19 @@ initContentDir('_MESSAGES_');
 
 // load up the messages
 console.log('Fetching message list...');
-getSavedContent('messages').then(function (results) {
+getSavedContent('messages').then(function(results) {
 	messages = results;
 });
 
 // load up the tasks
 console.log('Fetching task list...');
-getSavedContent('tasks').then(function (results) {
+getSavedContent('tasks').then(function(results) {
 	tasks = results;
 });
 
 // load up the photo albums
 console.log('Fetching photo album list...');
-getSavedContent('albums').then(function (results) {
+getSavedContent('albums').then(function(results) {
 	albums = results;
 });
 
@@ -41,6 +41,7 @@ const app = express();
 app.use('/', express.static('./webclients/board'));
 app.use('/remote', express.static('./webclients/remote'));
 app.use('/message', express.static('./webclients/message'));
+app.use('/albums', express.static('./_ALBUMS_'));
 app.use('/resources', express.static('./resources'));
 app.use(express.json());
 
@@ -50,28 +51,24 @@ const io = socket_io(server);
 io.on('connection', function (socket) {
 	console.log('a user connected');
 
-	socket.on('GET_MESSAGES', function () {
+	socket.on('GET_MESSAGES', function() {
 		io.emit('REFRESH_MESSAGES', messages);
-		//io.emit('REFRESH_TASKS', tasks);
-		//socket.broadcast.emit('REFRESH_MESSAGES', messages)
-
-		console.log(tasks);
 	});
 
-	socket.on('REFRESH_TASKS', function () {
+	socket.on('REFRESH_TASKS', function() {
 		socket.emit('REFRESH_TASKS', tasks);
 	});
 
-	socket.on('REFRESH_MESSAGES', function () {
+	socket.on('REFRESH_MESSAGES', function() {
 		socket.broadcast.emit('REFRESH_MESSAGES', messages);
 	});
 
-	socket.on('BUTTON_PUSHED', function (data) {
+	socket.on('BUTTON_PUSHED', function(data) {
 		console.log('button pushed ' + data.button);
 		socket.broadcast.emit('BUTTON_PUSHED', data);
 	});
 
-	socket.on('POST_TASK', function (data) {
+	socket.on('POST_TASK', function(data) {
 		const id = getRandomFileName();
 		let task = {
 			task: data.task,
@@ -136,11 +133,10 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('GET_ALBUMS', function() {
+		console.log(albums);
 		socket.emit('GET_ALBUMS', albums);
 	});
-
 });
-
 
 async function getSavedContent(c) {
 	const { readdir } = require('fs').promises;
@@ -182,16 +178,29 @@ async function getSavedContent(c) {
 	}
 
 	if (c === 'albums') {
+		// get a list of all pictures and the albums
+		// each directory is an album
 		dir = __dirname + path.join('/_ALBUMS_/');
 
 		items = await readdir(dir);
 		for (const item of items) {
 			if (statSync(`${dir}/${item}`).isDirectory()) {
-				results.push(item.replaceAll('_', ' '));
+				fs.readdir(`${dir}/${item}`, function(error, files) {
+					if (error) console.log(error);
+					files.forEach(function(file) {
+						if (file.indexOf('.jpg') > -1) {
+							let o = {};
+							o.album = item;
+							o.name = file;
+							
+							results.push(o);
+						}
+					});
+				})
 			}
 		}
 	}
-
+	
 	return results;
 }
 
@@ -222,23 +231,6 @@ function initContentDir(dir) {
 
 }
 
-
-
-
-// app.get('/getMessages', function(req, res) {
-//   res.send(JSON.stringify(messages)) 
-// });
-
-// app.post('/sendmessage', function(req, res) {
-//   let msg = {
-//     from: req.body.from,
-//     message: req.body.message
-//   }
-
-//   messages.push(msg)
-//   //socket.broadcast.emit('REFRESH_MESSAGES', messages)
-//   console.log(messages)
-// });
 
 server.listen(config.server.port, function () {
 	console.log('Boarderly app is now listening for connections...');

@@ -6,7 +6,7 @@ let __sidebar = null;
 let __content = null;
 
 document.addEventListener('DOMContentLoaded', function(e) {
-    __sidebar = document.getElementById('sidebar');
+    __sidebar = document.getElementById('sidebar_overlay');
     __content = document.getElementById('content');
 
     // set margin of content pane
@@ -15,8 +15,10 @@ document.addEventListener('DOMContentLoaded', function(e) {
     socket.on('REFRESH_MESSAGES', refreshMessages);
     socket.on('REFRESH_TASKS', refreshTasks);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
+    socket.on('GET_ALBUMS', buildAlbumList);
     socket.emit('GET_MESSAGES');
     socket.emit('REFRESH_TASKS');
+    socket.emit('GET_ALBUMS');
 
     getWeather();
     showTime();
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 });
 
 function getActiveSidebarButton() {
-    let b = document.querySelector('#sidebar .active');
+    let b = document.querySelector('#sidebar_overlay .active');
     let c = b.id;
 
     return c;
@@ -127,67 +129,53 @@ function triggerEvent(el, e) {
 }
 
 function refreshMessages(data) {
-    const message_block = document.getElementById('message_block');
+    let markup = '';
 
     // clear the list and rebuild
-    while (message_block.firstChild) {
-        message_block.removeChild(message_block.firstChild);
+    while (__message_block.firstChild) {
+        __message_block.removeChild(__message_block.firstChild);
     }
 
     for (let i = 0; i < data.length; i++) {
-        const con = document.createElement('div');
-        con.classList.add('msg-box');
+        markup += `
+            <div class="msg-box">
+                <div class="sender">${data[i].from}</div>
+                <div class="message">${data[i].message}</div>
+                <div class="sent">${data[i].date}</div>
+            </div>
+        `;
 
-        const sender = document.createElement('div');
-        sender.classList.add('sender');
-        sender.innerHTML = `${data[i].from} <br /> ${data[i].date}`;
-
-        const message = document.createElement('div');
-        message.classList.add('message');
-        message.innerHTML = data[i].message;
-
-        con.appendChild(sender);
-        con.appendChild(message);
-
-        message_block.appendChild(con);
-
-        triggerEvent(btn_playsound, 'click');
-        
-       // __message_block.scrollTo(0,9999);
+        //triggerEvent(btn_playsound, 'click');
     }
+    __message_block.innerHTML = markup + '<br /><br /><br />';
+    __message_block.scroll(0, 9999);
 }
 
 function refreshTasks(data) {
-    const task_block = document.getElementById('task_block');
+    let markup = '', c = '';
 
     // clear the list and rebuild
-    while (task_block.firstChild) {
-        task_block.removeChild(task_block.firstChild);
+    while (__task_block.firstChild) {
+        __task_block.removeChild(__task_block.firstChild);
     }
 
     for (let i = 0; i < data.length; i++) {
-        const task = document.createElement('div');
-        const l = document.createElement('span');
-        const r = document.createElement('span');
-
-        l.innerHTML = data[i].task;
-
         if (data[i].status === 'complete') {
-            l.style.textDecoration = 'line-through';
-            r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
+            c = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
         }
         else {
-            r.innerHTML = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
+            c = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
         }
 
-       // r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px; "/>';
-        //r.innerHTML = '<span class="material-symbols-outlined">check_box_outline_blank</span>';
-        //r.innerHTML = '<span class="material-symbols-outlined">check_box</span>';
-        task.appendChild(l);
-        task.appendChild(r);
-        task.classList.add('task');
-        
-        task_block.appendChild(task);
+        markup += `
+            <div class="task">
+                <span class="">${data[i].task}</span>
+                <span class="">${c}</span>
+            </div>
+        `;
+
+        __task_block.innerHTML = markup + '<br /><br /><br />';
+        __task_block.scroll(0, 9999);       
     }
 }
 
@@ -225,14 +213,14 @@ async function getWeather() {
 
     markup += '</table>';
 
-    weather_block.innerHTML = markup
+    __weather_block.innerHTML = markup
 }
 
 function showTime() {
     var date = new Date();
-    var h = date.getHours(); // 0 - 23
-    var m = date.getMinutes(); // 0 - 59
-    var s = date.getSeconds(); // 0 - 59
+    var h = date.getHours(); 
+    var m = date.getMinutes();
+    var s = date.getSeconds();
     var session = "AM";
     
     if (h == 0) {
@@ -255,6 +243,64 @@ function showTime() {
     setTimeout(showTime, 1000);
 }
 
+function XbuildAlbumList(data) {
+    let markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;
+
+    data.forEach(function(album) {
+        markup += `
+            <div class="content-grid-item">
+                <div class="card" tabindex="0">
+                    <div class="card-title">${album.replaceAll('_', ' ')}</div>
+                    <div class="card-body">
+                        <img src="/albums/${album}/front-page.jpg" onclick="openModal('pictures_modal')" style="swidth: 90%" />
+                    </div>
+                </div>           
+            </div>    
+        `;      
+    });
+    // <img src="/albums/Roger_and_family/front-page.jpg" onclick="openModal('pictures_modal')" style="cursor: pointer;" />
+    __image_block.innerHTML = markup;
+}
+
+function buildAlbumList(data) {
+    let button_markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;
+    let pic_markup = '';
+    let a = [];
+
+    data.forEach(function(o) {
+        let album_name = o.album;
+        let pic_name = o.name;
+
+        if (!a.includes(album_name)) {
+            a.push(album_name);
+            button_markup += `
+                <button class="btn" onclick="filterSelection('${album_name}')">${o.album.replaceAll('_', ' ')}</button>
+            `;   
+        }
+
+        pic_markup += getPicMarkup(o.album, o.name);
+    });
+   
+    __album_buttons.innerHTML = button_markup;
+    __pictures_block.innerHTML = pic_markup;
+}
+
+function getPicMarkup(album, name) {
+    let markup = '';
+
+    markup += `
+        <div class="column ${album}">
+        <div class="content">
+        <img src="/albums/${album}/${name}" alt="A picture" style="width:100%">
+        <p>Some pictures</p>
+        </div>
+        </div>
+        </div>
+        </div>
+    `;
+
+    return markup;
+}
 
 
 
@@ -287,3 +333,47 @@ async function fetchContent(page) {
 
 
 
+filterSelection("all")
+
+function filterSelection(c) {
+//   var x, i;
+//   x = document.getElementsByClassName("column");
+//   if (c == "all") c = "";
+//   for (i = 0; i < x.length; i++) {
+//     w3RemoveClass(x[i], "show");
+//     if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+//   }
+}
+
+// function w3AddClass(element, name) {
+//   var i, arr1, arr2;
+//   arr1 = element.className.split(" ");
+//   arr2 = name.split(" ");
+//   for (i = 0; i < arr2.length; i++) {
+//     if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+//   }
+// }
+
+// function w3RemoveClass(element, name) {
+//   var i, arr1, arr2;
+//   arr1 = element.className.split(" ");
+//   arr2 = name.split(" ");
+//   for (i = 0; i < arr2.length; i++) {
+//     while (arr1.indexOf(arr2[i]) > -1) {
+//       arr1.splice(arr1.indexOf(arr2[i]), 1);     
+//     }
+//   }
+//   element.className = arr1.join(" ");
+// }
+
+
+// Add active class to the current button (highlight it)
+// var btnContainer = document.getElementById("__album_buttons");
+// var btns = btnContainer.getElementsByClassName("btn");
+// for (var i = 0; i < btns.length; i++) {
+//   btns[i].addEventListener("click", function(){
+//     var current = document.getElementsByClassName("active");
+//     current[0].className = current[0].className.replace(" active", "");
+//     this.className += " active";
+//   });
+// }
