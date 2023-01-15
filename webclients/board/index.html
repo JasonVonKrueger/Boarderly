@@ -12,6 +12,7 @@
   <script src="/resources/js/csi.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>
+  <script src="/resources/js/qrcode.js"></script>
   <script src="/resources/js/main.js"></script>
 </head>
 
@@ -64,7 +65,7 @@
     <div id="section_pictures" class="section hidden">
       <div id="__album_buttons"></div>
       <div style="height: 2em;"></div>
-      <div id="__pictures_block" class="fc-pictures"></div>
+      <div id="__pictures_block" class="fc-pictures" style="overflow: auto !important;"></div>
     </div>
     <!-- End section -->
 
@@ -102,7 +103,7 @@
           <div class="card" tabindex="0">
               <div class="card-title">Remote Control Download</div>
               <div class="card-body">
-                <img src="/resources/images/remote.png" style="width: 75%; height: auto;">
+                <canvas id="qrcode"></canvas>
               </div>
           </div>
       </div>

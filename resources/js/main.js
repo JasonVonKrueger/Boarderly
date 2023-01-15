@@ -35,6 +35,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
         //snd_newmessage.play();
     });
+
+    // load the qr code
+    QRCode.toCanvas(document.getElementById('qrcode'), `${window.location}remote`, function (error) {
+        if (error) console.error(error)
+    })
 });
 
 function getActiveSidebarButton() {
@@ -274,7 +279,7 @@ function buildAlbumList(data) {
         if (!a.includes(album_name)) {
             a.push(album_name);
             button_markup += `
-                <button class="btn" onclick="filterSelection('${album_name}')">${o.album.replaceAll('_', ' ')}</button>
+                <button class="btn" tabindex="0" onclick="filterSelection('${album_name}')">${o.album.replaceAll('_', ' ')}</button>
             `;   
         }
 
@@ -291,8 +296,8 @@ function getPicMarkup(album, name) {
     markup += `
         <div class="column ${album}">
         <div class="content">
-        <img src="/albums/${album}/${name}" alt="A picture" style="width:100%">
-        <p>Some pictures</p>
+        <img src="/albums/${album}/${name}" alt="${name}" style="width:100%">
+        <p>${name.split('.')[0]}</p>
         </div>
         </div>
         </div>
@@ -344,36 +349,3 @@ function filterSelection(c) {
 //     if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
 //   }
 }
-
-// function w3AddClass(element, name) {
-//   var i, arr1, arr2;
-//   arr1 = element.className.split(" ");
-//   arr2 = name.split(" ");
-//   for (i = 0; i < arr2.length; i++) {
-//     if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
-//   }
-// }
-
-// function w3RemoveClass(element, name) {
-//   var i, arr1, arr2;
-//   arr1 = element.className.split(" ");
-//   arr2 = name.split(" ");
-//   for (i = 0; i < arr2.length; i++) {
-//     while (arr1.indexOf(arr2[i]) > -1) {
-//       arr1.splice(arr1.indexOf(arr2[i]), 1);     
-//     }
-//   }
-//   element.className = arr1.join(" ");
-// }
-
-
-// Add active class to the current button (highlight it)
-// var btnContainer = document.getElementById("__album_buttons");
-// var btns = btnContainer.getElementsByClassName("btn");
-// for (var i = 0; i < btns.length; i++) {
-//   btns[i].addEventListener("click", function(){
-//     var current = document.getElementsByClassName("active");
-//     current[0].className = current[0].className.replace(" active", "");
-//     this.className += " active";
-//   });
-// }

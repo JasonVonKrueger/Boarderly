@@ -20,7 +20,7 @@ fc = flex container
   --sidebar-inactive: #555;
   --button-bgcolor: #ed1010;
   --brand-font: 'Shadows Into Light Two', cursive;
-  --brand-font-size: 2.2em;
+  --brand-font-size: 2em;
   --active-element: #ed1010;
   --hightlight: rgb(122, 117, 117);
 }
@@ -110,14 +110,14 @@ body {
   left: 0;
   padding: 0;
   position: fixed;
-  font-size: 1.4em;
+  font-size: 1.2em;
   color: var(--font-main-color);
 }
 
 #sidebar {
   top: 0;
   left: 0;
-  width: 17%;
+  width: 16%;
   background-color: rgb(0, 0, 0);
   position: fixed;
   height: 100%;
@@ -313,38 +313,22 @@ iframe {
 
 
 
-
-
-
-li:nth-child(1){
-    transform:rotate(10deg);
-}
-
-li:nth-child(2){
-    transform:rotate(0deg);
-}
-
-li:nth-child(3){
-    transform:rotate(-10deg);
-}
-
-
-
-
-
-
 .fc-pictures {
   display: flex;
+  flex-direction: row;
+  xjustify-content: center;
+  xflex-wrap: wrap;
 }
 
 .fc-pictures > div {
   margin: .6em;
-  padding: 10px;
+  xpadding: 30px;
 }
 
 .content {
   background-color: white;
   padding: 10px;
+  text-align: center;
 }
 
 

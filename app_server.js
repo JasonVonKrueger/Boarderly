@@ -5,9 +5,7 @@ const express = require('express');
 const socket_io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
-const {
-	json
-} = require('express');
+const { json } = require('express');
 
 let messages = [];
 let tasks = [];
@@ -49,14 +47,20 @@ const server = http.Server(app);
 const io = socket_io(server);
 
 io.on('connection', function (socket) {
-	console.log('a user connected');
+	// join the assigned room
+	socket.join('poores');
+
+	io.of("/").adapter.on("join-room", (room, id) => {
+		console.log(`socket ${id} has joined room ${room}`);
+	  });
+
 
 	socket.on('GET_MESSAGES', function() {
-		io.emit('REFRESH_MESSAGES', messages);
+		io.to('poores').emit('REFRESH_MESSAGES', messages);
 	});
 
 	socket.on('REFRESH_TASKS', function() {
-		socket.emit('REFRESH_TASKS', tasks);
+		io.to('poores').emit('REFRESH_TASKS', tasks);
 	});
 
 	socket.on('REFRESH_MESSAGES', function() {
@@ -65,7 +69,8 @@ io.on('connection', function (socket) {
 
 	socket.on('BUTTON_PUSHED', function(data) {
 		console.log('button pushed ' + data.button);
-		socket.broadcast.emit('BUTTON_PUSHED', data);
+		io.to('poores').emit('BUTTON_PUSHED', data);
+		//socket.broadcast.emit('BUTTON_PUSHED', data);
 	});
 
 	socket.on('POST_TASK', function(data) {
@@ -78,7 +83,8 @@ io.on('connection', function (socket) {
 		}
 
 		tasks.push(task);
-		socket.broadcast.emit('REFRESH_TASKS', tasks);
+		io.to('poores').emit('REFRESH_TASKS', tasks);
+		//socket.broadcast.emit('REFRESH_TASKS', tasks);
 
 		// write task to filesystem
 		fs.writeFile(`./_TASKS_/${id}`, JSON.stringify(task), function (err) {
@@ -109,7 +115,8 @@ io.on('connection', function (socket) {
 		});
 
 		tasks = getSavedContent('tasks');
-		socket.broadcast.emit('REFRESH_TASKS', tasks);
+		io.to('poores').emit('REFRESH_TASKS', tasks);
+		//socket.broadcast.emit('REFRESH_TASKS', tasks);
 	});
 
 	socket.on('POST_MESSAGE', function(data) {
@@ -120,7 +127,8 @@ io.on('connection', function (socket) {
 		};
 
 		messages.push(msg);
-		socket.broadcast.emit('REFRESH_MESSAGES', messages);
+		io.to('poores').emit('REFRESH_MESSAGES', messages);
+		//socket.broadcast.emit('REFRESH_MESSAGES', messages);
 
 		// write message to filesystem
 		const fs = require('fs');
@@ -133,8 +141,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('GET_ALBUMS', function() {
-		console.log(albums);
-		socket.emit('GET_ALBUMS', albums);
+		io.to('poores').emit('GET_ALBUMS', albums);
 	});
 });
 
@@ -188,7 +195,7 @@ async function getSavedContent(c) {
 				fs.readdir(`${dir}/${item}`, function(error, files) {
 					if (error) console.log(error);
 					files.forEach(function(file) {
-						if (file.indexOf('.jpg') > -1) {
+						if (file.indexOf('.jpg') > -1 || file.indexOf('.png') > -1) {
 							let o = {};
 							o.album = item;
 							o.name = file;
