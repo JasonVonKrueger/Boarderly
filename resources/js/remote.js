@@ -29,7 +29,7 @@ function sendMessage() {
         date: d.toLocaleString()
     })
 
-    document.getElementById('btnSend').classList.add('hidden')
+    document.getElementById('btn_send').classList.add('hidden')
     document.getElementById('answer').innerHTML = 'Message sent!'
 }
 
