@@ -20,7 +20,7 @@
 <body>
   <div id="header">Boarderly :: Remote Control</div>
 
-  <div id="c_top" class="section-buttons section" style="padding-top: 25%;">
+  <div id="c_top" class="section-buttons section" style="padding-top: 15%;">
     <div id="btn_remote" class="push-button" onclick="showSection('c_dpad')">
       <span class="material-symbols-outlined">remote_gen</span>
       <span>D-Pad</span>
@@ -35,6 +35,11 @@
       <span class="material-symbols-outlined">sms</span>
       <span>Quick Message</span>
     </div>
+
+    <div id="btn_register" class="push-button" onclick="showSection('c_register')">
+      <span class="material-symbols-outlined">app_registration</span>
+      <span>Register this Device</span>
+    </div>
   </div>
 
   <!-- Section -->
@@ -42,8 +47,8 @@
     <div class="section-buttons">
       <div id="btn_home" class="push-button" onclick="sendPush('home')">🏠 Home</div>
       <div id="btn_pictures" class="push-button" onclick="sendPush('pictures')">🖼 Pictures</div>
+      <div id="btn_news" class="push-button" onclick="sendPush('news')">📰 News</div>
       <div id="btn_games" class="push-button" onclick="sendPush('games')">🕹 Games</div>
-      <div id="btn_tools" class="push-button" onclick="sendPush('tools')">🔧 Tools</div>
     </div>
 
     <div class="grid-container" style="padding-top: 20%;">
@@ -116,6 +121,24 @@
 
     <button id="btnSend" onclick="sendMessage()">Send...</button>
     <div id="answer"></div>
+  </div>
+  <!-- End section -->
+
+  <!-- Section -->
+  <div id="c_register" class="section hidden">
+    <input type="text" id="__fname" placeholder="First name..." />
+    <input type="text" id="__lname" placeholder="Last name..." />
+    <input type="text" id="__board_code" placeholder="Board code..." />
+
+    <button id="btn_save" onclick="registerDevice()">
+      <span>Save</span>
+    </button>
+
+    <button id="btn_reset" class="hidden" onclick="resetDevice()">
+      <span>Reset</span>
+    </button>
+
+    <div id="__register_answer" class="hidden"></div>
   </div>
   <!-- End section -->
 

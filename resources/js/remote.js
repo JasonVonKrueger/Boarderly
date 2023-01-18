@@ -1,68 +1,36 @@
 /* Scripts for Boarderly remote */
-
 const socket = io()
-
 const snd_button_push = new Howl({ src: ['/resources/sounds/cork-85200.mp3'] });
 
 // see if the sender has used it before
-let name = getCookie('name');
-if (name) {
-    document.getElementById('from').value = getCookie('name');
+const d = JSON.parse(localStorage.getItem('boarderly'));
+if (d.fname && d.lname) {
+    __fname.value = d.fname;
+    __lname.value = d.lname;
+
+    document.getElementById('btn_save').classList.add('hidden');
+    document.getElementById('btn_reset').classList.remove('hidden');
+
+    // pre-populate the message from field
+    document.getElementById('from').value = `${d.fname} ${d.lname}`;
     document.getElementById('message').focus();
-}
-else {
-    document.getElementById('from').focus();
 }
 
 socket.emit('REFRESH_TASKS');
 socket.on('REFRESH_TASKS', refreshTasks);
 
-
-
 function sendMessage() {
-    let from = document.getElementById('from').value
-    let message = document.getElementById('message').value
-
-    if (!from || !message) return false
-
-    // save the sender's name
-    setCookie('name', from, 90);
+    if (!__from.value || !__message.value) return false
 
     let d = new Date()
     socket.emit('POST_MESSAGE', {
-        from: from,
-        message: message,
+        from: __from.value,
+        message: __message.value,
         date: d.toLocaleString()
     })
 
     document.getElementById('btnSend').classList.add('hidden')
     document.getElementById('answer').innerHTML = 'Message sent!'
-}
-
-function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-
-    for (let i = 0; i <ca.length; i++) { 
-        let c = ca[i]; 
-        while (c.charAt(0) == ' ' ) { 
-            c = c.substring(1); 
-        } 
-        
-        if (c.indexOf(name) == 0) { 
-            return c.substring(name.length, c.length); 
-        } 
-    } 
-        
-    return false; 
 }
 
 function showSection(section) {
@@ -76,8 +44,7 @@ function showSection(section) {
   }
 
   function sendPush(btn) {
-   snd_button_push.play();
-
+    snd_button_push.play();
     socket.emit('BUTTON_PUSHED', { button: btn });
   }
 
@@ -142,6 +109,43 @@ function showSection(section) {
 
   function completeTask(id) {
     socket.emit('COMPLETE_TASK', { id: id });
+  }
+
+  function registerDevice() {
+    if (!__fname.value || !__lname.value) {
+        return false;
+    }
+
+    const data = {};
+    data.fname = __fname.value;
+    data.lname = __lname.value;
+
+    // playing with geolocation
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            data.location = `${pos.coords.latitude} ${pos.coords.longitude}`;
+        });
+    } 
+    else {
+        console.log("Geolocation isn't supported by this browser.");
+    }
+
+    localStorage.setItem('boarderly', JSON.stringify(data));
+
+    document.getElementById('btn_save').classList.add('hidden');
+    document.getElementById('btn_reset').classList.remove('hidden');
+
+    __register_answer.value = 'Thanks for registering!';
+    __register_answer.classList.remove('hidden');
+  }
+
+  function resetDevice() {
+    __fname.value = '';
+    __lname.value = '';
+
+    localStorage.removeItem('boarderly');
+    document.getElementById('btn_reset').classList.add('hidden');
+    document.getElementById('btn_save').classList.remove('hidden');
   }
 
 

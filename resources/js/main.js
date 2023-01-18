@@ -1,7 +1,6 @@
 const socket = io();
 const messages = [];
-let selected_card_index = -1;
-
+let __selected_card_index = -1;
 let __sidebar = null;
 let __content = null;
 
@@ -51,7 +50,7 @@ function getActiveSidebarButton() {
 
 function show(el) {
     // reset selected card
-    selected_card_index = -1;
+    __selected_card_index = -1;
 
     // clear all the sectiions first
     Array.from(document.querySelectorAll("[id^='section_']")).forEach(function(element) {
@@ -85,29 +84,29 @@ function handleRemBtnPush(data) {
             triggerEvent(document.getElementById('nav_games'), 'click');
             __content.focus();
             break;
-        case 'tools':
-            triggerEvent(document.getElementById('nav_tools'), 'click');
+        case 'news':
+            triggerEvent(document.getElementById('nav_news'), 'click');
             __content.focus();
             break;
         case 'ArrowRight':
-                if (selected_card_index >= cards.length) return;
+                if (__selected_card_index >= cards.length) return;
 
-                if (selected_card_index >= 0) {
-                    cards[selected_card_index].classList.remove('selected');
+                if (__selected_card_index >= 0) {
+                    cards[__selected_card_index].classList.remove('selected');
                 }
 
-                selected_card_index++;
-                cards[selected_card_index].classList.add('selected');
+                __selected_card_index++;
+                cards[__selected_card_index].classList.add('selected');
             break;
         case 'ArrowLeft':        
-            if (selected_card_index <= 0) return;
+            if (__selected_card_index <= 0) return;
             
-            //if (selected_card_index >=0) {
-                cards[selected_card_index].classList.remove('selected');
+            //if (__selected_card_index >=0) {
+                cards[__selected_card_index].classList.remove('selected');
             //}
 
-            selected_card_index--;
-            cards[selected_card_index].classList.add('selected');
+            __selected_card_index--;
+            cards[__selected_card_index].classList.add('selected');
             break;
         case 'enter':
             //alert('enter');
@@ -143,11 +142,10 @@ function refreshMessages(data) {
 
     for (let i = 0; i < data.length; i++) {
         markup += `
-            <div class="msg-box">
-                <div class="sender">${data[i].from}</div>
-                <div class="message">${data[i].message}</div>
-                <div class="sent">${data[i].date}</div>
-            </div>
+
+        <div class="bubble">${data[i].message}</div>
+
+
         `;
 
         //triggerEvent(btn_playsound, 'click');
@@ -279,27 +277,25 @@ function buildAlbumList(data) {
         if (!a.includes(album_name)) {
             a.push(album_name);
             button_markup += `
-                <button class="btn" tabindex="0" onclick="filterSelection('${album_name}')">${o.album.replaceAll('_', ' ')}</button>
+                <button class="btn" tabindex="0" onclick="filterSelection('${o.css_name}')">${o.album.replaceAll('_', ' ')}</button>
             `;   
         }
 
-        pic_markup += getPicMarkup(o.album, o.name);
+        pic_markup += getPicMarkup(o.album, o.name, o.css_name);
     });
    
     __album_buttons.innerHTML = button_markup;
     __pictures_block.innerHTML = pic_markup;
 }
 
-function getPicMarkup(album, name) {
+function getPicMarkup(album, name, css_name) {
     let markup = '';
 
     markup += `
-        <div class="column ${album}">
-        <div class="content">
-        <img src="/albums/${album}/${name}" alt="${name}" style="width:100%">
+        <div class="content-grid-item card" tabindex="0">
+        <div class="card-body">
+        <img src="/albums/${album}/${name}" alt="${name}" class="${css_name}" style="width:100%">
         <p>${name.split('.')[0]}</p>
-        </div>
-        </div>
         </div>
         </div>
     `;
@@ -307,6 +303,15 @@ function getPicMarkup(album, name) {
     return markup;
 }
 
+
+
+
+
+
+function facenameFlip() {
+    let card = document.querySelector('.flip-card');
+    card.classList.toggle('is-flipped');
+}
 
 
 
@@ -338,9 +343,11 @@ async function fetchContent(page) {
 
 
 
-filterSelection("all")
+//filterSelection("all")
 
 function filterSelection(c) {
+    document.querySelector(`.${c}`).parentElement.classList.add('hidden');
+   
 //   var x, i;
 //   x = document.getElementsByClassName("column");
 //   if (c == "all") c = "";

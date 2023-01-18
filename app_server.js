@@ -199,6 +199,7 @@ async function getSavedContent(c) {
 							let o = {};
 							o.album = item;
 							o.name = file;
+							o.css_name = item.replaceAll(' ', '-').replaceAll('_', '-').toLowerCase();
 							
 							results.push(o);
 						}

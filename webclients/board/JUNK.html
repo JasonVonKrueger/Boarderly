@@ -22,42 +22,41 @@
     <div class="brand"><span class="material-symbols-outlined">dashboard</span>Boarderly</div>
     <div style="height: 1.5em;"></div>
     <div id="nav_home" class="active" onclick="return show(this)"><span class="material-symbols-outlined">home</span>Home</div>
-    <div id="nav_news" onclick="return show(this)"><span class="material-symbols-outlined">newspaper</span>News</div>
     <div id="nav_pictures" onclick="return show(this)"><span class="material-symbols-outlined">photo_library</span>Pictures</div>
     <div id="nav_games" onclick="return show(this)"><span class="material-symbols-outlined">sports_esports</span>Games</div>
     <div id="nav_tools" onclick="return show(this)"><span class="material-symbols-outlined">tools_wrench</span>Tools</div>
     <div id="time" onload="showTime()"></div> 
   </div>
 
-  <div id="content">
+  <div id="content" class="content-cards">
 
     <!-- Home section -->
     <div id="section_home" class="section">
       <div class="content-grid">
+        
+          <div class="content-grid-item">
+            <div class="card taller" tabindex="-1">
+              <div class="card-title">Messages</div>            
+              <div class="card-body" id="__message_block"></div>
+              <div id="msg_anchor"></div>
+            </div>
+          </div>
 
-        <div class="content-grid-item card taller messages" tabindex="-1">
-          <div class="card-title">Messages</div>
-          <div class="card-body" id="__message_block"></div>
-          <div id="msg_anchor"></div>
-        </div>
+          <div class="content-grid-item">
+            <div class="card taller" tabindex="-1">
+              <div class="card-title">To-Do List</div>
+              <div class="card-body" id="__task_block"></div>
+              <div id="task_anchor"></div>
+            </div>          
+          </div>
 
-        <div class="content-grid-item card taller tasks" tabindex="-1">
-          <div class="card-title">To-Do List</div>
-          <div class="card-body" id="__task_block"></div>
-          <div id="task_anchor"></div>
-        </div>
+          <div class="content-grid-item">
+            <div class="card taller" tabindex="-1">
+              <div class="card-title">Weather</div>
+              <div class="card-body" id="__weather_block"></div>
+            </div>            
+          </div>
 
-      </div>
-    </div>
-    <!-- End section -->
-
-    <!-- News section -->
-    <div id="section_news" class="section hidden">
-      <div class="content-grid">
-        <div class="content-grid-item card weather" tabindex="-1">
-          <div class="card-title">Weather</div>
-          <div class="card-body" id="__weather_block"></div>
-        </div>
       </div>
     </div>
     <!-- End section -->
@@ -66,28 +65,52 @@
     <div id="section_pictures" class="section hidden">
       <div id="__album_buttons"></div>
       <div style="height: 2em;"></div>
-      <div class="content-grid" id="__pictures_block"></div>
+      <div id="__pictures_block" class="flex-pictures" style="overflow: auto !important;"></div>
     </div>
     <!-- End section -->
 
     <!-- Games section -->
     <div id="section_games" class="section hidden">
-      <div class="content-grid">
+      <!-- <div class="flex-games">
 
-        <div class="content-grid-item card" tabindex="0">
+        <div class="card" tabindex="0">
           <div class="card-title">Simon Says</div>
           <div class="card-body">
-            <img src="/resources/images/simon_thumb.png" onclick="openModal('simon_modal')" style="cursor: pointer;" />
+            <img src="/resources/images/simon_thumb.png" onclick="openModal('simon_modal')" style="cursor: pointer;"/>
           </div>
         </div>
 
-        <div class="content-grid-item card" tabindex="0">
+        <div class="card" tabindex="0">
           <div class="card-title">Name that Face</div>
           <div class="card-body">
             <div data-include="/resources/widgets/facename.html"></div>
           </div>
         </div>
 
+      </div> -->
+
+      <div class="content-grid">
+
+        <div class="content-grid-item card">
+          <!-- <div class="card" tabindex="0"> -->
+            <div class="card-title">Simon Says</div>
+            <div class="card-body">
+              <img src="/resources/images/simon_thumb.png" onclick="openModal('simon_modal')" style="cursor: pointer;"/>
+            </div>
+          <!-- </div>            -->
+        </div> 
+
+        <div class="content-grid-item card">
+          <!-- <div class="card" tabindex="0"> -->
+            <div class="card-title">Name that Face</div>
+            <div class="card-body">
+              <div data-include="/resources/widgets/facename.html"></div>
+              <!-- <iframe src="/resources/widgets/facename.html" title="Name that Face"></iframe> -->
+            </div>
+          <!-- </div>            -->
+        </div>
+
+        
       </div>
     </div>
     <!-- End section -->
@@ -95,21 +118,21 @@
     <!-- Tools section -->
     <div id="section_tools" class="section hidden">
       <div class="content-grid">
-
-        <div class="content-grid-item card" tabindex="0">
-          <div class="card-title">Remote Control Download</div>
-          <div class="card-body">
-            <canvas id="qrcode"></canvas>
-            <div style="text-align: left; padding: 1.5em;">
-              For iPhone users:
-              <ol>
-                <li>Open your camera app and point it at the QR code above.</li>
-                <li>After your phone recogizes the QR code, click on the provided link.</li>
-              </ol>
-            </div>
+        <div class="content-grid-item">
+          <div class="card" tabindex="0">
+              <div class="card-title">Remote Control Download</div>
+              <div class="card-body">
+                <canvas id="qrcode" ></canvas>
+                <div style="text-align: left; padding: 1.5em;">
+                  For iPhone users:
+                  <ol>
+                    <li>Open your camera app and point it at the QR code above.</li>
+                    <li>After your phone recogizes the QR code, click on the provided link.</li>
+                  </ol>
+                </div>
+              </div>
           </div>
-        </div>
-
+      </div>
       </div>
     </div>
     <!-- End section -->
@@ -133,6 +156,10 @@
 
   <!-- hidden button to trigger audio -->
   <button id="btn_playsound" class="fff" style="display: none;">Play</button>
+
+  <!-- extra scripts for content -->
+  <!-- <script src="/resources/widgets/scripts/facename.js"></script> -->
+  <!-- <script src="/resources/widgets/scripts/simon.js"></script> -->
 
 </body>
 
