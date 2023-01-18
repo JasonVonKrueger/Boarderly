@@ -12,8 +12,8 @@ if (d.fname && d.lname) {
     document.getElementById('btn_reset').classList.remove('hidden');
 
     // pre-populate the message from field
-    document.getElementById('from').value = `${d.fname} ${d.lname}`;
-    document.getElementById('message').focus();
+    __from.value = `${d.fname} ${d.lname}`;
+    __message.focus();
 }
 
 socket.emit('REFRESH_TASKS');
@@ -30,7 +30,7 @@ function sendMessage() {
     })
 
     document.getElementById('btn_send').classList.add('hidden')
-    document.getElementById('answer').innerHTML = 'Message sent!'
+    document.getElementById('message_answer').innerHTML = 'Message sent!'
 }
 
 function showSection(section) {
@@ -133,7 +133,7 @@ function showSection(section) {
     localStorage.setItem('boarderly', JSON.stringify(data));
 
     document.getElementById('btn_save').classList.add('hidden');
-    document.getElementById('btn_reset').classList.remove('hidden');
+    //document.getElementById('btn_reset').classList.remove('hidden');
 
     __register_answer.value = 'Thanks for registering!';
     __register_answer.classList.remove('hidden');
