@@ -142,9 +142,10 @@ function refreshMessages(data) {
 
     for (let i = 0; i < data.length; i++) {
         markup += `
-
+        <div style="display: flex; flex-direction: row;">
+        <div><img src="/resources/images/roger.png" /></div>
         <div class="bubble">${data[i].message}</div>
-
+        </div>
 
         `;
 

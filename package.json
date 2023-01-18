@@ -2,9 +2,9 @@
   "name": "boarderly",
   "version": "1.0.0",
   "description": "Message board for the elderly",
-  "main": "app_server.js",
+  "main": "boarderly-app.js",
   "scripts": {
-    "start": "node ./app_server.js",
+    "start": "node ./boarderly-app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mr. Monster",

@@ -286,16 +286,16 @@ iframe {
   color: #666;
   font-family: Arial;
   font-size: 20px;
-  line-height: 78px;
+  line-height: 58px;
   filter: drop-shadow(5px 5px 1px #ababab);
   text-align: center;
   width: 300px;
   height: 78px;
   border-radius: 10px;
   padding: 0px;
-  margin-left: 2em;
   margin-bottom: 1em;
 }
+
 .bubble:after {
   content: '';
   position: absolute;
@@ -303,89 +303,11 @@ iframe {
   width: 0;
   z-index: 1;
   border-style: solid;
-  kborder-color: transparent #000000;
   border-color: transparent #e8dfdf;
   border-width: 9px 19px 9px 0;
-  top: 50%;
+  top: 35%;
   left: -19px;
-  kmargin-top: -9px;
 }
-
-
-
-
-
-
-.speech-bubble {
-  filter: drop-shadow(-1px -1px 2px rgba(0, 0, 0, 0.1)) drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.15));
-  margin: 1rem;
-  margin-bottom: 40px;
-  padding: .2em;
-  position: relative;
-  font-size: 1.2rem;
-  font-weight: 400;
-  background: #8CA8D8;
-  color: white;
-  border-radius: 60px;
-}
-
-.speech-bubble::before {
-  border: 12.5px solid transparent;
-  border-top: 12.5px solid #8CA8D8;
-  border-bottom: 0;
-  height: 0;
-  width: 0;
-  border-top-width: 25px;
-  content: "";
-  display: block;
-  position: absolute;
-  left: 3rem;
-  bottom: -25px;
-  transform-origin: center;
-  transform: rotate(90deg) skew(-25deg) translateY(16.6666666667px);
-}
-
-.speech-bubble cite {
-  position: absolute;
-  bottom: -2rem;
-  left: 4.5rem;
-  font-size: 1rem;
-  xfont-style: normal;
-  xfont-weight: 300;
-  color: rgb(86, 74, 74);
-}
-
-
-
-
-
-.msg-box {
-  border: 2px solid #dedede;
-  background-color: #aba1aa;
-  padding: .5em;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: .5em;
-  text-align: left;
-  width: 95%;
-  color: #fff;
-  backdrop-filter: blur(10px);
-}
-
-.msg-box .sender {
-  font-size: 1.2em;
-  font-weight: 900;
-}
-
-.msg-box .message {
-  font-size: 1em;
-}
-
-.msg-box .sent {
-  font-size: .8em;
-}
-
-
 
 button {
   background-color: #b0a4e9;
