@@ -46,6 +46,18 @@ app.use(express.json());
 const server = http.Server(app);
 const io = socket_io(server);
 
+// route for sending contact pics
+app.post('/api/postpic', function(req, res) {
+	res.send('Hello World!')
+	console.log(req.body);
+	fs.writeFile(task_file, JSON.stringify(task), function(err) {
+		if (err) {
+			console.error(err);
+		}
+	});
+});
+
+// fire up the sockets...
 io.on('connection', function (socket) {
 	// join the assigned room
 	socket.join('poores');
@@ -53,7 +65,6 @@ io.on('connection', function (socket) {
 	io.of("/").adapter.on("join-room", (room, id) => {
 		console.log(`socket ${id} has joined room ${room}`);
 	  });
-
 
 	socket.on('GET_MESSAGES', function() {
 		io.to('poores').emit('REFRESH_MESSAGES', messages);

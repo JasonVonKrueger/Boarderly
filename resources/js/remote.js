@@ -2,22 +2,35 @@
 const socket = io()
 const snd_button_push = new Howl({ src: ['/resources/sounds/cork-85200.mp3'] });
 
-// see if the sender has used it before
-const d = JSON.parse(localStorage.getItem('boarderly'));
-if (d.fname && d.lname) {
-    __fname.value = d.fname;
-    __lname.value = d.lname;
+const fileInput = document.querySelector('input[type="file"]');
+const preview = document.querySelector('img.preview');
+const reader = new FileReader();
 
-    document.getElementById('btn_save').classList.add('hidden');
-    document.getElementById('btn_reset').classList.remove('hidden');
+fileInput.addEventListener('change', handleSelected);
 
-    // pre-populate the message from field
-    __from.value = `${d.fname} ${d.lname}`;
-    __message.focus();
-}
+document.addEventListener('DOMContentLoaded', function(e) {
+  // see if the sender has used it before
+  const d = JSON.parse(localStorage.getItem('boarderly'));
+  if (d.fname && d.lname) {
+      __fname.value = d.fname;
+      __lname.value = d.lname;
 
-socket.emit('REFRESH_TASKS');
-socket.on('REFRESH_TASKS', refreshTasks);
+      document.getElementById('btn_save').classList.add('hidden');
+      document.getElementById('btn_reset').classList.remove('hidden');
+
+      // pre-populate the message from field
+      __from.value = `${d.fname} ${d.lname}`;
+      __message.focus();
+  }
+
+  socket.emit('REFRESH_TASKS');
+  socket.on('REFRESH_TASKS', refreshTasks);
+
+});
+
+
+
+
 
 function sendMessage() {
     if (!__from.value || !__message.value) return false
@@ -147,5 +160,101 @@ function showSection(section) {
     document.getElementById('btn_reset').classList.add('hidden');
     document.getElementById('btn_save').classList.remove('hidden');
   }
+
+
+function handleEvent(e) {
+  if (e.type === "load") {
+      preview.src = reader.result;
+      preview.classList.remove('hidden');
+  }
+}
+
+function addListeners(reader) {
+    reader.addEventListener('load', handleEvent);
+}
+
+function handleSelected(e) {
+    const selectedFile = fileInput.files[0];
+    if (selectedFile) {
+        addListeners(reader);
+        reader.readAsDataURL(selectedFile);
+    }
+}
+
+
+
+
+  function readFile(file) {
+    var reader = new FileReader();
+
+    reader.onloadend = function() {
+      //let file_contents = window.btoa(reader.result);
+      //localStorage.setItem('boarderly-avatar', file-contents);
+     // processFile(reader.result, file.type);
+    }
+  
+    reader.onerror = function () {
+      alert('There was an error reading the file!');
+    }
+
+    reader.onload = function(loadedEvent) {
+      var image = document.getElementById("theImage");
+      image.setAttribute("src", loadedEvent.target.result);
+
+      console.log(loadedEvent.target.result)
+  }
+  
+    //reader.readAsDataURL(file);
+
+   // document.write(getPhoto());
+  }
+
+  function upload(event) {
+    console.log("Uploading...");
+    var reader = new FileReader();
+
+    const fileField = document.getElementById('contact_pic');
+
+    //formData.append('selectedFile', fileField.files[0]);
+
+
+    reader.onloadend = function() {
+
+    }
+
+
+
+    fetch('/api/postpic', {
+        method: 'POST',
+        body: fileField.files[0]
+    })
+    .then((result) => {
+        console.log('Success:', result);
+    })
+    ;
+}
+
+async function postData(data) {
+	var formData = new FormData();
+	formData.append('imageData', data);
+
+  const url = '/api/postpic';
+
+  const response = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      //'Content-Type': 'application/json'
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: data
+  });
+
+  return response.json(); 
+}
+
 
 
