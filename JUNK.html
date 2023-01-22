@@ -164,3 +164,14 @@
 </body>
 
 </html>
+
+
+
+// playing with geolocation
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function (pos) {
+    data.location = `${pos.coords.latitude} ${pos.coords.longitude}`;
+  });
+} else {
+  console.log("Geolocation isn't supported by this browser.");
+}

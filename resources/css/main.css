@@ -50,10 +50,6 @@ body {
   padding-top: 2.5em;
 }
 
-.xweather { grid-area: weather; }
-.xmessages { grid-area: messages; }
-.xtasks { grid-area: tasks; }
-
 .content-grid {
   display: grid;
   grid-template-columns: 40% 40%;

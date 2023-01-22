@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     __content = document.getElementById('content');
 
     // set margin of content pane
-    __content.style.marginLeft =  __sidebar.clientWidth + 15 + 'px';
+    __content.style.marginLeft =  __sidebar.clientWidth + 10 + 'px';
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
     socket.on('REFRESH_TASKS', refreshTasks);
@@ -142,11 +142,10 @@ function refreshMessages(data) {
 
     for (let i = 0; i < data.length; i++) {
         markup += `
-        <div style="display: flex; flex-direction: row;">
-        <div><img src="/resources/images/roger.png" /></div>
-        <div class="bubble">${data[i].message}</div>
-        </div>
-
+            <div style="display: flex; flex-direction: row;">
+            <div><img src="${data[i].image}" /></div>
+            <div class="bubble">${data[i].message}</div>
+            </div>
         `;
 
         //triggerEvent(btn_playsound, 'click');
@@ -330,16 +329,6 @@ async function getAlbums() {
     let data = await response.json()
 }
 
-async function fetchContent(page) {
-
-    let response = await fetch(page)
-    let data = await response.text()
-    document.getElementById('bob').innerHTML = data
-    console.log('RGP: ' + data)
-    //return { stuff: data }
-    //let response = fetch(page)
-
-}
 
 
 

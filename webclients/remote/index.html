@@ -128,16 +128,16 @@
   <div id="c_register" class="section hidden">
     <input type="text" id="__fname" placeholder="First name..." />
     <input type="text" id="__lname" placeholder="Last name..." />
-    <input type="text" id="__board_code" placeholder="Board code..." />
+    <!-- <input type="text" id="__board_code" placeholder="Board code..." /> -->
 
     <p>
       Add a contact picture to help with visual memory stimulation!
     </p>
   
     <p><input type="file" id="contact_pic" accept="image/*"></p>
-    <p><img src="" class="preview hidden" alt="Image preview" style="width: 120px;" /></p>
+    <p><img src="" id="avatar_preview" class="preview hidden" alt="Image preview" style="width: 120px;" /></p>
 
-    <button id="btn_save" onclick="registerDevice()">
+    <button id="btn_save" class="hidden" onclick="registerDevice()">
       <span>Save</span>
     </button>
 
@@ -145,7 +145,7 @@
       <span>Reset</span>
     </button>
 
-    <div id="__register_answer" class="hidden"></div>
+    <div id="register_answer" class="hidden"></div>
   </div>
   <!-- End section -->
 

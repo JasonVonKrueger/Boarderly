@@ -5,7 +5,7 @@ const express = require('express');
 const socket_io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
-const { json } = require('express');
+//const { json } = require('express');
 
 let messages = [];
 let tasks = [];
@@ -16,6 +16,7 @@ console.log('Initializing content directories...');
 initContentDir('_ALBUMS_');
 initContentDir('_TASKS_');
 initContentDir('_MESSAGES_');
+initContentDir('_DEVICES_');
 
 // load up the messages
 console.log('Fetching message list...');
@@ -40,6 +41,7 @@ app.use('/', express.static('./webclients/board'));
 app.use('/remote', express.static('./webclients/remote'));
 app.use('/message', express.static('./webclients/message'));
 app.use('/albums', express.static('./_ALBUMS_'));
+app.use('/devices', express.static('./_DEVICES_'));
 app.use('/resources', express.static('./resources'));
 app.use(express.json());
 
@@ -47,15 +49,15 @@ const server = http.Server(app);
 const io = socket_io(server);
 
 // route for sending contact pics
-app.post('/api/postpic', function(req, res) {
-	res.send('Hello World!')
-	console.log(req.body);
-	fs.writeFile(task_file, JSON.stringify(task), function(err) {
-		if (err) {
-			console.error(err);
-		}
-	});
-});
+// app.post('/api/postpic', function(req, res) {
+// 	res.send('Hello World!')
+// 	console.log(req.body);
+// 	fs.writeFile(task_file, JSON.stringify(task), function(err) {
+// 		if (err) {
+// 			console.error(err);
+// 		}
+// 	});
+// });
 
 // fire up the sockets...
 io.on('connection', function (socket) {
@@ -134,7 +136,8 @@ io.on('connection', function (socket) {
 		let msg = {
 			from: data.from,
 			message: data.message,
-			date: data.date
+			date: data.date,
+			image: data.image
 		};
 
 		messages.push(msg);
@@ -148,11 +151,29 @@ io.on('connection', function (socket) {
 				console.error(err);
 			}
 		});
-
 	});
 
 	socket.on('GET_ALBUMS', function() {
 		io.to('poores').emit('GET_ALBUMS', albums);
+	});
+
+	// handle device registration
+	let device_token = null;
+	socket.on('REGISTER_DEVICE', function(data, callback) {
+		device_token = generateToken();
+
+
+		fs.mkdir(`./_DEVICES_/${device_token}`, (error) => {
+			if (error) {
+				console.log(error);
+			} 
+		});
+
+		fs.writeFile(`./_DEVICES_/${device_token}/${data.file_name}`, data.image, function(err) {
+			callback({ message: err ? "failure" : "success" });
+		});
+
+		//callback({ token: device_token});
 	});
 });
 
@@ -248,6 +269,15 @@ function initContentDir(dir) {
 		}
 	});
 
+}
+
+function generateToken(n = 20) {
+    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var token = '';
+    for(var i = 0; i < n; i++) {
+        token += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return token;
 }
 
 

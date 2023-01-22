@@ -1,6 +1,10 @@
 /* Scripts for Boarderly remote */
-const socket = io()
-const snd_button_push = new Howl({ src: ['/resources/sounds/cork-85200.mp3'] });
+const socket = io({ forceBase64: true });
+const snd_button_push = new Howl({
+  src: ['/resources/sounds/cork-85200.mp3']
+});
+
+const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
 
 const fileInput = document.querySelector('input[type="file"]');
 const preview = document.querySelector('img.preview');
@@ -8,253 +12,177 @@ const reader = new FileReader();
 
 fileInput.addEventListener('change', handleSelected);
 
-document.addEventListener('DOMContentLoaded', function(e) {
+document.addEventListener('DOMContentLoaded', function (e) {
   // see if the sender has used it before
-  const d = JSON.parse(localStorage.getItem('boarderly'));
-  if (d.fname && d.lname) {
-      __fname.value = d.fname;
-      __lname.value = d.lname;
+  if (__boarderly.fname && __boarderly.lname) {
+    __fname.value = __boarderly.fname;
+    __lname.value = __boarderly.lname;
 
-      document.getElementById('btn_save').classList.add('hidden');
-      document.getElementById('btn_reset').classList.remove('hidden');
+    preview.src = __boarderly.image;
+    showElement('avatar_preview');
+    hideElement('btn_save');
+    showElement('btn_reset');
 
-      // pre-populate the message from field
-      __from.value = `${d.fname} ${d.lname}`;
-      __message.focus();
+    // pre-populate the message from field
+    __from.value = `${__boarderly.fname} ${__boarderly.lname}`;
+    //__message.focus();
   }
 
   socket.emit('REFRESH_TASKS');
   socket.on('REFRESH_TASKS', refreshTasks);
-
 });
 
 
-
-
-
 function sendMessage() {
-    if (!__from.value || !__message.value) return false
+  if (!__from.value || !__message.value) return false
 
-    let d = new Date()
-    socket.emit('POST_MESSAGE', {
-        from: __from.value,
-        message: __message.value,
-        date: d.toLocaleString()
-    })
+  let d = new Date()
+  socket.emit('POST_MESSAGE', {
+    from: __from.value,
+    message: __message.value,
+    date: d.toLocaleString(),
+    device_token: __boarderly.token,
+    image: __boarderly.image
+  })
 
-    document.getElementById('btn_send').classList.add('hidden')
-    document.getElementById('message_answer').innerHTML = 'Message sent!'
+  hideElement('btn_send');
+  setElementText('message_answer', 'Message sent!');
 }
 
 function showSection(section) {
-    snd_button_push.play();
+  snd_button_push.play();
 
-    document.getElementById('c_top').classList.add('hidden');
-    document.getElementById(section).classList.remove('hidden');
-    document.getElementById('btn_back').classList.remove('hidden');
+  hideElement('c_top');
+  showElement(section);
+  showElement('btn_back');
 
+  return false;
+}
+
+function sendPush(btn) {
+  snd_button_push.play();
+  socket.emit('BUTTON_PUSHED', {
+    button: btn
+  });
+}
+
+function refreshTasks(data) {
+  const task_block = document.getElementById('task_block');
+
+  for (let i = 0; i < data.length; i++) {
+    const task = document.createElement('div');
+    const l = document.createElement('span');
+    const r = document.createElement('span');
+
+    l.innerHTML = data[i].task;
+
+    if (data[i].status === 'complete') {
+      l.style.textDecoration = 'line-through';
+      r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
+    } else {
+      r.innerHTML = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
+    }
+
+    task.appendChild(l);
+    task.appendChild(r);
+    task.classList.add('task');
+
+    task_block.appendChild(task);
+  }
+}
+
+function addTask() {
+  // clear the list and rebuild
+  while (document.getElementById('task_block').firstChild) {
+    document.getElementById('task_block').removeChild(document.getElementById('task_block').firstChild);
+  }
+
+  const new_task = document.getElementById('new_task');
+
+  if (new_task.value.length == 0) return;
+
+  let d = new Date()
+  socket.emit('POST_TASK', {
+    task: new_task.value,
+    date: d.toLocaleString(),
+    device_token: __boarderly.token
+  })
+
+  socket.emit('REFRESH_TASKS');
+}
+
+function completeTask(id) {
+  socket.emit('COMPLETE_TASK', {
+    id: id
+  });
+}
+
+function registerDevice() {
+  if (!__fname.value || !__lname.value) {
     return false;
   }
 
-  function sendPush(btn) {
-    snd_button_push.play();
-    socket.emit('BUTTON_PUSHED', { button: btn });
-  }
+  const data = {};
+  data.fname = __fname.value;
+  data.lname = __lname.value;
+  data.file_name = document.getElementById('contact_pic').files[0].name;
+  data.image = reader.result;
+ 
+  socket.emit('REGISTER_DEVICE', data, function(response) {
+    data.token = response.token;
+    //__boarderly.device_token = data.token;
+  });
 
-  function refreshTasks(data) {
-    const task_block = document.getElementById('task_block');
+  localStorage.setItem('boarderly', JSON.stringify(data));
 
-    for (let i = 0; i < data.length; i++) {
-        const task = document.createElement('div');
-        const l = document.createElement('span');
-        const r = document.createElement('span');
-
-        l.innerHTML = data[i].task;
-
-        if (data[i].status === 'complete') {
-            l.style.textDecoration = 'line-through';
-            r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
-        }
-        else {
-            r.innerHTML = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
-        }
-        
-        task.appendChild(l);
-        task.appendChild(r);
-        task.classList.add('task');
-        
-        task_block.appendChild(task);
-    }
+  hideElement('btn_save');
+  setElementText('register_answer', 'Thanks for registering!');
+  showElement('register_answer');
 }
 
-  function addTask() {
-    // clear the list and rebuild
-    while (document.getElementById('task_block').firstChild) {
-        document.getElementById('task_block').removeChild(document.getElementById('task_block').firstChild);
-    }
+function resetDevice() {
+  __fname.value = '';
+  __lname.value = '';
+  preview.src = null;
+  hideElement('avatar_preview');
 
-    const new_task = document.getElementById('new_task');
+  localStorage.removeItem('boarderly');
 
-    if (new_task.value.length == 0) return;
-   
-    // document.querySelector('#task_block').innerHTML += `
-    // <div class="task">
-    //     <span id="taskname">
-    //         ${new_task.value}
-    //     </span>
-    // </div>`;
-
-    // var current_tasks = document.querySelectorAll(".delete");
-    // for (var i = 0; i < current_tasks.length; i++) {
-    //     current_tasks[i].onclick = function () {
-    //         this.parentNode.remove();
-    //     }
-    // }
-
-    let d = new Date()
-    socket.emit('POST_TASK', {
-        task: new_task.value,
-        date: d.toLocaleString()
-    })
-
-    socket.emit('REFRESH_TASKS');
-  }
-
-  function completeTask(id) {
-    socket.emit('COMPLETE_TASK', { id: id });
-  }
-
-  function registerDevice() {
-    if (!__fname.value || !__lname.value) {
-        return false;
-    }
-
-    const data = {};
-    data.fname = __fname.value;
-    data.lname = __lname.value;
-
-    // playing with geolocation
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            data.location = `${pos.coords.latitude} ${pos.coords.longitude}`;
-        });
-    } 
-    else {
-        console.log("Geolocation isn't supported by this browser.");
-    }
-
-    localStorage.setItem('boarderly', JSON.stringify(data));
-
-    document.getElementById('btn_save').classList.add('hidden');
-    //document.getElementById('btn_reset').classList.remove('hidden');
-
-    __register_answer.value = 'Thanks for registering!';
-    __register_answer.classList.remove('hidden');
-  }
-
-  function resetDevice() {
-    __fname.value = '';
-    __lname.value = '';
-
-    localStorage.removeItem('boarderly');
-    document.getElementById('btn_reset').classList.add('hidden');
-    document.getElementById('btn_save').classList.remove('hidden');
-  }
-
+  hideElement('btn_reset');
+  hideElement('btn_save');
+}
 
 function handleEvent(e) {
   if (e.type === "load") {
-      preview.src = reader.result;
-      preview.classList.remove('hidden');
+    preview.src = reader.result;
+    showElement('avatar_preview');
+    showElement('btn_save');
   }
 }
 
 function addListeners(reader) {
-    reader.addEventListener('load', handleEvent);
+  reader.addEventListener('load', handleEvent);
 }
 
 function handleSelected(e) {
-    const selectedFile = fileInput.files[0];
-    if (selectedFile) {
-        addListeners(reader);
-        reader.readAsDataURL(selectedFile);
-    }
-}
-
-
-
-
-  function readFile(file) {
-    var reader = new FileReader();
-
-    reader.onloadend = function() {
-      //let file_contents = window.btoa(reader.result);
-      //localStorage.setItem('boarderly-avatar', file-contents);
-     // processFile(reader.result, file.type);
-    }
-  
-    reader.onerror = function () {
-      alert('There was an error reading the file!');
-    }
-
-    reader.onload = function(loadedEvent) {
-      var image = document.getElementById("theImage");
-      image.setAttribute("src", loadedEvent.target.result);
-
-      console.log(loadedEvent.target.result)
+  const selectedFile = fileInput.files[0];
+  if (selectedFile) {
+    addListeners(reader);
+    reader.readAsDataURL(selectedFile);
   }
-  
-    //reader.readAsDataURL(file);
-
-   // document.write(getPhoto());
-  }
-
-  function upload(event) {
-    console.log("Uploading...");
-    var reader = new FileReader();
-
-    const fileField = document.getElementById('contact_pic');
-
-    //formData.append('selectedFile', fileField.files[0]);
-
-
-    reader.onloadend = function() {
-
-    }
-
-
-
-    fetch('/api/postpic', {
-        method: 'POST',
-        body: fileField.files[0]
-    })
-    .then((result) => {
-        console.log('Success:', result);
-    })
-    ;
 }
 
-async function postData(data) {
-	var formData = new FormData();
-	formData.append('imageData', data);
-
-  const url = '/api/postpic';
-
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      //'Content-Type': 'application/json'
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: data
-  });
-
-  return response.json(); 
+function showElement(element) {
+  document.getElementById(element).classList.remove('hidden');
+  return;
 }
 
+function hideElement(element) {
+  document.getElementById(element).classList.add('hidden');
+  return;
+}
 
-
+function setElementText(element, text) {
+  document.getElementById(element).innerHTML = text;
+  return;
+}
