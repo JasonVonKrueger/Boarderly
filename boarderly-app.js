@@ -1,11 +1,11 @@
 /* Server for Boarderly */
+require('dotenv').config(); 
 const config = require('./lib/settings.json');
 const http = require('http');
 const express = require('express');
 const socket_io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
-//const { json } = require('express');
 
 let messages = [];
 let tasks = [];
@@ -13,6 +13,7 @@ let albums = [];
 
 // initialize the content folders
 console.log('Initializing content directories...');
+initContentDir('_BOARDS_');
 initContentDir('_ALBUMS_');
 initContentDir('_TASKS_');
 initContentDir('_MESSAGES_');
@@ -48,25 +49,10 @@ app.use(express.json());
 const server = http.Server(app);
 const io = socket_io(server);
 
-// route for sending contact pics
-// app.post('/api/postpic', function(req, res) {
-// 	res.send('Hello World!')
-// 	console.log(req.body);
-// 	fs.writeFile(task_file, JSON.stringify(task), function(err) {
-// 		if (err) {
-// 			console.error(err);
-// 		}
-// 	});
-// });
-
 // fire up the sockets...
 io.on('connection', function (socket) {
 	// join the assigned room
 	socket.join('poores');
-
-	io.of("/").adapter.on("join-room", (room, id) => {
-		console.log(`socket ${id} has joined room ${room}`);
-	  });
 
 	socket.on('GET_MESSAGES', function() {
 		io.to('poores').emit('REFRESH_MESSAGES', messages);
@@ -100,7 +86,7 @@ io.on('connection', function (socket) {
 		//socket.broadcast.emit('REFRESH_TASKS', tasks);
 
 		// write task to filesystem
-		fs.writeFile(`./_TASKS_/${id}`, JSON.stringify(task), function (err) {
+		fs.writeFile(`./_TASKS_/${id}`, JSON.stringify(task), function(err) {
 			if (err) {
 				console.error(err);
 			}
@@ -137,7 +123,8 @@ io.on('connection', function (socket) {
 			from: data.from,
 			message: data.message,
 			date: data.date,
-			image: data.image
+			token: data.token,
+			file_name: data.file_name
 		};
 
 		messages.push(msg);
@@ -158,22 +145,17 @@ io.on('connection', function (socket) {
 	});
 
 	// handle device registration
-	let device_token = null;
 	socket.on('REGISTER_DEVICE', function(data, callback) {
-		device_token = generateToken();
-
-
-		fs.mkdir(`./_DEVICES_/${device_token}`, (error) => {
-			if (error) {
-				console.log(error);
-			} 
+		fs.mkdir(`./_DEVICES_/${data.token}`, function(error) {
+			if (error) console.log(error); 
 		});
 
-		fs.writeFile(`./_DEVICES_/${device_token}/${data.file_name}`, data.image, function(err) {
+		// convert the base64 string and save as an image
+		const buffer = Buffer.from(data.image.split(';base64,')[1], 'base64');
+
+		fs.writeFile(`./_DEVICES_/${data.token}/${data.file_name}`, buffer, function(err) {
 			callback({ message: err ? "failure" : "success" });
 		});
-
-		//callback({ token: device_token});
 	});
 });
 
@@ -245,42 +227,37 @@ async function getSavedContent(c) {
 }
 
 function getRandomFileName() {
-	var timestamp = new Date().toISOString().replace(/[-:.]/g, "");
-	var random = ("" + Math.random()).substring(2, 8);
-	var random_number = timestamp + random;
+	let timestamp = new Date().toISOString().replace(/[-:.]/g, '');
+	let random = ('' + Math.random()).substring(2, 8);
+	let random_number = timestamp + random;
 
 	return random_number;
 }
 
 function initContentDir(dir) {
 	const path = `./${dir}`
-	fs.access(path, (error) => {
+	fs.access(path, function(error) {
 		if (error) {
 			// if directory doesn't exist, create it
-			fs.mkdir(path, (error) => {
-				if (error) {
-					console.log(error);
-				} else {
-					console.log(`Created directory ${dir}`);
-				}
-			});
-		} else {
-			console.log(`${dir} already exists`);
-		}
-	});
-
+			fs.mkdir(path, function(error) {
+				if (error) console.log(error);
+				else console.log(`Created directory ${dir}`)
+			})
+		} 
+		else console.log(`${dir} already exists`)
+	})
 }
 
 function generateToken(n = 20) {
     var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     var token = '';
-    for(var i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
         token += chars[Math.floor(Math.random() * chars.length)];
     }
     return token;
 }
 
 
-server.listen(config.server.port, function () {
+server.listen(process.env.PORT, function () {
 	console.log('Boarderly app is now listening for connections...');
 });

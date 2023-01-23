@@ -141,9 +141,11 @@ function refreshMessages(data) {
     }
 
     for (let i = 0; i < data.length; i++) {
+        let image_data = fetch(data[i].avatar_link);
+        console.log(image_data);
         markup += `
             <div style="display: flex; flex-direction: row;">
-            <div><img src="${data[i].image}" /></div>
+            <div><img src="/devices/${data[i].token}/${data[i].file_name}" /></div>
             <div class="bubble">${data[i].message}</div>
             </div>
         `;

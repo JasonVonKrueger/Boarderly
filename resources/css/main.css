@@ -6,7 +6,7 @@
   --font-main: 'Titillium Web', sans-serif;
   --font-main-color: #fff;
   --content-bgcolor: #313131;
-  --card-bgcolor: #fff;
+  --card-bgcolor: rgba(33, 36, 62, .34);
   --title-bgcolor: #a90202;
   --sidebar-bgcolor: #414141;
   --sidebar-inactive: #555;
@@ -34,7 +34,6 @@ body {
   overflow: hidden;
   font-family: var(--font-main);
   background-color: var(--content-bgcolor);
-
   background: hsla(0, 75%, 28%, 1);
   background: linear-gradient(135deg, hsla(0, 75%, 28%, 1) 9%, hsla(243, 67%, 29%, 1) 100%);
   background: -moz-linear-gradient(135deg, hsla(0, 75%, 28%, 1) 9%, hsla(243, 67%, 29%, 1) 100%);
@@ -48,15 +47,26 @@ body {
 
 #content {
   padding-top: 2.5em;
+  padding: 2em;
 }
 
 .content-grid {
   display: grid;
-  grid-template-columns: 40% 40%;
   column-gap: 1.5em;
   row-gap: 1em;
-  gap: 10x;
-  justify-content: center;
+  gap: 1em;
+}
+
+.content-grid.col-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.content-grid.col-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.content-grid.col-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .content-grid-item {
@@ -67,27 +77,30 @@ body {
 .selected,
 .content-grid-item:hover,
 .content-grid-item:focus {
-  border: 2px solid var(--hightlight);
-  transform: scale(1.07);
+  transform: scale(1.04);
 }
 
 .card {
   text-align: center;
-  background-color: var(--card-bgcolor);
+  border: 2px solid #fff;
+  border-radius: 10px;
   min-height: 350px;
   max-height: 350px;
-  border-bottom: 6px inset var(--card-bgcolor) !important;
+  xborder-bottom: 6px inset var(--card-bgcolor) !important;
 }
 
 .card-title {
   background-color: var(--title-bgcolor);
-  color: #fff;
+  color: var(--font-main-color);
   font-size: 1.25em;
   padding: .25em;
-  margin-bottom: .35em;
 }
 
 .card-body {
+  background-color: var(--card-bgcolor);
+  color: var(--font-main-color);
+  padding: .5em;
+  height: 100%;
   max-height: inherit;
   overflow: auto;
 }
@@ -105,6 +118,7 @@ body {
   position: fixed;
   font-size: 1.2em;
   color: var(--font-main-color);
+  border-right: 2px inset black;
 }
 
 #sidebar {
@@ -162,7 +176,7 @@ body {
 
 button {
   background-color: var(--button-bgcolor);
-  color: white;
+  color: var(--font-main-color);
   padding: 12px 20px;
   border: none;
   cursor: pointer;
@@ -204,7 +218,7 @@ iframe {
 }
 
 .modal-caption {
-  color: #fff;
+  color: var(--font-main-color);
   font-size: 1.6em;
   width: 100%;
   text-align: center;
@@ -285,13 +299,12 @@ iframe {
   color: #666;
   font-family: Arial;
   font-size: 20px;
-  line-height: 58px;
   filter: drop-shadow(5px 5px 1px #ababab);
-  text-align: center;
+  text-align: left;
   width: 300px;
   height: 78px;
   border-radius: 10px;
-  padding: 0px;
+  padding: .6em;
   margin-bottom: 1em;
 }
 

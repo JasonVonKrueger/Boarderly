@@ -12,7 +12,7 @@ const reader = new FileReader();
 
 fileInput.addEventListener('change', handleSelected);
 
-document.addEventListener('DOMContentLoaded', function (e) {
+document.addEventListener('DOMContentLoaded', function(e) {
   // see if the sender has used it before
   if (__boarderly.fname && __boarderly.lname) {
     __fname.value = __boarderly.fname;
@@ -41,9 +41,9 @@ function sendMessage() {
     from: __from.value,
     message: __message.value,
     date: d.toLocaleString(),
-    device_token: __boarderly.token,
-    image: __boarderly.image
-  })
+    token: __boarderly.token,
+    file_name: __boarderly.file_name
+  });
 
   hideElement('btn_send');
   setElementText('message_answer', 'Message sent!');
@@ -105,7 +105,7 @@ function addTask() {
   socket.emit('POST_TASK', {
     task: new_task.value,
     date: d.toLocaleString(),
-    device_token: __boarderly.token
+    token: __boarderly.token
   })
 
   socket.emit('REFRESH_TASKS');
@@ -122,18 +122,25 @@ function registerDevice() {
     return false;
   }
 
+  const token = generateToken();
   const data = {};
+
   data.fname = __fname.value;
   data.lname = __lname.value;
+  data.token = token;
   data.file_name = document.getElementById('contact_pic').files[0].name;
   data.image = reader.result;
- 
-  socket.emit('REGISTER_DEVICE', data, function(response) {
-    data.token = response.token;
-    //__boarderly.device_token = data.token;
-  });
 
   localStorage.setItem('boarderly', JSON.stringify(data));
+ 
+  // save to server
+  socket.emit('REGISTER_DEVICE', data, function(response) {
+    //data.token = response.token;
+    //data.avatar_link = 'bob'; //`/devices/${data.token}/avatar`;
+    //__boarderly.token = data.token;
+  });
+  
+  
 
   hideElement('btn_save');
   setElementText('register_answer', 'Thanks for registering!');
@@ -150,6 +157,16 @@ function resetDevice() {
 
   hideElement('btn_reset');
   hideElement('btn_save');
+}
+
+function generateToken(n = 20) {
+  var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  var token = '';
+  for (var i = 0; i < n; i++) {
+      token += chars[Math.floor(Math.random() * chars.length)];
+  }
+
+  return token;
 }
 
 function handleEvent(e) {

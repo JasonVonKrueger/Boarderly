@@ -1,8 +1,4 @@
 {
-    "server": {
-     "port": 9980
-    },
- 
     "sidebar": [ 
        {
           "name": "Home",
