@@ -6,6 +6,7 @@ const express = require('express');
 const socket_io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
+const Image = require('./lib/classes/Image');
 
 let messages = [];
 let tasks = [];
@@ -18,6 +19,8 @@ initContentDir('_ALBUMS_');
 initContentDir('_TASKS_');
 initContentDir('_MESSAGES_');
 initContentDir('_DEVICES_');
+
+const image = new Image();
 
 // load up the messages
 console.log('Fetching message list...');
@@ -153,9 +156,16 @@ io.on('connection', function (socket) {
 		// convert the base64 string and save as an image
 		const buffer = Buffer.from(data.image.split(';base64,')[1], 'base64');
 
-		fs.writeFile(`./_DEVICES_/${data.token}/${data.file_name}`, buffer, function(err) {
-			callback({ message: err ? "failure" : "success" });
-		});
+		// resize it
+		const path = `./_DEVICES_/${data.token}/${data.file_name}`;
+		const avatar = new Image();
+		avatar.shrink(buffer, path, 90, 90);
+
+		// fs.writeFile(`./_DEVICES_/${data.token}/${data.file_name}`, buffer, function(err) {
+		// 	callback({ message: err ? "failure" : "success" });
+		// });
+
+		
 	});
 });
 
@@ -236,28 +246,13 @@ function getRandomFileName() {
 
 function initContentDir(dir) {
 	const path = `./${dir}`
-	fs.access(path, function(error) {
-		if (error) {
-			// if directory doesn't exist, create it
-			fs.mkdir(path, function(error) {
-				if (error) console.log(error);
-				else console.log(`Created directory ${dir}`)
-			})
-		} 
-		else console.log(`${dir} already exists`)
-	})
+
+	if (!fs.existsSync(path)) {
+		fs.mkdirSync(path);
+		console.log(`Created directory ${dir}`);
+	}
 }
 
-function generateToken(n = 20) {
-    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var token = '';
-    for (var i = 0; i < n; i++) {
-        token += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return token;
-}
-
-
-server.listen(process.env.PORT, function () {
+server.listen(process.env.PORT, '192.168.1.161', function () {
 	console.log('Boarderly app is now listening for connections...');
 });

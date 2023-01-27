@@ -45,10 +45,14 @@
   <!-- Section -->
   <div id="c_dpad" class="section hidden">
     <div class="section-buttons">
-      <div id="btn_home" class="push-button" onclick="sendPush('home')">🏠 Home</div>
-      <div id="btn_pictures" class="push-button" onclick="sendPush('pictures')">🖼 Pictures</div>
-      <div id="btn_news" class="push-button" onclick="sendPush('news')">📰 News</div>
-      <div id="btn_games" class="push-button" onclick="sendPush('games')">🕹 Games</div>
+      <div id="btn_home" class="push-button" onclick="sendPush('home')">
+        <span class="material-symbols-outlined">home</span>Home</div>
+      <div id="btn_pictures" class="push-button" onclick="sendPush('pictures')">
+        <span class="material-symbols-outlined">photo_library</span>Pictures</div>
+      <div id="btn_news" class="push-button" onclick="sendPush('news')">
+        <span class="material-symbols-outlined">newspaper</span>News</div>
+      <div id="btn_games" class="push-button" onclick="sendPush('games')">
+        <span class="material-symbols-outlined">sports_esports</span>Games</div>
     </div>
 
     <div class="grid-container" style="padding-top: 20%;">
@@ -83,13 +87,14 @@
 
       <div class="grid-item">
         <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('cancel')">
-          <span style="font-size: 2em;">❌</span>
+          <span style="font-size: 1.5rem; color: red;">cancel</span>
         </div>
       </div>
       <div></div>
+
       <div class="grid-item">
         <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('enter')">
-          <span style="font-size: 2em; color: green;">✔</span>
+          <span style="font-size: 1.5rem; color: green;">enter</span>
         </div>
       </div>
     </div>
@@ -107,7 +112,7 @@
         </div>
     </div>
 
-    <div id="task_block" style="padding-top: 2em;"></div>
+    <div id="task_block" style="padding-top: 2rem;"></div>
   </div>
   <!-- End section -->
 
@@ -135,7 +140,7 @@
     </p>
   
     <p><input type="file" id="contact_pic" accept="image/*"></p>
-    <p><img src="" id="avatar_preview" class="preview hidden" alt="Image preview" style="width: 120px;" /></p>
+    <p><img src="" id="avatar_preview" class="preview hidden" alt="Image preview" style="width: auto; height: 120px;" /></p>
 
     <button id="btn_save" class="hidden" onclick="registerDevice()">
       <span>Save</span>

@@ -1,7 +1,7 @@
 /* Scripts for Boarderly remote */
 const socket = io({ forceBase64: true });
 const snd_button_push = new Howl({
-  src: ['/resources/sounds/cork-85200.mp3']
+  src: ['/resources/sounds/click.mp3']
 });
 
 const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
@@ -17,11 +17,14 @@ document.addEventListener('DOMContentLoaded', function(e) {
   if (__boarderly.fname && __boarderly.lname) {
     __fname.value = __boarderly.fname;
     __lname.value = __boarderly.lname;
+    __fname.setAttribute('disabled', 'true');
+    __lname.setAttribute('disabled', 'true');
 
     preview.src = __boarderly.image;
+    showElement('btn_reset');
     showElement('avatar_preview');
     hideElement('btn_save');
-    showElement('btn_reset');
+    hideElement('contact_pic');
 
     // pre-populate the message from field
     __from.value = `${__boarderly.fname} ${__boarderly.lname}`;
@@ -139,22 +142,22 @@ function registerDevice() {
     //data.avatar_link = 'bob'; //`/devices/${data.token}/avatar`;
     //__boarderly.token = data.token;
   });
-  
-  
 
+  hideElement('contact_pic');
   hideElement('btn_save');
-  setElementText('register_answer', 'Thanks for registering!');
   showElement('register_answer');
+  setElementText('register_answer', 'Thanks for registering!');
 }
 
 function resetDevice() {
   __fname.value = '';
   __lname.value = '';
   preview.src = null;
-  hideElement('avatar_preview');
-
+  
   localStorage.removeItem('boarderly');
 
+  showElement('contact_pic');
+  hideElement('avatar_preview');
   hideElement('btn_reset');
   hideElement('btn_save');
 }

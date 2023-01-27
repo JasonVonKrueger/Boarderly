@@ -1,15 +1,13 @@
 const socket = io();
 const messages = [];
+
 let __selected_card_index = -1;
 let __sidebar = null;
 let __content = null;
 
 document.addEventListener('DOMContentLoaded', function(e) {
-    __sidebar = document.getElementById('sidebar_overlay');
-    __content = document.getElementById('content');
-
-    // set margin of content pane
-    __content.style.marginLeft =  __sidebar.clientWidth + 10 + 'px';
+    __sidebar = document.getElementById('sidebar');
+    __content = document.getElementById('contents');
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
     socket.on('REFRESH_TASKS', refreshTasks);
@@ -24,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     btn_playsound.addEventListener('click', function(e) {
         var snd_newmessage = new Howl({
-            src: ['/resources/sounds/wrong-answer-129254.mp3'],
+            src: ['/resources/sounds/click.mp3'],
             onplayerror: function() {
                 snd_newmessage.once('unlock', function() {
                     //snd_newmessage.play();
@@ -39,16 +37,34 @@ document.addEventListener('DOMContentLoaded', function(e) {
     QRCode.toCanvas(document.getElementById('qrcode'), `${window.location}remote`, function (error) {
         if (error) console.error(error)
     })
+
+    const domain = 'meet.jit.si';
+    const options = {
+        roomName: 'JitsiMeetAPIExample',
+        width: 700,
+        height: 700,
+        parentNode: document.querySelector('#meet'),
+        lang: 'en'
+    };
+    const api = new JitsiMeetExternalAPI(domain, options);
+
+
+
+
 });
 
 function getActiveSidebarButton() {
-    let b = document.querySelector('#sidebar_overlay .active');
+    let b = document.querySelector('#sidebar .active');
     let c = b.id;
 
     return c;
 }
 
 function show(el) {
+    // var msg = new SpeechSynthesisUtterance();
+    // msg.text = "He's a stupid cat.";
+    // window.speechSynthesis.speak(msg);
+
     // reset selected card
     __selected_card_index = -1;
 
@@ -90,7 +106,7 @@ function handleRemBtnPush(data) {
             break;
         case 'ArrowRight':
                 if (__selected_card_index >= cards.length) return;
-
+                
                 if (__selected_card_index >= 0) {
                     cards[__selected_card_index].classList.remove('selected');
                 }
@@ -99,11 +115,9 @@ function handleRemBtnPush(data) {
                 cards[__selected_card_index].classList.add('selected');
             break;
         case 'ArrowLeft':        
-            if (__selected_card_index <= 0) return;
-            
-            //if (__selected_card_index >=0) {
-                cards[__selected_card_index].classList.remove('selected');
-            //}
+            if (__selected_card_index <= -1) return;
+                
+            cards[__selected_card_index].classList.remove('selected');
 
             __selected_card_index--;
             cards[__selected_card_index].classList.add('selected');
@@ -141,17 +155,16 @@ function refreshMessages(data) {
     }
 
     for (let i = 0; i < data.length; i++) {
-        let image_data = fetch(data[i].avatar_link);
-        console.log(image_data);
         markup += `
             <div style="display: flex; flex-direction: row;">
-            <div><img src="/devices/${data[i].token}/${data[i].file_name}" /></div>
+            <div><img src="/devices/${data[i].token}/${data[i].file_name}" class="thumb-avatar" /></div>
             <div class="bubble">${data[i].message}</div>
             </div>
         `;
 
         //triggerEvent(btn_playsound, 'click');
     }
+    
     __message_block.innerHTML = markup + '<br /><br /><br />';
     __message_block.scroll(0, 9999);
 }
@@ -248,25 +261,6 @@ function showTime() {
     setTimeout(showTime, 1000);
 }
 
-function XbuildAlbumList(data) {
-    let markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;
-
-    data.forEach(function(album) {
-        markup += `
-            <div class="content-grid-item">
-                <div class="card" tabindex="0">
-                    <div class="card-title">${album.replaceAll('_', ' ')}</div>
-                    <div class="card-body">
-                        <img src="/albums/${album}/front-page.jpg" onclick="openModal('pictures_modal')" style="swidth: 90%" />
-                    </div>
-                </div>           
-            </div>    
-        `;      
-    });
-    // <img src="/albums/Roger_and_family/front-page.jpg" onclick="openModal('pictures_modal')" style="cursor: pointer;" />
-    __image_block.innerHTML = markup;
-}
-
 function buildAlbumList(data) {
     let button_markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;
     let pic_markup = '';
@@ -296,13 +290,17 @@ function getPicMarkup(album, name, css_name) {
     markup += `
         <div class="content-grid-item card" tabindex="0">
         <div class="card-body">
-        <img src="/albums/${album}/${name}" alt="${name}" class="${css_name}" style="width:100%">
+        <img src="/albums/${album}/${name}" alt="${name}" class="${css_name} pic-thumb" onclick="openModal('pictures_modal');">
         <p>${name.split('.')[0]}</p>
         </div>
         </div>
     `;
 
     return markup;
+}
+
+function handlePicClick(e) {
+   
 }
 
 
@@ -314,24 +312,6 @@ function facenameFlip() {
     let card = document.querySelector('.flip-card');
     card.classList.toggle('is-flipped');
 }
-
-
-
-
-
-
-async function getAlbums() {
-    const url = 'https://photoslibrary.googleapis.com/v1/albums'
-    const client_id = '948657149825-l9p5dkb7od1c85kupbutjqrfe1guakho.apps.googleusercontent.com'
-    const client_secret = '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'
-    const api_key = 'AIzaSyAzNeh8YHfwLXpsT92c1FMyopxhSLVvuUg'
-    // key=API_KEY
-
-    let response = await fetch(url)
-    let data = await response.json()
-}
-
-
 
 
 
