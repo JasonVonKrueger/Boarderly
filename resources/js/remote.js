@@ -55,7 +55,7 @@ function sendMessage() {
 function showSection(section) {
   snd_button_push.play();
 
-  hideElement('c_top');
+  hideElement('section_top');
   showElement(section);
   showElement('btn_back');
 

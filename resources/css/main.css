@@ -31,7 +31,6 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: var(--font-main);
-  xbackground-color: var(--content-bgcolor);
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#3b679e+0,2b88d9+50,207cca+51,7db9e8+100;Blue+Gloss+%232 */
   background: rgb(59, 103, 158);
   /* Old browsers */
@@ -157,8 +156,8 @@ body {
 }
 
 .card.taller {
-  min-height: 520px;
-  max-height: 520px;
+  min-height: 720px;
+  max-height: 720px;
 }
 
 #content {
@@ -246,7 +245,22 @@ body {
 }
 
 
+#reload {
+  font-size: 6rem;
+  cursor: pointer;
+  
+}
 
+#reload:hover {
+  animation:spin 1.5s linear infinite;
+}
+
+@keyframes spin { 
+  100% { 
+      -webkit-transform: rotate(360deg); 
+      transform:rotate(360deg); 
+  } 
+}
 
 
 /*

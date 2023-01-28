@@ -42,9 +42,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
     const options = {
         roomName: 'JitsiMeetAPIExample',
         width: 700,
-        height: 700,
+        height: 500,
         parentNode: document.querySelector('#meet'),
-        lang: 'en'
+        lang: 'en',
+        userInfo: {
+            email: 'sherrypoore1939@gmail.com',
+            displayName: 'Sherry Poore'
+        }
     };
     const api = new JitsiMeetExternalAPI(domain, options);
 
@@ -102,6 +106,14 @@ function handleRemBtnPush(data) {
             break;
         case 'news':
             triggerEvent(document.getElementById('nav_news'), 'click');
+            __content.focus();
+            break;
+        case 'jitsi':
+            triggerEvent(document.getElementById('nav_jitsi'), 'click');
+            __content.focus();
+            break;
+        case 'tools':
+            triggerEvent(document.getElementById('nav_tools'), 'click');
             __content.focus();
             break;
         case 'ArrowRight':

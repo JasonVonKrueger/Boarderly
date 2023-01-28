@@ -20,7 +20,8 @@
 <body>
   <div id="header">Boarderly :: Remote Control</div>
 
-  <div id="c_top" class="section-buttons section" style="padding-top: 15%;">
+  <div id="section_top" class="section-buttons">
+
     <div id="btn_remote" class="push-button" onclick="showSection('c_dpad')">
       <span class="material-symbols-outlined">remote_gen</span>
       <span>D-Pad</span>
@@ -39,7 +40,8 @@
     <div id="btn_register" class="push-button" onclick="showSection('c_register')">
       <span class="material-symbols-outlined">app_registration</span>
       <span>Register this Device</span>
-    </div>
+    </div>  
+
   </div>
 
   <!-- Section -->
@@ -53,34 +55,38 @@
         <span class="material-symbols-outlined">newspaper</span>News</div>
       <div id="btn_games" class="push-button" onclick="sendPush('games')">
         <span class="material-symbols-outlined">sports_esports</span>Games</div>
+      <div id="btn_jitsi" class="push-button" onclick="sendPush('jitsi')">
+        <span class="material-symbols-outlined">video_call</span>Jitsi</div>
+      <div id="btn_tools" class="push-button" onclick="sendPush('tools')">
+        <span class="material-symbols-outlined">tools_wrench</span>Tools</div>        
     </div>
 
-    <div class="grid-container" style="padding-top: 20%;">
+    <div id="function_buttons" class="grid" style="padding-top: 10%;">
       <div></div>
       <div class="grid-item">
         <div class="push-button" onclick="sendPush('ArrowUp')">
-          <img src="/resources/images/up-arrow.svg" />
+          <span class="material-symbols-outlined arrow">keyboard_arrow_up</span> 
         </div>
       </div>
       <div></div>
 
       <div class="grid-item">
         <div class="push-button" onclick="sendPush('ArrowLeft')">
-          <img src="/resources/images/left-arrow.svg" />
+          <span class="material-symbols-outlined arrow">keyboard_arrow_left</span> 
         </div>
       </div>
       <div></div>
       
       <div class="grid-item">
         <div class="push-button" onclick="sendPush('ArrowRight')">
-          <img src="/resources/images/right-arrow.svg" />
+          <span class="material-symbols-outlined arrow">keyboard_arrow_right</span> 
         </div>
       </div>
       <div></div>
 
       <div class="grid-item">
         <div class="push-button" onclick="sendPush('ArrowDown')">
-          <img src="/resources/images/down-arrow.svg" />
+          <span class="material-symbols-outlined arrow">keyboard_arrow_down</span> 
         </div>
       </div>
       <div></div>
