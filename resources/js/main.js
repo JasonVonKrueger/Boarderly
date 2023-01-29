@@ -20,6 +20,16 @@ document.addEventListener('DOMContentLoaded', function(e) {
     getWeather();
     showTime();
 
+    let m = document.querySelectorAll('.modal-close');
+    m.forEach(function(n) {
+        n.addEventListener('click', function(e) {
+            this.parentElement.classList.add('hidden')
+            //closeModal(this)
+        })
+    });
+
+
+
     btn_playsound.addEventListener('click', function(e) {
         var snd_newmessage = new Howl({
             src: ['/resources/sounds/click.mp3'],
@@ -52,16 +62,16 @@ document.addEventListener('DOMContentLoaded', function(e) {
     };
     const api = new JitsiMeetExternalAPI(domain, options);
 
-
-
-
 });
 
 function getActiveSidebarButton() {
     let b = document.querySelector('#sidebar .active');
-    let c = b.id;
+    return b.id;
+}
 
-    return c;
+function getActiveCard() {
+    let b = document.querySelector('.card .active');
+    return b.id;
 }
 
 function show(el) {
@@ -89,7 +99,7 @@ function show(el) {
 
 function handleRemBtnPush(data) {
     let section = getActiveSidebarButton().replace('nav', 'section');
-    let cards = document.getElementById(section).querySelectorAll('.content-grid-item');
+    let cards = document.getElementById(section).querySelectorAll('.card');
 
     switch (data.button) {
         case 'home':
@@ -117,28 +127,28 @@ function handleRemBtnPush(data) {
             __content.focus();
             break;
         case 'ArrowRight':
-                if (__selected_card_index >= cards.length) return;
+                if (__selected_card_index >= (cards.length -1)) return;
                 
                 if (__selected_card_index >= 0) {
-                    cards[__selected_card_index].classList.remove('selected');
+                    cards[__selected_card_index].classList.remove('active');
                 }
 
                 __selected_card_index++;
-                cards[__selected_card_index].classList.add('selected');
+                cards[__selected_card_index].classList.add('active');
             break;
         case 'ArrowLeft':        
             if (__selected_card_index <= -1) return;
                 
-            cards[__selected_card_index].classList.remove('selected');
+            cards[__selected_card_index].classList.remove('active');
 
             __selected_card_index--;
-            cards[__selected_card_index].classList.add('selected');
+            cards[__selected_card_index].classList.add('active');
             break;
         case 'enter':
-            //alert('enter');
+            triggerEvent(document.querySelector('.card.active'), 'click');       
             break;
-        case 'cancel':
-            //alert('cancel');
+        case 'exit':
+            triggerEvent(document.querySelector('.modal-close.active'), 'click');
             break;
     }
 
@@ -146,12 +156,14 @@ function handleRemBtnPush(data) {
     // __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
 }
 
-function openModal(mo) {
-    document.getElementById(mo).style.display = 'block';
+function openModal(modal) {
+    document.getElementById(modal).classList.add('active');
+    document.getElementById(modal).classList.remove('hidden');
 }
 
-function closeModal(mo) {
-    document.getElementById(mo).style.display = 'none';
+function closeModal(modal) {
+    document.getElementById(modal).classList.remove('active');
+    document.getElementById(modal).classList.add('hidden');
 }
 
 function triggerEvent(el, e) {

@@ -97,25 +97,24 @@
     <div id="section_games" class="section hidden">
       <div class="content-grid col-3">
 
-        <div class="content-grid-item card" tabindex="0">
+        <div id="game_simon" class="content-grid-item card" onclick="openModal(this)">
           <div class="card-title">Simon Says</div>
           <div class="card-body">
-            <img src="/resources/widgets/simon/cover.png" onclick="openModal('simon_modal')" style="cursor: pointer;" />
+            <img src="/resources/widgets/simon/cover.png" style="cursor: pointer;" />
           </div>
         </div>
 
-        <div class="content-grid-item card" tabindex="0">
+        <div class="content-grid-item card">
           <div class="card-title">Name that Face</div>
           <div class="card-body">
             <div data-include="/resources/widgets/facename.html"></div>
           </div>
         </div>
 
-        <div class="content-grid-item card" tabindex="0">
+        <div id="game_memcards" class="content-grid-item card" onclick="openModal('memcards_modal')">
           <div class="card-title">Memory Cards</div>
           <div class="card-body">
-            <img src="/resources/widgets/memorycards/cover.svg" class="cover-image"
-              onclick="openModal('memcards_modal')" />
+            <img src="/resources/widgets/memorycards/cover.svg" class="cover-image" />
           </div>
         </div>
 
@@ -166,7 +165,7 @@
             <div class="card-title">Maintenance</div>
             <div class="card-body">
               <span id="reload" class="material-symbols-outlined">refresh</span>  
-              <div>Reload Boarderly</div>           
+              <div>Reload the board</div>           
             </div>
           </div>
 
@@ -179,17 +178,17 @@
 
   <!-- Other stuff-->
   <div id="simon_modal" class="modal hidden">
-    <span class="modal-close" onclick="return closeModal('simon_modal');">&times;</span>
+    <span class="modal-close" onclick="closeModal('simon_modal');">&times;</span>
     <iframe src="/resources/widgets/simon" title="Simon"></iframe>
   </div>
 
   <div id="pictures_modal" class="modal hidden">
-    <span class="modal-close" onclick="return closeModal('pictures_modal');">&times;</span>
+    <span class="modal-close" onclick="closeModal('pictures_modal');">&times;</span>
     <iframe src="/resources/widgets/pictures.html" title="Pictures"></iframe>
   </div>
 
   <div id="memcards_modal" class="modal hidden">
-    <span class="modal-close" onclick="return closeModal('memcards_modal');">&times;</span>
+    <span class="modal-close active">&times;</span>
     <iframe src="/resources/widgets/memorycards" title="Memory Cards"></iframe>
   </div>
 

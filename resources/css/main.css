@@ -25,23 +25,67 @@ html {
   width: 100vw;
   margin: 0;
 }
+
 body {
   margin: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
   font-family: var(--font-main);
+
+ /*  background-image: linear-gradient(
+    330deg,
+    hsl(117deg 83% 16%) 1%,
+    hsl(84deg 88% 27%) 51%,
+    hsl(67deg 100% 36%) 49%,
+    hsl(55deg 100% 50%) 99%
+  ); */
+
+
+  background-image: linear-gradient(
+    210deg,
+    hsl(249deg 100% 13%) 0%,
+    hsl(212deg 55% 31%) 45%,
+    hsl(202deg 24% 56%) 57%,
+    hsl(214deg 16% 29%) 77%,
+    hsl(240deg 100% 1%) 100%
+  );
+
+
+  xbackground-image: linear-gradient(
+    50deg,
+    hsl(133deg 62% 35%) 1%,
+    hsl(123deg 57% 40%) 50%,
+    hsl(111deg 65% 42%) 50%,
+    hsl(120deg 100% 18%) 50%,
+    hsl(0deg 0% 0%) 99%
+  );
+
+
+  xbackground-image: linear-gradient(
+    325deg,
+    hsl(276deg 96% 29%) 1%,
+    hsl(278deg 82% 33%) 51%,
+    hsl(280deg 72% 38%) 49%,
+    hsl(283deg 65% 42%) 99%
+  );
+
+background-image: url('https://img5.goodfon.com/wallpaper/nbig/1/c3/vector-art-forest-green-sky-clear.jpg');
+
+
+
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#3b679e+0,2b88d9+50,207cca+51,7db9e8+100;Blue+Gloss+%232 */
-  background: rgb(59, 103, 158);
+  /* background: rgb(59, 103, 158); */
+
   /* Old browsers */
-  background: -moz-linear-gradient(-45deg, rgba(59, 103, 158, 1) 0%, rgba(43, 136, 217, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%);
-  /* FF3.6-15 */
+/*   background: -moz-linear-gradient(-45deg, rgba(59, 103, 158, 1) 0%, rgba(43, 136, 217, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%);
+ 
   background: -webkit-linear-gradient(-45deg, rgba(59, 103, 158, 1) 0%, rgba(43, 136, 217, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%);
-  /* Chrome10-25,Safari5.1-6 */
+
   background: linear-gradient(135deg, rgba(59, 103, 158, 1) 0%, rgba(43, 136, 217, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3b679e', endColorstr='#7db9e8', GradientType=1);
-  /* IE6-9 fallback on horizontal gradient */
+ */
 }
 
 .hidden {
@@ -132,11 +176,19 @@ body {
   transform: scale(1.04);
 }
 
+.card.active {
+  transform: scale(1.04);
+}
+
 .card {
   text-align: center;
   min-height: 350px;
   max-height: 350px;
   xborder-bottom: 6px inset var(--card-bgcolor) !important;
+  border: 1px solid #000;
+  border-left: 3px inset #111;
+  border-bottom: 5px solid #111;
+  xborder-radius: 4px;
 }
 
 .card-title {
@@ -153,6 +205,7 @@ body {
   height: 100%;
   max-height: inherit;
   overflow: auto;
+  
 }
 
 .card.taller {
@@ -263,12 +316,67 @@ body {
 }
 
 
+
+/* Modal */
+.modal {
+  position: fixed;
+  z-index: 10; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-caption {
+  color: var(--font-main-color);
+  font-size: 1.6em;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: .5s;
+  transition: transform .7s;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+  transform: scale(1.04);
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+}
+/* End */
+
+
+
+
 /*
-
-
-
-
-
 .cover-image {
   width: 300px;
   height: auto;
@@ -322,14 +430,7 @@ button {
   cursor: pointer;
 }
 
-iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  margin: 0;
-  top: 0;
-  left: 0;
-}
+
 
 
 
@@ -341,52 +442,11 @@ iframe {
   xmax-height: 380px;
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1; 
-  xpadding-top: 2em;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%; 
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.9);
-}
 
-.modal-caption {
-  color: var(--font-main-color);
-  font-size: 1.6em;
-  width: 100%;
-  text-align: center;
-}
 
-.modal-content {
-  margin: auto;
-  display: block;
-  width: 80%;
-  max-width: 700px;
-}
 
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  transition: .5s;
-  transition: transform .7s;
-}
 
-.modal-close:hover,
-.modal-close:focus {
-  color: #bbb;
-  text-decoration: none;
-  cursor: pointer;
-  transform: scale(1.04);
-}
+
 
 
 
