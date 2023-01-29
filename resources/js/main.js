@@ -203,18 +203,24 @@ function refreshTasks(data) {
 
     for (let i = 0; i < data.length; i++) {
         if (data[i].status === 'complete') {
-            c = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
+            //c = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
+            //c = '<li>Eat Breakfeast</li>';
+            markup += `<li class="task-complete">${data[i].task}</li>`;
         }
         else {
-            c = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
+            //c = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
+            //c = '<li>Eat Breakfeast</li>';
+            markup += `<li>${data[i].task}</li>`;
         }
 
-        markup += `
+/*         markup += `
             <div class="task">
                 <span class="">${data[i].task}</span>
                 <span class="">${c}</span>
             </div>
-        `;
+        `; */
+
+
 
         __task_block.innerHTML = markup + '<br /><br /><br />';
         __task_block.scroll(0, 9999);       
