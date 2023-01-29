@@ -204,7 +204,10 @@ function refreshTasks(data) {
 
     for (let i = 0; i < data.length; i++) {
         if (data[i].status === 'complete') {
-            markup += `<li class="task-complete">${data[i].task}</li>`;
+            markup += `<li><div>
+                <span class="task-text task-complete">${data[i].task}</span>
+                <span class="task-date task-complete">${data[i].date}</span>
+                </div></li>`;            
         }
         else {
             markup += `<li><div>
