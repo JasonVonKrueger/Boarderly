@@ -131,11 +131,6 @@ body {
   text-align: center;
   min-height: 350px;
   max-height: 350px;
-  xborder-bottom: 6px inset var(--card-bgcolor) !important;
-  xborder: 1px solid #000;
-  xborder-left: 3px inset #111;
-  xborder-bottom: 5px solid #111;
-  xborder-radius: 4px;
 }
 
 .card-title {
@@ -152,7 +147,6 @@ body {
   height: 100%;
   max-height: inherit;
   overflow: auto;
-  
 }
 
 .card.taller {
@@ -160,25 +154,25 @@ body {
   max-height: 520px;
 }
 
+.card.tallest {
+  min-height: 780px;
+  max-height: 780px;
+}
+
 
 
 .card-body.tasks {
   background-color: #f5f5f5 !important;
-  width: 600px;
   margin: 0 auto;
   padding: 0;
   opacity: 1 !important;
   text-align: left;
-  font-family: courier, monospace !important;
   color: #555;
 }
 
 .tasks.list {
   color: #555;
-  font-size: 22px;
   padding: 0 !important;
-  width: 500px;
-  font-family: courier, monospace !important;
   border: 1px solid #dedede;
 }
 
@@ -194,7 +188,7 @@ body {
 .lines {
   border-left: 1px solid #ffaa9f;
   border-right: 1px solid #ffaa9f;
-  width: 2px;
+  width: .3rem;
   float: left;
   height: 495px;
   margin-left: 40px;
@@ -204,9 +198,18 @@ body {
   text-decoration: line-through;
 }
 
+.task-text {
+  
+}
+
+.task-date {
+  letter-spacing: -1px;
+  font-style: italic;
+  float: right;
+}
 
 
-​
+
 
 #content {
   display: grid;

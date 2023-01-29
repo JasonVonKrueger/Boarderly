@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     getWeather();
     showTime();
 
+    // add event listeners to modal close buttons
     let m = document.querySelectorAll('.modal-close');
     m.forEach(function(n) {
         n.addEventListener('click', function(e) {
@@ -203,24 +204,14 @@ function refreshTasks(data) {
 
     for (let i = 0; i < data.length; i++) {
         if (data[i].status === 'complete') {
-            //c = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
-            //c = '<li>Eat Breakfeast</li>';
             markup += `<li class="task-complete">${data[i].task}</li>`;
         }
         else {
-            //c = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
-            //c = '<li>Eat Breakfeast</li>';
-            markup += `<li>${data[i].task}</li>`;
+            markup += `<li><div>
+                <span class="task-text">${data[i].task}</span>
+                <span class="task-date">${data[i].date}</span>
+                </div></li>`;
         }
-
-/*         markup += `
-            <div class="task">
-                <span class="">${data[i].task}</span>
-                <span class="">${c}</span>
-            </div>
-        `; */
-
-
 
         __task_block.innerHTML = markup + '<br /><br /><br />';
         __task_block.scroll(0, 9999);       
