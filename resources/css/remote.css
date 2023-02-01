@@ -61,7 +61,7 @@ body {
 }
 
 #section_top {
-  margin-top: 10%;
+  margin-top: 25%;
 }
 
 .section-buttons {
@@ -127,6 +127,7 @@ button {
   background-color: #f25022;
   box-shadow: 0 0 0 1px #f25022 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #c93a12, 0 8px 0 1px rgba(0, 0, 0, 0.4), 0 8px 8px 1px rgba(0, 0, 0, 0.5);
   transition: 0.15s;
+  font-size: 1.3rem;
 }
 
 .push-button > span {

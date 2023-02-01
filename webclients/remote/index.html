@@ -20,23 +20,20 @@
 <body>
   <div id="header">Boarderly :: Remote Control</div>
 
-  <div id="section_top" class="section-buttons" style="margin-top: 25%;">
+  <div id="section_top" class="section-buttons">
 
     <div id="btn_remote" class="push-button" onclick="showSection('c_dpad')">
       <span class="material-symbols-outlined">remote_gen</span>
       <span>D-Pad</span>
     </div>
-
-    <div id="btn_todo" class="push-button" onclick="showSection('c_todo')">
+    <div id="btn_todo" class="push-button">
       <span class="material-symbols-outlined">checklist_rtl</span>
       <span>To-Do</span>
     </div>
-
     <div id="btn_message" class="push-button" onclick="showSection('c_message')">
       <span class="material-symbols-outlined">sms</span>
       <span>Quick Message</span>
     </div>
-
     <div id="btn_register" class="push-button" onclick="showSection('c_register')">
       <span class="material-symbols-outlined">app_registration</span>
       <span>Register this Device</span>
@@ -45,20 +42,20 @@
   </div>
 
   <!-- Section -->
-  <div id="c_dpad" class="section hidden" style="margin-top: 12%;">
+  <div id="c_dpad" class="section hidden" style="margin-top: 10%;">
     <div class="section-buttons">
       <div id="btn_home" class="push-button" onclick="sendPush('home')">
-        <span class="material-symbols-outlined">home</span>Home</div>
+        <span class="material-symbols-outlined">home</span><span>Home</span></div>
       <div id="btn_pictures" class="push-button" onclick="sendPush('pictures')">
-        <span class="material-symbols-outlined">photo_library</span>Pictures</div>
+        <span class="material-symbols-outlined">photo_library</span><span>Pictures</span></div>
       <div id="btn_news" class="push-button" onclick="sendPush('news')">
-        <span class="material-symbols-outlined">newspaper</span>News</div>
+        <span class="material-symbols-outlined">newspaper</span><span>News</span></div>
       <div id="btn_games" class="push-button" onclick="sendPush('games')">
-        <span class="material-symbols-outlined">sports_esports</span>Games</div>
+        <span class="material-symbols-outlined">sports_esports</span><span>Games</span></div>
       <div id="btn_jitsi" class="push-button" onclick="sendPush('jitsi')">
-        <span class="material-symbols-outlined">video_call</span>Jitsi</div>
+        <span class="material-symbols-outlined">video_call</span><span>Jitsi</span></div>
       <div id="btn_tools" class="push-button" onclick="sendPush('tools')">
-        <span class="material-symbols-outlined">tools_wrench</span>Tools</div>        
+        <span class="material-symbols-outlined">tools_wrench</span><span>Tools</span></div>        
     </div>
 
     <div id="function_buttons" class="grid" style="padding-top: 10%;">

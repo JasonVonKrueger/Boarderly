@@ -218,9 +218,11 @@ body {
 #time {
   position: fixed;
   bottom: 0;
-  font-size: 1.15em;
+  font-size: 2rem;
+  letter-spacing: .2rem;
   text-align: center;
   width: 100%;
+  color: #ccc;
 }
 
 .bubble {

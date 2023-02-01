@@ -11,6 +11,7 @@ const preview = document.querySelector('img.preview');
 const reader = new FileReader();
 
 fileInput.addEventListener('change', handleSelected);
+btn_todo.addEventListener('click', handleTodoClicked);
 
 document.addEventListener('DOMContentLoaded', function(e) {
   // see if the sender has used it before
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     //__message.focus();
   }
 
-  socket.emit('REFRESH_TASKS');
+  //socket.emit('REFRESH_TASKS');
   socket.on('REFRESH_TASKS', refreshTasks);
 });
 
@@ -69,6 +70,13 @@ function sendPush(btn) {
   });
 }
 
+function handleTodoClicked() {
+  socket.emit('REFRESH_TASKS');
+  hideElement('section_top');
+  showElement('c_todo');
+  showElement('btn_back');
+}
+
 function refreshTasks(data) {
   const task_block = document.getElementById('task_block');
 
@@ -104,14 +112,15 @@ function addTask() {
 
   if (new_task.value.length == 0) return;
 
-  let d = new Date()
+  let d = new Date();
   socket.emit('POST_TASK', {
     task: new_task.value,
     date: d.toLocaleString(),
+    created_by: `${__boarderly.fname} ${__boarderly.lname}`,
     token: __boarderly.token
-  })
+  });
 
-  socket.emit('REFRESH_TASKS');
+  //socket.emit('REFRESH_TASKS');
 }
 
 function completeTask(id) {

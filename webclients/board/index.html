@@ -52,11 +52,9 @@
         <span class="material-symbols-outlined">tools_wrench</span>
         <span>Tools</span>
       </div>
-
-      <div id="time" onload="showTime()"></div>
     </div>
     <!-- end sidebar -->
-
+    
     <!-- contents -->
     <div id="contents" tabindex="-1">
 
@@ -189,13 +187,16 @@
 
   <div id="pictures_modal" class="modal hidden">
     <span class="modal-close" onclick="closeModal('pictures_modal');">&times;</span>
-    <iframe src="/resources/widgets/pictures.html" title="Pictures"></iframe>
+    <iframe src="/resources/widgets/pictures" title="Pictures"></iframe>
   </div>
 
   <div id="memcards_modal" class="modal hidden">
     <span class="modal-close active">&times;</span>
     <iframe src="/resources/widgets/memorycards" title="Memory Cards"></iframe>
   </div>
+
+  
+  <div id="time" onload="showTime()"></div>
 
   <!-- hidden button to trigger audio -->
   <button id="btn_playsound" class="fff" style="display: none;">Play</button>

@@ -297,7 +297,7 @@ function buildAlbumList(data) {
         if (!a.includes(album_name)) {
             a.push(album_name);
             button_markup += `
-                <button class="btn" tabindex="0" onclick="filterSelection('${o.css_name}')">${o.album.replaceAll('_', ' ')}</button>
+                <button class="btn" onclick="filterSelection('${o.css_name}')">${o.album.replaceAll('_', ' ')}</button>
             `;   
         }
 
@@ -312,7 +312,7 @@ function getPicMarkup(album, name, css_name) {
     let markup = '';
 
     markup += `
-        <div class="content-grid-item card" tabindex="0">
+        <div class="content-grid-item card">
         <div class="card-body">
         <img src="/albums/${album}/${name}" alt="${name}" class="${css_name} pic-thumb" onclick="openModal('pictures_modal');">
         <p>${name.split('.')[0]}</p>
@@ -327,17 +327,10 @@ function handlePicClick(e) {
    
 }
 
-
-
-
-
-
 function facenameFlip() {
     let card = document.querySelector('.flip-card');
     card.classList.toggle('is-flipped');
 }
-
-
 
 //filterSelection("all")
 
