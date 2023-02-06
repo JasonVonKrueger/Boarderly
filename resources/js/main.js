@@ -1,3 +1,7 @@
+//const FaceName = require("./classes/FaceName");
+
+//import { FaceName } from './classes/FaceName'
+
 const socket = io();
 const messages = [];
 
@@ -312,10 +316,10 @@ function getPicMarkup(album, name, css_name) {
     let markup = '';
 
     markup += `
-        <div class="content-grid-item card">
-        <div class="card-body">
-        <img src="/albums/${album}/${name}" alt="${name}" class="${css_name} pic-thumb" onclick="openModal('pictures_modal');">
-        <p>${name.split('.')[0]}</p>
+        <div class="xcontent-grid-item xcard">
+        <div class="xcard-body">
+        <img src="/albums/${album}/${name}" alt="${name}" class="${css_name} pic-thumb" onclick="showImage(this.src);">
+        
         </div>
         </div>
     `;
@@ -323,8 +327,25 @@ function getPicMarkup(album, name, css_name) {
     return markup;
 }
 
-function handlePicClick(e) {
-   
+function showImage(src) {
+    // remove the previous pic
+    document.querySelectorAll('#image_preview_container img').forEach(function(i) {
+        i.classList.remove('show');
+    })
+
+    const img = new Image();
+    document.getElementById('image_preview_container').appendChild(img);
+    img.src = src;
+    img.classList.add('show');
+
+    
+    //document.querySelector('.image-preview').classList.remove('show');
+    //img.classList.add('show');
+
+    //img.classList.add('grow');
+
+    //document.getElementById('__image_preview').style.backgroundImage = `url('${e}')`;
+    //document.querySelector('#__image_preview > img').classList.add('grow');
 }
 
 function facenameFlip() {

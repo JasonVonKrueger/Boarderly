@@ -7,6 +7,8 @@
     const heading = document.querySelector('.js-heading');
     const tileContainer = document.querySelector('.js-container');
 
+    startButton.focus();
+
     function resetGame(text) {
       alert(text);
       sequence = [];

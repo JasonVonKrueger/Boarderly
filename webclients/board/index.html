@@ -11,6 +11,7 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="manifest" href="/manifest.json">
+  <script type="module" src='/resources/widgets/facename/FaceName.js'></script>
   <script src="/resources/js/csi.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>
@@ -100,17 +101,17 @@
     <div id="section_games" class="section hidden">
       <div class="content-grid col-3">
 
-        <div id="game_simon" class="content-grid-item card" onclick="openModal(this)">
+        <div id="game_simon" class="content-grid-item card" onclick="openModal('simon_modal')">
           <div class="card-title">Simon Says</div>
           <div class="card-body">
             <img src="/resources/widgets/simon/cover.png" style="cursor: pointer;" />
           </div>
         </div>
 
-        <div class="content-grid-item card">
+        <div class="content-grid-item card" onclick="facenameFlip()">
           <div class="card-title">Name that Face</div>
           <div class="card-body">
-            <div data-include="/resources/widgets/facename.html"></div>
+            <face-name name="Raelyn" path="/albums/Roger_and_family/Raelyn.png"></face-name>
           </div>
         </div>
 
@@ -129,7 +130,8 @@
     <div id="section_pictures" class="section hidden">
       <div id="__album_buttons"></div>
       <div style="height: 2em;"></div>
-      <div class="content-grid col-4" id="__pictures_block"></div>
+      <div class="content-grid col-8" id="__pictures_block"></div>
+      <div id="image_preview_container"></div>
     </div>
     <!-- End section -->
 
@@ -194,7 +196,6 @@
     <span class="modal-close active">&times;</span>
     <iframe src="/resources/widgets/memorycards" title="Memory Cards"></iframe>
   </div>
-
   
   <div id="time" onload="showTime()"></div>
 

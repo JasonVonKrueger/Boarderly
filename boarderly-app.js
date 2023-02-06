@@ -1,12 +1,11 @@
 /* Server for Boarderly */
 require('dotenv').config(); 
-const config = require('./lib/settings.json');
 const http = require('http');
 const express = require('express');
 const socket_io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
-const Image = require('./lib/classes/Image');
+const ImageWorker = require('./lib/classes/ImageWorker');
 const TaskWorker = require('./lib/classes/TaskWorker');
 const MessageWorker = require('./lib/classes/MessageWorker');
 
@@ -17,14 +16,14 @@ let albums = [];
 // initialize the content folders
 console.log('Initializing content directories...');
 initContentDir('_BOARDS_');
-initContentDir('_ALBUMS_');
+initContentDir('.stores/albums');
 initContentDir('.stores/tasks');
 initContentDir('.stores/messages');
 initContentDir('_DEVICES_');
 
 const message_worker = new MessageWorker();
 const task_worker = new TaskWorker();
-const image = new Image();
+const image_worker = new ImageWorker();
 
 // load up the messages
 console.log('Fetching message list...');
@@ -51,7 +50,7 @@ const app = express();
 app.use('/', express.static('./webclients/board'));
 app.use('/remote', express.static('./webclients/remote'));
 app.use('/message', express.static('./webclients/message'));
-app.use('/albums', express.static('./_ALBUMS_'));
+app.use('/albums', express.static('./.stores/albums'));
 app.use('/devices', express.static('./_DEVICES_'));
 app.use('/resources', express.static('./resources'));
 app.use(express.json());
@@ -69,15 +68,19 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('REFRESH_MESSAGES', function() {
-		//socket.broadcast.emit('REFRESH_MESSAGES', messages);
-		io.to('poores').emit('REFRESH_MESSAGES', messages);
+		// return sorted by date
+		io.to('poores').emit('REFRESH_MESSAGES', messages.sort(function(a, b) {
+			if (b.date < a.date) return 1;
+			else if (a.date < b.date) return -1;
+			else return 0;
+		}));
 	});
 
 	socket.on('POST_MESSAGE', function(data) {
 		const id = getRandomFileName();
 		message_worker.create(id, data);
 		//message_worker.load().then(function(results) { messages = results; });
-		messages.push(message);
+		messages.push(data);
 		io.to('poores').emit('REFRESH_MESSAGES', messages);
 	});
 
@@ -89,7 +92,13 @@ io.on('connection', function (socket) {
 
 	socket.on('REFRESH_TASKS', function() {
 		task_worker.load().then(function(results) { tasks = results; });
-		io.to('poores').emit('REFRESH_TASKS', tasks);
+		
+		// return sorted by date
+		io.to('poores').emit('REFRESH_TASKS', tasks.sort(function(a, b) {
+			if (b.date < a.date) return 1;
+			else if (a.date < b.date) return -1;
+			else return 0;
+		}));
 	});
 
 	socket.on('POST_TASK', function(data) {
@@ -124,8 +133,7 @@ io.on('connection', function (socket) {
 
 		// resize it
 		const path = `./_DEVICES_/${data.token}/${data.file_name}`;
-		const avatar = new Image();
-		avatar.shrink(buffer, path, 90, 90);
+		image_worker.shrink(buffer, path, 90, 90);
 
 		// fs.writeFile(`./_DEVICES_/${data.token}/${data.file_name}`, buffer, function(err) {
 		// 	callback({ message: err ? "failure" : "success" });
@@ -177,7 +185,7 @@ async function getSavedContent(c) {
 	if (c === 'albums') {
 		// get a list of all pictures and the albums
 		// each directory is an album
-		dir = __dirname + path.join('/_ALBUMS_/');
+		dir = __dirname + path.join('/.stores/albums/');
 
 		items = await readdir(dir);
 		for (const item of items) {
