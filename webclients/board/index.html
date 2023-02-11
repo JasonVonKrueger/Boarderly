@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="/resources/images/favicon.ico" />
   <link rel="stylesheet" href="/resources/css/main.css" />
-  <link rel="stylesheet" href="/resources/css/typewriter.css" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="manifest" href="/manifest.json">
   <script type="module" src='/resources/widgets/facename/FaceName.js'></script>
+  <script type="module" src='/resources/widgets/aboutme/Me.js'></script>
   <script src="/resources/js/csi.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>
@@ -23,7 +21,7 @@
   <div id="top_container">
 
     <!-- sidebar -->
-    <div id="sidebar" tabindex="-1">
+    <div id="sidebar">
       <div class="brand">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Boarderly</span>
@@ -45,10 +43,10 @@
         <span class="material-symbols-outlined">sports_esports</span>
         <span>Games</span>
       </div>
-      <div id="nav_jitsi" onclick="return show(this)">
+      <!-- <div id="nav_jitsi" onclick="return show(this)">
         <span class="material-symbols-outlined">video_call</span>
         <span>Jitsi</span>
-      </div>
+      </div> -->
       <div id="nav_tools" onclick="return show(this)">
         <span class="material-symbols-outlined">tools_wrench</span>
         <span>Tools</span>
@@ -60,16 +58,16 @@
     <div id="contents" tabindex="-1">
 
       <!-- Home section -->
-      <div id="section_home" class="section" tabindex="1">
+      <div id="section_home" class="section">
         <div class="content-grid col-2">
 
-          <div class="content-grid-item card taller messages">
+          <div class="content-grid-item card taller messages boring">
             <div class="card-title">Messages</div>
             <div class="card-body" id="__message_block"></div>
             <div id="msg_anchor"></div>
           </div>
 
-          <div class="content-grid-item card taller">
+          <div class="content-grid-item card taller boring">
             <div class="card-title">Reminders</div>
             <!-- <div class="card-body" id="__task_block"></div> -->
             
@@ -80,7 +78,7 @@
             <div id="task_anchor"></div>
           </div>
 
-        </div>
+        </div>     
       </div>
       <!-- End section -->
 
@@ -88,7 +86,7 @@
       <div id="section_news" class="section hidden">
         <div class="content-grid col-3">
 
-          <div class="content-grid-item card weather taller" tabindex="1">
+          <div class="content-grid-item card weather taller boring" tabindex="1">
             <div class="card-title">Weather</div>
             <div class="card-body" id="__weather_block"></div>
           </div>
@@ -136,23 +134,23 @@
     <!-- End section -->
 
     <!-- Jitsi section -->
-    <div id="section_jitsi" class="section hidden">
+    <!-- <div id="section_jitsi" class="section hidden">
       <div class="content-grid col-1">
 
-        <div class="content-grid-item card tallest">
+        <div class="content-grid-item card tallest boring">
           <div class="card-title">Jitsi</div>
           <div class="card-body" id="meet"></div>
         </div>
 
       </div>
-    </div>
+    </div> -->
     <!-- End section -->
 
       <!-- Tools section -->
       <div id="section_tools" class="section hidden">
         <div class="content-grid col-3">
 
-          <div class="content-grid-item card taller">
+          <div class="content-grid-item card taller boring">
             <div class="card-title">Remote Control Download</div>
             <div class="card-body">
               <canvas id="qrcode"></canvas>
@@ -193,8 +191,12 @@
   </div>
 
   <div id="memcards_modal" class="modal hidden">
-    <span class="modal-close active">&times;</span>
+    <span class="modal-close">&times;</span>
     <iframe src="/resources/widgets/memorycards" title="Memory Cards"></iframe>
+  </div>
+
+  <div id="screensaver_modal" class="modal">
+    <about-me></about-me>
   </div>
   
   <div id="time" onload="showTime()"></div>

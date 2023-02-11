@@ -36,6 +36,10 @@ document.addEventListener('DOMContentLoaded', function(e) {
   socket.on('REFRESH_TASKS', refreshTasks);
 });
 
+function goHome() {
+  snd_button_push.play();
+  window.location.reload();
+}
 
 function sendMessage() {
   if (!__from.value || !__message.value) return false
@@ -129,14 +133,17 @@ function completeTask(id) {
   });
 }
 
-function registerDevice() {
+async function registerDevice() {
   if (!__fname.value || !__lname.value) {
     return false;
   }
 
-  const token = generateToken();
+  // go fetch a token
+  let res = await fetch('/api/gettoken');
+  let json = await res.json();
+  const token = json.answer;
   const data = {};
-
+ 
   data.fname = __fname.value;
   data.lname = __lname.value;
   data.token = token;
@@ -169,16 +176,6 @@ function resetDevice() {
   hideElement('avatar_preview');
   hideElement('btn_reset');
   hideElement('btn_save');
-}
-
-function generateToken(n = 20) {
-  var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  var token = '';
-  for (var i = 0; i < n; i++) {
-      token += chars[Math.floor(Math.random() * chars.length)];
-  }
-
-  return token;
 }
 
 function handleEvent(e) {

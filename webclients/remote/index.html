@@ -52,8 +52,6 @@
         <span class="material-symbols-outlined">newspaper</span><span>News</span></div>
       <div id="btn_games" class="push-button" onclick="sendPush('games')">
         <span class="material-symbols-outlined">sports_esports</span><span>Games</span></div>
-      <div id="btn_jitsi" class="push-button" onclick="sendPush('jitsi')">
-        <span class="material-symbols-outlined">video_call</span><span>Jitsi</span></div>
       <div id="btn_tools" class="push-button" onclick="sendPush('tools')">
         <span class="material-symbols-outlined">tools_wrench</span><span>Tools</span></div>        
     </div>
@@ -157,7 +155,7 @@
   </div>
   <!-- End section -->
 
-  <div id="btn_back" class="hidden" onclick="window.location.reload();"><span class="material-symbols-outlined">arrow_back</span></div>
+  <div id="btn_back" class="hidden clicker" onclick="goHome()"><span class="material-symbols-outlined">arrow_back</span></div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>

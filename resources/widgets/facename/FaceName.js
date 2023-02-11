@@ -65,7 +65,7 @@ class FaceName extends HTMLElement {
         this.innerHTML = markup;
     }
 
-    connectedCallback() { // (2)
+    connectedCallback() {
         if (!this.rendered) {
           this.render();
           this.rendered = true;

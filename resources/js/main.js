@@ -8,8 +8,15 @@ const messages = [];
 let __selected_card_index = -1;
 let __sidebar = null;
 let __content = null;
+let countdown;
 
 document.addEventListener('DOMContentLoaded', function(e) {
+    // stuff for the screen saver
+    document.body.addEventListener('click', resetScreenTimer, false);
+    document.body.addEventListener('mousemove', resetScreenTimer, false);
+
+    //resetTimer(); 
+
     __sidebar = document.getElementById('sidebar');
     __content = document.getElementById('contents');
 
@@ -33,20 +40,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
         })
     });
 
+    // add event listeners for screen saver
+    //document.querySelector('#screensaver_modal').addEventListener('click', handleScrSavr);
 
-
-    btn_playsound.addEventListener('click', function(e) {
-        var snd_newmessage = new Howl({
-            src: ['/resources/sounds/click.mp3'],
-            onplayerror: function() {
-                snd_newmessage.once('unlock', function() {
-                    //snd_newmessage.play();
-              });
-            }
-          });
-
-        //snd_newmessage.play();
-    });
+    // handle notification sounds
+    btn_playsound.addEventListener('click', handleSound);
 
     // load the qr code
     QRCode.toCanvas(document.getElementById('qrcode'), `${window.location}remote`, function (error) {
@@ -65,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
             displayName: 'Sherry Poore'
         }
     };
-    const api = new JitsiMeetExternalAPI(domain, options);
+    //const api = new JitsiMeetExternalAPI(domain, options);
 
 });
 
@@ -79,11 +77,24 @@ function getActiveCard() {
     return b.id;
 }
 
-function show(el) {
-    // var msg = new SpeechSynthesisUtterance();
-    // msg.text = "He's a stupid cat.";
-    // window.speechSynthesis.speak(msg);
+// function handleScrSavr() {
+//     closeModal('screensaver_modal');
+// }
 
+function handleSound() {
+    var snd_newmessage = new Howl({
+        src: ['/resources/sounds/click.mp3'],
+        onplayerror: function() {
+            snd_newmessage.once('unlock', function() {
+                //snd_newmessage.play();
+          });
+        }
+      });
+
+    //snd_newmessage.play();
+}
+
+function show(el) {
     // reset selected card
     __selected_card_index = -1;
 
@@ -103,6 +114,9 @@ function show(el) {
 }
 
 function handleRemBtnPush(data) {
+    // turn off screen saver
+    triggerEvent(document.body, 'mousemove');
+
     let section = getActiveSidebarButton().replace('nav', 'section');
     let cards = document.getElementById(section).querySelectorAll('.card');
 
@@ -123,8 +137,8 @@ function handleRemBtnPush(data) {
             triggerEvent(document.getElementById('nav_news'), 'click');
             __content.focus();
             break;
-        case 'jitsi':
-            triggerEvent(document.getElementById('nav_jitsi'), 'click');
+        case 'messages':
+            triggerEvent(document.getElementById('nav_messages'), 'click');
             __content.focus();
             break;
         case 'tools':
@@ -196,6 +210,8 @@ function refreshMessages(data) {
     
     __message_block.innerHTML = markup + '<br /><br /><br />';
     __message_block.scroll(0, 9999);
+
+    speak('You have a new message!');
 }
 
 function refreshTasks(data) {
@@ -289,6 +305,20 @@ function showTime() {
     setTimeout(showTime, 1000);
 }
 
+function speak(message) {
+    const talker = new SpeechSynthesisUtterance();
+    let voices = window.speechSynthesis.getVoices();
+
+    talker.voice = voices[20]; 
+    talker.voiceURI = 'native';
+    talker.text = message;
+    talker.lang = 'en-US';
+    talker.rate = .6;
+    talker.pitch = 1;
+
+    window.speechSynthesis.speak(talker);
+}
+
 function buildAlbumList(data) {
     let button_markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;
     let pic_markup = '';
@@ -365,4 +395,17 @@ function filterSelection(c) {
 //     w3RemoveClass(x[i], "show");
 //     if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
 //   }
+}
+
+function resetScreenTimer() {
+    if (countdown) {
+        document.getElementById('screensaver_modal').classList.remove('active');
+        document.getElementById('screensaver_modal').classList.add('hidden');
+        clearTimeout(countdown)
+    }
+
+    countdown = setTimeout(function() {
+        document.getElementById('screensaver_modal').classList.add('active');
+        document.getElementById('screensaver_modal').classList.remove('hidden');
+    }, 10000);
 }

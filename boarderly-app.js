@@ -9,50 +9,52 @@ const ImageWorker = require('./lib/classes/ImageWorker');
 const TaskWorker = require('./lib/classes/TaskWorker');
 const MessageWorker = require('./lib/classes/MessageWorker');
 
+// file stores
+const __devices = '.stores/devices';
+const __messages = '.stores/messages';
+const __tasks = '.stores/tasks';
+const __albums = '.stores/albums';
+const __boards = '.stores/boards';
+
 let messages = [];
 let tasks = [];
 let albums = [];
 
 // initialize the content folders
 console.log('Initializing content directories...');
-initContentDir('_BOARDS_');
-initContentDir('.stores/albums');
-initContentDir('.stores/tasks');
-initContentDir('.stores/messages');
-initContentDir('_DEVICES_');
+initContentDir(__boards);
+initContentDir(__albums);
+initContentDir(__tasks);
+initContentDir(__messages);
+initContentDir(__devices);
 
-const message_worker = new MessageWorker();
-const task_worker = new TaskWorker();
-const image_worker = new ImageWorker();
+const message_worker = new MessageWorker(__messages);
+const task_worker = new TaskWorker(__tasks);
+const image_worker = new ImageWorker(__albums);
 
 // load up the messages
 console.log('Fetching message list...');
 message_worker.load().then(function(results) { messages = results; });
-// getSavedContent('messages').then(function(results) {
-// 	messages = results;
-// });
 
 // load up the tasks
 console.log('Fetching task list...');
 task_worker.load().then(function(results) { tasks = results; });
 
-/* getSavedContent('tasks').then(function(results) {
-	tasks = results;
-}); */
-
 // load up the photo albums
 console.log('Fetching photo album list...');
-getSavedContent('albums').then(function(results) {
-	albums = results;
-});
+getSavedContent('albums').then(function(results) { albums = results; });
 
+// create some extra routes
 const app = express();
 app.use('/', express.static('./webclients/board'));
 app.use('/remote', express.static('./webclients/remote'));
 app.use('/message', express.static('./webclients/message'));
-app.use('/albums', express.static('./.stores/albums'));
-app.use('/devices', express.static('./_DEVICES_'));
+app.use('/albums', express.static(__albums));
+app.use('/devices', express.static(__devices));
 app.use('/resources', express.static('./resources'));
+app.get('/api/gettoken', function(req, res) { 
+	res.send( { answer: generateToken() }); 
+});
 app.use(express.json());
 
 const server = http.Server(app);
@@ -124,7 +126,7 @@ io.on('connection', function (socket) {
 
 	// handle device registration
 	socket.on('REGISTER_DEVICE', function(data, callback) {
-		fs.mkdir(`./_DEVICES_/${data.token}`, function(error) {
+		fs.mkdir(`${__devices}/${data.token}`, function(error) {
 			if (error) console.log(error); 
 		});
 
@@ -132,14 +134,8 @@ io.on('connection', function (socket) {
 		const buffer = Buffer.from(data.image.split(';base64,')[1], 'base64');
 
 		// resize it
-		const path = `./_DEVICES_/${data.token}/${data.file_name}`;
+		const path = `${__devices}/${data.token}/${data.file_name}`;
 		image_worker.shrink(buffer, path, 90, 90);
-
-		// fs.writeFile(`./_DEVICES_/${data.token}/${data.file_name}`, buffer, function(err) {
-		// 	callback({ message: err ? "failure" : "success" });
-		// });
-
-		
 	});
 });
 
@@ -148,39 +144,6 @@ async function getSavedContent(c) {
 	const { statSync } = require('fs');
 	const results = [];
 	let dir = null, items = null;
-
-	// if (c === 'messages') {
-	// 	dir = __dirname + path.join('/.stores/messages/');
-
-	// 	items = await readdir(dir);
-	// 	for (const item of items) {
-	// 		fs.readFile(dir + item, 'utf8', function (err, message) {
-	// 			if (err) {
-	// 				return console.log(err);
-	// 			}
-
-	// 			results.push(JSON.parse(message));
-	// 		});
-	// 	}
-	// }
-
-	// if (c === 'tasks') {
-	// 	dir = __dirname + path.join('/.stores/tasks/');
-
-	// 	// empty the tasks array
-	// 	tasks.length = 0;
-
-	// 	items = await readdir(dir);
-	// 	for (const item of items) {
-	// 		fs.readFile(dir + item, 'utf8', function(err, task) {
-	// 			if (err) {
-	// 				console.log(err);
-	// 			}
-
-	// 			results.push(JSON.parse(task));
-	// 		});
-	// 	}
-	// }
 
 	if (c === 'albums') {
 		// get a list of all pictures and the albums
@@ -208,6 +171,16 @@ async function getSavedContent(c) {
 	}
 	
 	return results;
+}
+
+function generateToken(n = 32) {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let token = '';
+    for (var i = 0; i < n; i++) {
+        token += chars[Math.floor(Math.random() * chars.length)];
+    }
+  
+    return token;
 }
 
 function getRandomFileName() {

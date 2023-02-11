@@ -32,7 +32,9 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: var(--font-main);
-  background-image: url('/resources/images/mount-24.jpg');
+  xbackground-image: url('/resources/images/mount-24.jpg');
+
+  background-image: linear-gradient(to right bottom, #7c87f7, #6368d8, #4949b9, #2f2c9a, #0e0c7c);
 }
 
 .hidden {
@@ -130,12 +132,12 @@ body {
 }
 
 .selected,
-.content-grid-item:hover,
+.content-grid-item:hover:not(.boring),
 .content-grid-item:focus {
   transform: scale(1.04);
 }
 
-.card.active {
+.card.active:not(.boring) {
   transform: scale(1.04);
 }
 
@@ -170,8 +172,6 @@ body {
   min-height: 780px;
   max-height: 780px;
 }
-
-
 
 .card-body.tasks {
   background-color: #f5f5f5 !important;
@@ -299,11 +299,12 @@ body {
 }
 
 #reload {
-  font-size: 6rem;
+  font-size: 10rem;
   cursor: pointer;
+  margin-top: 8%;
 }
 
-#reload:hover {
+#reload.spin {
   animation:spin 1.5s linear infinite;
 }
 
@@ -358,6 +359,11 @@ body {
   text-decoration: none;
   cursor: pointer;
   transform: scale(1.04);
+}
+
+#screensaver_modal {
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,1);
 }
 
 iframe {
