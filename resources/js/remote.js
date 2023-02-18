@@ -5,6 +5,8 @@ const snd_button_push = new Howl({
 });
 
 const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
+const __fname = document.getElementById('fname');
+const __lname = document.getElementById('lname');
 
 const fileInput = document.querySelector('input[type="file"]');
 const preview = document.querySelector('img.preview');
@@ -15,7 +17,14 @@ btn_todo.addEventListener('click', handleTodoClicked);
 
 document.addEventListener('DOMContentLoaded', function(e) {
   // see if the sender has used it before
-  if (__boarderly.fname && __boarderly.lname) {
+  if (__boarderly.fname && __boarderly.lname && __boarderly.token) {
+
+    // enable the other buttons
+    document.querySelectorAll('.reg-req').forEach(function(b) {
+      b.classList.remove('reg-req');
+    });
+
+    // pre-populate first and last name
     __fname.value = __boarderly.fname;
     __lname.value = __boarderly.lname;
     __fname.setAttribute('disabled', 'true');
@@ -26,27 +35,32 @@ document.addEventListener('DOMContentLoaded', function(e) {
     showElement('avatar_preview');
     hideElement('btn_save');
     hideElement('contact_pic');
-
-    // pre-populate the message from field
-    __from.value = `${__boarderly.fname} ${__boarderly.lname}`;
-    //__message.focus();
   }
+
+  // add click handler for button sounds
+  document.querySelectorAll('.push-button').forEach(function(b) {
+    b.addEventListener('click', handleButtonPush, false)
+  })
 
   //socket.emit('REFRESH_TASKS');
   socket.on('REFRESH_TASKS', refreshTasks);
 });
 
-function goHome() {
+
+function handleButtonPush(e) {
   snd_button_push.play();
+}
+
+function goHome() {
   window.location.reload();
 }
 
 function sendMessage() {
-  if (!__from.value || !__message.value) return false
+  if (!__boarderly.fname || !__boarderly.lname || !__boarderly.token) return false;
 
   let d = new Date()
   socket.emit('POST_MESSAGE', {
-    from: __from.value,
+    from: `${__boarderly.fname} ${__boarderly.lname}`,
     message: __message.value,
     date: d.toLocaleString(),
     token: __boarderly.token,
@@ -58,8 +72,6 @@ function sendMessage() {
 }
 
 function showSection(section) {
-  snd_button_push.play();
-
   hideElement('section_top');
   showElement(section);
   showElement('btn_back');
@@ -69,9 +81,7 @@ function showSection(section) {
 
 function sendPush(btn) {
   snd_button_push.play();
-  socket.emit('BUTTON_PUSHED', {
-    button: btn
-  });
+  socket.emit('BUTTON_PUSHED', { button: btn });
 }
 
 function handleTodoClicked() {
@@ -128,24 +138,20 @@ function addTask() {
 }
 
 function completeTask(id) {
-  socket.emit('COMPLETE_TASK', {
-    id: id
-  });
+  socket.emit('COMPLETE_TASK', { id: id });
 }
 
 async function registerDevice() {
-  if (!__fname.value || !__lname.value) {
-    return false;
-  }
-
+  if (!fname.value || !lname.value) return false;
+  
   // go fetch a token
   let res = await fetch('/api/gettoken');
   let json = await res.json();
   const token = json.answer;
   const data = {};
  
-  data.fname = __fname.value;
-  data.lname = __lname.value;
+  data.fname = fname.value;
+  data.lname = lname.value;
   data.token = token;
   data.file_name = document.getElementById('contact_pic').files[0].name;
   data.image = reader.result;
@@ -153,11 +159,7 @@ async function registerDevice() {
   localStorage.setItem('boarderly', JSON.stringify(data));
  
   // save to server
-  socket.emit('REGISTER_DEVICE', data, function(response) {
-    //data.token = response.token;
-    //data.avatar_link = 'bob'; //`/devices/${data.token}/avatar`;
-    //__boarderly.token = data.token;
-  });
+  socket.emit('REGISTER_DEVICE', data)
 
   hideElement('contact_pic');
   hideElement('btn_save');
@@ -166,16 +168,8 @@ async function registerDevice() {
 }
 
 function resetDevice() {
-  __fname.value = '';
-  __lname.value = '';
-  preview.src = null;
-  
   localStorage.removeItem('boarderly');
-
-  showElement('contact_pic');
-  hideElement('avatar_preview');
-  hideElement('btn_reset');
-  hideElement('btn_save');
+  goHome();
 }
 
 function handleEvent(e) {

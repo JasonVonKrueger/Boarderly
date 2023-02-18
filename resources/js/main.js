@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
         if (error) console.error(error)
     })
 
+
     const domain = 'meet.jit.si';
     const options = {
         roomName: 'JitsiMeetAPIExample',
@@ -125,8 +126,8 @@ function handleRemBtnPush(data) {
             triggerEvent(document.getElementById('nav_home'), 'click');
             __content.focus();
             break;
-        case 'pictures':
-            triggerEvent(document.getElementById('nav_pictures'), 'click');
+        case 'gallery':
+            triggerEvent(document.getElementById('nav_gallery'), 'click');
             __content.focus();
             break;
         case 'games':
@@ -142,7 +143,7 @@ function handleRemBtnPush(data) {
             __content.focus();
             break;
         case 'tools':
-            triggerEvent(document.getElementById('nav_tools'), 'click');
+            triggerEvent(document.getElementById('nav_settings'), 'click');
             __content.focus();
             break;
         case 'ArrowRight':
@@ -266,8 +267,14 @@ async function getWeather() {
     for (let i=0; i<forecast.forecastday.length; i++) {
         let d = forecast.forecastday[i];
         //let dow = new Date(d.date).toLocaleString('default', {weekday: 'long'});
+        let dd = new Date(d.date).toLocaleDateString('en-us', {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+          })
 
-        markup += `<tr><td>${d.date}</td>
+        markup += `<tr><td>${dd}</td>
             <td><img src="${d.day.condition.icon}" style="width: 50px" /></td>
             <td>${Math.round(d.day.maxtemp_f)}</td>
             <td>${d.day.avghumidity}%</td></tr>`;
@@ -326,7 +333,6 @@ function buildAlbumList(data) {
 
     data.forEach(function(o) {
         let album_name = o.album;
-        let pic_name = o.name;
 
         if (!a.includes(album_name)) {
             a.push(album_name);
@@ -335,66 +341,22 @@ function buildAlbumList(data) {
             `;   
         }
 
-        pic_markup += getPicMarkup(o.album, o.name, o.css_name);
+        pic_markup += getPicMarkup(o.album, o.name);
     });
    
-    __album_buttons.innerHTML = button_markup;
+   // __album_buttons.innerHTML = button_markup;
     __pictures_block.innerHTML = pic_markup;
 }
 
-function getPicMarkup(album, name, css_name) {
-    let markup = '';
-
-    markup += `
-        <div class="xcontent-grid-item xcard">
-        <div class="xcard-body">
-        <img src="/albums/${album}/${name}" alt="${name}" class="${css_name} pic-thumb" onclick="showImage(this.src);">
-        
-        </div>
-        </div>
-    `;
+function getPicMarkup(album, name) {
+    let markup = `<img src="/albums/${album}/${name}" />`;
 
     return markup;
-}
-
-function showImage(src) {
-    // remove the previous pic
-    document.querySelectorAll('#image_preview_container img').forEach(function(i) {
-        i.classList.remove('show');
-    })
-
-    const img = new Image();
-    document.getElementById('image_preview_container').appendChild(img);
-    img.src = src;
-    img.classList.add('show');
-
-    
-    //document.querySelector('.image-preview').classList.remove('show');
-    //img.classList.add('show');
-
-    //img.classList.add('grow');
-
-    //document.getElementById('__image_preview').style.backgroundImage = `url('${e}')`;
-    //document.querySelector('#__image_preview > img').classList.add('grow');
 }
 
 function facenameFlip() {
     let card = document.querySelector('.flip-card');
     card.classList.toggle('is-flipped');
-}
-
-//filterSelection("all")
-
-function filterSelection(c) {
-    document.querySelector(`.${c}`).parentElement.classList.add('hidden');
-   
-//   var x, i;
-//   x = document.getElementsByClassName("column");
-//   if (c == "all") c = "";
-//   for (i = 0; i < x.length; i++) {
-//     w3RemoveClass(x[i], "show");
-//     if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
-//   }
 }
 
 function resetScreenTimer() {
@@ -407,5 +369,5 @@ function resetScreenTimer() {
     countdown = setTimeout(function() {
         document.getElementById('screensaver_modal').classList.add('active');
         document.getElementById('screensaver_modal').classList.remove('hidden');
-    }, 10000);
+    }, 50000);
 }

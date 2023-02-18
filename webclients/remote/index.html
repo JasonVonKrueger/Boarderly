@@ -20,17 +20,17 @@
 <body>
   <div id="header">Boarderly :: Remote Control</div>
 
+  <!-- Section -->
   <div id="section_top" class="section-buttons">
-
-    <div id="btn_remote" class="push-button" onclick="showSection('c_dpad')">
+    <div id="btn_remote" class="push-button reg-req" onclick="showSection('c_dpad')">
       <span class="material-symbols-outlined">remote_gen</span>
       <span>D-Pad</span>
     </div>
-    <div id="btn_todo" class="push-button">
+    <div id="btn_todo" class="push-button reg-req">
       <span class="material-symbols-outlined">checklist_rtl</span>
       <span>To-Do</span>
     </div>
-    <div id="btn_message" class="push-button" onclick="showSection('c_message')">
+    <div id="btn_message" class="push-button reg-req" onclick="showSection('c_message')">
       <span class="material-symbols-outlined">sms</span>
       <span>Quick Message</span>
     </div>
@@ -38,62 +38,64 @@
       <span class="material-symbols-outlined">app_registration</span>
       <span>Register this Device</span>
     </div>  
-
+    <div id="btn_settings" class="push-button" onclick="showSection('c_settings')">
+      <span class="material-symbols-outlined">settings</span>
+      <span>Settings</span>
+    </div>  
   </div>
+  <!-- End section -->
 
   <!-- Section -->
-  <div id="c_dpad" class="section hidden" style="margin-top: 10%;">
+  <div id="c_dpad" class="section hidden">
     <div class="section-buttons">
       <div id="btn_home" class="push-button" onclick="sendPush('home')">
         <span class="material-symbols-outlined">home</span><span>Home</span></div>
-      <div id="btn_pictures" class="push-button" onclick="sendPush('pictures')">
-        <span class="material-symbols-outlined">photo_library</span><span>Pictures</span></div>
+      <div id="btn_gallery" class="push-button" onclick="sendPush('gallery')">
+        <span class="material-symbols-outlined">photo_library</span><span>Gallery</span></div>
       <div id="btn_news" class="push-button" onclick="sendPush('news')">
         <span class="material-symbols-outlined">newspaper</span><span>News</span></div>
       <div id="btn_games" class="push-button" onclick="sendPush('games')">
-        <span class="material-symbols-outlined">sports_esports</span><span>Games</span></div>
-      <div id="btn_tools" class="push-button" onclick="sendPush('tools')">
-        <span class="material-symbols-outlined">tools_wrench</span><span>Tools</span></div>        
+        <span class="material-symbols-outlined">sports_esports</span><span>Games</span></div>      
     </div>
 
-    <div id="function_buttons" class="grid" style="padding-top: 10%;">
+    <div id="function_buttons">
       <div></div>
-      <div class="grid-item">
+      <div>
         <div class="push-button" onclick="sendPush('ArrowUp')">
           <span class="material-symbols-outlined arrow">keyboard_arrow_up</span> 
         </div>
       </div>
       <div></div>
 
-      <div class="grid-item">
+      <div>
         <div class="push-button" onclick="sendPush('ArrowLeft')">
           <span class="material-symbols-outlined arrow">keyboard_arrow_left</span> 
         </div>
       </div>
       <div></div>
       
-      <div class="grid-item">
+      <div>
         <div class="push-button" onclick="sendPush('ArrowRight')">
           <span class="material-symbols-outlined arrow">keyboard_arrow_right</span> 
         </div>
       </div>
       <div></div>
 
-      <div class="grid-item">
+      <div>
         <div class="push-button" onclick="sendPush('ArrowDown')">
           <span class="material-symbols-outlined arrow">keyboard_arrow_down</span> 
         </div>
       </div>
       <div></div>
 
-      <div class="grid-item">
+      <div>
         <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('exit')">
           <span style="font-size: 1.5rem; color: red;">exit</span>
         </div>
       </div>
       <div></div>
-
-      <div class="grid-item">
+  
+      <div>
         <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('enter')">
           <span style="font-size: 1.5rem; color: green;">enter</span>
         </div>
@@ -103,7 +105,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_todo" class="section hidden" style="margin-top: 10%">
+  <div id="c_todo" class="section hidden">
     <div id="newtask" class="fc-tasks">
         <div style="flex: 100%;">
           <input id="new_task" type="text" placeholder="Add a task">
@@ -118,10 +120,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_message" class="section hidden" style="margin-top: 10%;">
-    <label for="__from">From</label>
-    <input type="text" id="__from" name="__from" placeholder="Your name..">
-
+  <div id="c_message" class="section hidden">
     <label for="__message">Message</label>
     <textarea id="__message" name="__message" placeholder="Write something.." style="height:200px"></textarea>
 
@@ -132,8 +131,8 @@
 
   <!-- Section -->
   <div id="c_register" class="section hidden" style="margin-top: 10%;">
-    <input type="text" id="__fname" placeholder="First name..." />
-    <input type="text" id="__lname" placeholder="Last name..." />
+    <input type="text" id="fname" placeholder="First name..." />
+    <input type="text" id="lname" placeholder="Last name..." />
     <!-- <input type="text" id="__board_code" placeholder="Board code..." /> -->
 
     <p>

@@ -14,6 +14,8 @@
   --brand-font-size: 1.7em;
   --active-element: #ed1010;
   --hightlight: rgb(122, 117, 117);
+  --inlay-border-color: #666;
+  --inlay-pit-color: #707c8612;
 }
 
 * {
@@ -29,39 +31,41 @@ html {
 }
 
 body {
-  background: rgb(3, 4, 6);
-  background: linear-gradient(124deg, rgba(3, 4, 6, 1) 0%, rgba(64, 76, 99, 1) 42%);
+  background-color: #232324;
   padding: 2rem;
   overflow: hidden;
 }
 
+.reg-req,
 .hidden {
   display: none !important;
 }
 
 .material-symbols-outlined {
-  xfont-size: 2rem !important;
+  font-size: 2rem !important;
 }
 
-
 #header {
-  background-color: rgba(3, 2, 2, .3);
+  background: #474344;
+  background: linear-gradient(to top, #474344, #1B1C1C);
   color: #fff;
-  xborder-bottom: 2px inset rgb(186, 144, 144);
-  xborder-bottom-left-radius: 5em;
-  xborder-bottom-right-radius: 5em;
+  text-shadow: 2px 2px 4px #272827;
+  border-bottom: .1rem inset rgb(20, 19, 19);
   position: fixed;
   top: 0;
   left: 0;
   margin: 0;
-  padding: .3rem;
+  padding: .6rem;
   width: 100%;
   font-size: 1.3rem;
   text-align: center;
 }
 
-#section_top {
-  margin-top: 25%;
+#section_top,
+#c_todo,
+#c_message,
+#c_dpad {
+  margin-top: 15%;
 }
 
 .section-buttons {
@@ -72,13 +76,17 @@ body {
   row-gap: 4rem;
   margin-left: auto;
   margin-right: auto; 
+  border: 1px inset var(--inlay-border-color);
+  background-color: var(--inlay-pit-color);
+  border-radius: 4px;
+  padding: 1.5rem;
 }
 
 .section-buttons div {
   color: #fff;
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
+  width: 85%;
   text-align: center;
 }
 
@@ -87,24 +95,28 @@ body {
   row-gap: 2rem;
 }
 
-#function_buttons.grid {
-  margin-top: 3%;
+#section_top .push-button {
+  padding: 1rem;
+}
+
+#function_buttons {
+  width: 100%;
+  margin-top: 20%;
   margin-left: auto;
   margin-right: auto;
   display: grid;
   grid-template-columns: auto auto auto;
   column-gap: 1rem;
   row-gap: 2rem;
-  xpadding-left: 2rem;
-  xpadding-right: 2rem;
+  padding: 1.5rem;;
+  border: 1px inset var(--inlay-border-color);
+  border-radius: 4px;
+  text-align: center;
+  background-color: var(--inlay-pit-color);
 }
 
 .arrow {
   font-size: 3rem;
-}
-
-.grid-item {
-  text-align: center;
 }
 
 img {
@@ -122,6 +134,8 @@ button {
 }
 
 .push-button {
+  width: 80px;
+  text-align: center;
   cursor: pointer;
   padding: .5rem;
   background-color: #f25022;
@@ -132,7 +146,7 @@ button {
 
 .push-button > span {
   vertical-align: middle;
-  padding-right: .5rem;
+  text-align: center;
 }
 
 .push-button .push-button:hover,
@@ -162,7 +176,7 @@ textarea {
 #btn_back {
   color: var(--card-bgcolor);
   position: absolute;
-  top: 1.8%;
+  top: 1%;
   left: 8.5%;
 }
 
