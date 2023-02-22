@@ -27,8 +27,8 @@
       <span>D-Pad</span>
     </div>
     <div id="btn_todo" class="push-button reg-req">
-      <span class="material-symbols-outlined">checklist_rtl</span>
-      <span>To-Do</span>
+      <span class="material-symbols-outlined">event_note</span>
+      <span>Planner</span>
     </div>
     <div id="btn_message" class="push-button reg-req" onclick="showSection('c_message')">
       <span class="material-symbols-outlined">sms</span>
@@ -37,11 +37,7 @@
     <div id="btn_register" class="push-button" onclick="showSection('c_register')">
       <span class="material-symbols-outlined">app_registration</span>
       <span>Register this Device</span>
-    </div>  
-    <div id="btn_settings" class="push-button" onclick="showSection('c_settings')">
-      <span class="material-symbols-outlined">settings</span>
-      <span>Settings</span>
-    </div>  
+    </div>   
   </div>
   <!-- End section -->
 
@@ -52,10 +48,10 @@
         <span class="material-symbols-outlined">home</span><span>Home</span></div>
       <div id="btn_gallery" class="push-button" onclick="sendPush('gallery')">
         <span class="material-symbols-outlined">photo_library</span><span>Gallery</span></div>
-      <div id="btn_news" class="push-button" onclick="sendPush('news')">
-        <span class="material-symbols-outlined">newspaper</span><span>News</span></div>
       <div id="btn_games" class="push-button" onclick="sendPush('games')">
-        <span class="material-symbols-outlined">sports_esports</span><span>Games</span></div>      
+        <span class="material-symbols-outlined">sports_esports</span><span>Games</span></div> 
+      <div id="btn_settings" class="push-button" onclick="sendPush('settings')">
+        <span class="material-symbols-outlined">settings</span><span>Settings</span></div>      
     </div>
 
     <div id="function_buttons">
@@ -106,16 +102,25 @@
 
   <!-- Section -->
   <div id="c_todo" class="section hidden">
-    <div id="newtask" class="fc-tasks">
+    <fieldset>
+      <legend>New Event</legend>
+      <div id="newevent" class="fc-events">
         <div style="flex: 100%;">
-          <input id="new_task" type="text" placeholder="Add a task">
+          <input id="event_subject" type="text" placeholder="Description">
+        </div>
+        <div style="flex: 100%;">
+          <input type="date" id="event_date">
+        </div>
+        <div style="flex: 100%;">
+          <input type="time" id="event_time">
         </div>
         <div style="margin-left: auto; order: 2;">
-          <button onclick="addTask()">Add</button>
+          <button onclick="addEvent()" class="clicker">Add</button>
         </div>
-    </div>
+      </div>
+    </fieldset>
 
-    <div id="task_block" style="padding-top: 2rem;"></div>
+    <div id="event_block" style="flex: 100%; padding-top: 2rem;"></div>
   </div>
   <!-- End section -->
 
@@ -155,6 +160,11 @@
   <!-- End section -->
 
   <div id="btn_back" class="hidden clicker" onclick="goHome()"><span class="material-symbols-outlined">arrow_back</span></div>
+
+  <!-- MOBILE: rotate your device -->
+  <div id="device-message">
+    <img src="/resources/images/phone512.png" class="modal-rotate-phone" />
+  </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>

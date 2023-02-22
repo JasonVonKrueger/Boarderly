@@ -6,39 +6,39 @@ const socket_io = require('socket.io');
 const path = require('path');
 const fs = require('fs');
 const ImageWorker = require('./lib/classes/ImageWorker');
-const TaskWorker = require('./lib/classes/TaskWorker');
+const EventWorker = require('./lib/classes/EventWorker');
 const MessageWorker = require('./lib/classes/MessageWorker');
 
 // file stores
 const __devices = '.stores/devices';
 const __messages = '.stores/messages';
-const __tasks = '.stores/tasks';
+const __events = '.stores/events';
 const __albums = '.stores/albums';
 const __boards = '.stores/boards';
 
 let messages = [];
-let tasks = [];
+let events = [];
 let albums = [];
 
 // initialize the content folders
 console.log('Initializing content directories...');
 initContentDir(__boards);
 initContentDir(__albums);
-initContentDir(__tasks);
+initContentDir(__events);
 initContentDir(__messages);
 initContentDir(__devices);
 
 const message_worker = new MessageWorker(__messages);
-const task_worker = new TaskWorker(__tasks);
+const event_worker = new EventWorker(__events);
 const image_worker = new ImageWorker(__albums);
 
 // load up the messages
 console.log('Fetching message list...');
 message_worker.load().then(function(results) { messages = results; });
 
-// load up the tasks
-console.log('Fetching task list...');
-task_worker.load().then(function(results) { tasks = results; });
+// load up the events
+console.log('Fetching event list...');
+event_worker.load().then(function(results) { events = results; });
 
 // load up the photo albums
 console.log('Fetching photo album list...');
@@ -92,32 +92,32 @@ io.on('connection', function (socket) {
 		//socket.broadcast.emit('BUTTON_PUSHED', data);
 	});
 
-	socket.on('REFRESH_TASKS', function() {
-		task_worker.load().then(function(results) { tasks = results; });
+	socket.on('REFRESH_PLANNER_EVENTS', function() {
+		event_worker.load().then(function(results) { events = results; });
 		
 		// return sorted by date
-		io.to('poores').emit('REFRESH_TASKS', tasks.sort(function(a, b) {
+		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events.sort(function(a, b) {
 			if (b.date < a.date) return 1;
 			else if (a.date < b.date) return -1;
 			else return 0;
 		}));
 	});
 
-	socket.on('POST_TASK', function(data) {
+	socket.on('POST_PLANNER_EVENT', function(data) {
 		const id = getRandomFileName();
-		task_worker.create(id, data);
+		event_worker.create(id, data);
 
-		tasks.push(data);
-		io.to('poores').emit('REFRESH_TASKS', tasks);
+		events.push(data);
+		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events);
 	});
 
-	socket.on('COMPLETE_TASK', function(data) {
-		// update the task file task status
-		task_worker.complete(data.id);
+	socket.on('COMPLETE_PLANNER_EVENT', function(data) {
+		// update the event file event status
+		event_worker.complete(data.id);
 
-		tasks = getSavedContent('tasks');
-		io.to('poores').emit('REFRESH_TASKS', tasks);
-		//socket.broadcast.emit('REFRESH_TASKS', tasks);
+		events = getSavedContent('events');
+		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events);
+		//socket.broadcast.emit('REFRESH_eventS', events);
 	});
 
 	socket.on('GET_ALBUMS', function() {

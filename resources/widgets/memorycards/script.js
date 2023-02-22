@@ -50,6 +50,33 @@ function resetBoard() {
   [firstCard, secondCard] = [null, null];
 }
 
+function handleKeys(e) {
+  switch (e.key) {
+    case 'ArrowLeft':
+      calculateCardPosition();
+      break;
+    case 'ArrowUp':
+      alert('up');
+      break;
+    case 'ArrowRight':
+      alert('rght');
+      break;
+    case 'ArrowDown':
+      alert('down');
+      break;
+  }
+}
+
+function calculateCardPosition() {
+  document.querySelector('.memory-game').children[2].classList.add('bob')
+
+  cards.forEach(function(card, index) {
+    if (card.getAttribute('data-index') == 3) {
+      //card.classList.add('bob');
+    }
+  });
+}
+
 (function shuffle() {
   cards.forEach(card => {
     let randomPos = Math.floor(Math.random() * 12);
@@ -57,4 +84,10 @@ function resetBoard() {
   });
 })();
 
-cards.forEach(card => card.addEventListener('click', flipCard));
+cards.forEach(function(card, index) {
+  card.setAttribute('data-index', index);
+  card.addEventListener('click', flipCard);
+});
+
+document.addEventListener('keydown', handleKeys);
+

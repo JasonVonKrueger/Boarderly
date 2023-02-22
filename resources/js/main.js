@@ -2,6 +2,7 @@
 
 //import { FaceName } from './classes/FaceName'
 
+
 const socket = io();
 const messages = [];
 
@@ -10,10 +11,12 @@ let __sidebar = null;
 let __content = null;
 let countdown;
 
+document.addEventListener('keydown', handleKeydown, false)
+
 document.addEventListener('DOMContentLoaded', function(e) {
     // stuff for the screen saver
-    document.body.addEventListener('click', resetScreenTimer, false);
-    document.body.addEventListener('mousemove', resetScreenTimer, false);
+    document.body.addEventListener('click', resetScreenTimer, false)
+    document.body.addEventListener('mousemove', resetScreenTimer, false)
 
     //resetTimer(); 
 
@@ -21,11 +24,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
     __content = document.getElementById('contents');
 
     socket.on('REFRESH_MESSAGES', refreshMessages);
-    socket.on('REFRESH_TASKS', refreshTasks);
     socket.on('BUTTON_PUSHED', handleRemBtnPush);
     socket.on('GET_ALBUMS', buildAlbumList);
     socket.emit('GET_MESSAGES');
-    socket.emit('REFRESH_TASKS');
     socket.emit('GET_ALBUMS');
 
     getWeather();
@@ -44,26 +45,25 @@ document.addEventListener('DOMContentLoaded', function(e) {
     //document.querySelector('#screensaver_modal').addEventListener('click', handleScrSavr);
 
     // handle notification sounds
-    btn_playsound.addEventListener('click', handleSound);
+    //btn_playsound.addEventListener('click', handleSound);
 
     // load the qr code
     QRCode.toCanvas(document.getElementById('qrcode'), `${window.location}remote`, function (error) {
         if (error) console.error(error)
     })
 
-
-    const domain = 'meet.jit.si';
-    const options = {
-        roomName: 'JitsiMeetAPIExample',
-        width: 700,
-        height: 500,
-        parentNode: document.querySelector('#meet'),
-        lang: 'en',
-        userInfo: {
-            email: 'sherrypoore1939@gmail.com',
-            displayName: 'Sherry Poore'
-        }
-    };
+    // const domain = 'meet.jit.si';
+    // const options = {
+    //     roomName: 'JitsiMeetAPIExample',
+    //     width: 700,
+    //     height: 500,
+    //     parentNode: document.querySelector('#meet'),
+    //     lang: 'en',
+    //     userInfo: {
+    //         email: 'sherrypoore1939@gmail.com',
+    //         displayName: 'Sherry Poore'
+    //     }
+    // };
     //const api = new JitsiMeetExternalAPI(domain, options);
 
 });
@@ -116,45 +116,41 @@ function show(el) {
 
 function handleRemBtnPush(data) {
     // turn off screen saver
-    triggerEvent(document.body, 'mousemove');
+    triggerEvent(document.body, 'mousemove')
 
-    let section = getActiveSidebarButton().replace('nav', 'section');
-    let cards = document.getElementById(section).querySelectorAll('.card');
+    let section = getActiveSidebarButton().replace('nav', 'section')
+    let cards = document.getElementById(section).querySelectorAll('.card')
 
     switch (data.button) {
         case 'home':
             triggerEvent(document.getElementById('nav_home'), 'click');
-            __content.focus();
+           // __content.focus();
             break;
         case 'gallery':
             triggerEvent(document.getElementById('nav_gallery'), 'click');
-            __content.focus();
+            //__content.focus();
             break;
         case 'games':
             triggerEvent(document.getElementById('nav_games'), 'click');
-            __content.focus();
-            break;
-        case 'news':
-            triggerEvent(document.getElementById('nav_news'), 'click');
-            __content.focus();
+           // __content.focus();
             break;
         case 'messages':
             triggerEvent(document.getElementById('nav_messages'), 'click');
-            __content.focus();
+            //__content.focus();
             break;
-        case 'tools':
+        case 'settings':
             triggerEvent(document.getElementById('nav_settings'), 'click');
-            __content.focus();
+            //__content.focus();
             break;
         case 'ArrowRight':
-                if (__selected_card_index >= (cards.length -1)) return;
-                
-                if (__selected_card_index >= 0) {
-                    cards[__selected_card_index].classList.remove('active');
-                }
+            if (__selected_card_index >= (cards.length -1)) return;
+            
+            if (__selected_card_index >= 0) {
+                cards[__selected_card_index].classList.remove('active');
+            }
 
-                __selected_card_index++;
-                cards[__selected_card_index].classList.add('active');
+            __selected_card_index++;
+            cards[__selected_card_index].classList.add('active');
             break;
         case 'ArrowLeft':        
             if (__selected_card_index <= -1) return;
@@ -168,12 +164,33 @@ function handleRemBtnPush(data) {
             triggerEvent(document.querySelector('.card.active'), 'click');       
             break;
         case 'exit':
-            triggerEvent(document.querySelector('.modal-close.active'), 'click');
+            document.querySelectorAll('.modal').forEach(function(m) {
+                m.classList.remove('active')
+                m.classList.add('hidden')
+            })
+            //triggerEvent(document.querySelector('.modal-close.active'), 'click');
             break;
     }
 
     // __sidebar.dispatchEvent(new Event('focus'));
     // __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
+}
+
+function handleKeydown(e) {
+    switch (e.key) {
+        case 'Escape':
+            document.querySelectorAll('.modal').forEach(function(m) {
+                m.classList.add('hidden')
+            })
+            break;
+    }
+
+    // 9 is tab
+    // 40 is down
+    // 38 is up
+    // 37 is left
+    // 39 is right or ArrowRight
+    // 27 is Esc
 }
 
 function openModal(modal) {
@@ -213,33 +230,6 @@ function refreshMessages(data) {
     __message_block.scroll(0, 9999);
 
     speak('You have a new message!');
-}
-
-function refreshTasks(data) {
-    let markup = '', c = '';
-
-    // clear the list and rebuild
-    while (__task_block.firstChild) {
-        __task_block.removeChild(__task_block.firstChild);
-    }
-
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].status === 'complete') {
-            markup += `<li><div>
-                <span class="task-text task-complete">${data[i].task}</span>
-                <span class="task-date task-complete">${data[i].date}</span>
-                </div></li>`;            
-        }
-        else {
-            markup += `<li><div>
-                <span class="task-text">${data[i].task}</span>
-                <span class="task-date">${data[i].date}</span>
-                </div></li>`;
-        }
-
-        __task_block.innerHTML = markup + '<br /><br /><br />';
-        __task_block.scroll(0, 9999);       
-    }
 }
 
 async function getWeather() {

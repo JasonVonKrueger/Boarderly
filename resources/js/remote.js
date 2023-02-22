@@ -21,20 +21,20 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     // enable the other buttons
     document.querySelectorAll('.reg-req').forEach(function(b) {
-      b.classList.remove('reg-req');
+      b.classList.remove('reg-req')
     });
 
     // pre-populate first and last name
-    __fname.value = __boarderly.fname;
-    __lname.value = __boarderly.lname;
-    __fname.setAttribute('disabled', 'true');
-    __lname.setAttribute('disabled', 'true');
+    __fname.value = __boarderly.fname
+    __lname.value = __boarderly.lname
+    __fname.setAttribute('disabled', 'true')
+    __lname.setAttribute('disabled', 'true')
 
-    preview.src = __boarderly.image;
-    showElement('btn_reset');
-    showElement('avatar_preview');
-    hideElement('btn_save');
-    hideElement('contact_pic');
+    preview.src = __boarderly.image
+    showElement('btn_reset')
+    showElement('avatar_preview')
+    hideElement('btn_save')
+    hideElement('contact_pic')
   }
 
   // add click handler for button sounds
@@ -42,10 +42,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
     b.addEventListener('click', handleButtonPush, false)
   })
 
-  //socket.emit('REFRESH_TASKS');
-  socket.on('REFRESH_TASKS', refreshTasks);
+  //socket.emit('REFRESH_eventS');
+  socket.on('REFRESH_PLANNER_EVENTS', refreshEvents);
 });
-
 
 function handleButtonPush(e) {
   snd_button_push.play();
@@ -80,69 +79,67 @@ function showSection(section) {
 }
 
 function sendPush(btn) {
-  snd_button_push.play();
-  socket.emit('BUTTON_PUSHED', { button: btn });
+  snd_button_push.play()
+  socket.emit('BUTTON_PUSHED', { button: btn })
 }
 
 function handleTodoClicked() {
-  socket.emit('REFRESH_TASKS');
-  hideElement('section_top');
-  showElement('c_todo');
-  showElement('btn_back');
+  socket.emit('REFRESH_PLANNER_EVENTS')
+  hideElement('section_top')
+  showElement('c_todo')
+  showElement('btn_back')
 }
 
-function refreshTasks(data) {
-  const task_block = document.getElementById('task_block');
+function refreshEvents(data) {
+  const event_block = document.getElementById('event_block')
 
-  for (let i = 0; i < data.length; i++) {
-    const task = document.createElement('div');
-    const l = document.createElement('span');
-    const r = document.createElement('span');
+  for (let i = 0; i < data.length; i++) {  
+    const event = document.createElement('div')
+    const l = document.createElement('span')
+    const r = document.createElement('span')
 
-    l.innerHTML = data[i].task;
+    l.innerHTML = data[i].event;
+    r.innerHTML = `<span class="material-symbols-outlined" style="cursor: pointer; color: #cf5e5e;" onclick="deleteEvent('${data[i].id}')">delete</span>`
 
-    if (data[i].status === 'complete') {
-      l.style.textDecoration = 'line-through';
-      r.innerHTML = '<input type="checkbox" style="width: 20px; height: 20px;" checked="true" />';
-    } else {
-      r.innerHTML = `<input type="checkbox" style="width: 20px; height: 20px;" onclick="completeTask('${data[i].id}')" />`;
-    }
+    event.appendChild(l);
+    event.appendChild(r);
+    event.classList.add('event');
 
-    task.appendChild(l);
-    task.appendChild(r);
-    task.classList.add('task');
-
-    task_block.appendChild(task);
+    event_block.appendChild(event);
   }
 }
 
-function addTask() {
+function addEvent() {
   // clear the list and rebuild
-  while (document.getElementById('task_block').firstChild) {
-    document.getElementById('task_block').removeChild(document.getElementById('task_block').firstChild);
+  while (document.getElementById('event_block').firstChild) {
+    document.getElementById('event_block').removeChild(document.getElementById('event_block').firstChild);
   }
 
-  const new_task = document.getElementById('new_task');
+  const event_subject = document.getElementById('event_subject')
+  const event_date = document.getElementById('event_date')
+  const event_time = document.getElementById('event_time')
 
-  if (new_task.value.length == 0) return;
+  if (event_subject.value.length == 0) return;
 
-  let d = new Date();
-  socket.emit('POST_TASK', {
-    task: new_task.value,
-    date: d.toLocaleString(),
+  let d = new Date()
+  socket.emit('POST_PLANNER_EVENT', {
+    event: event_subject.value,
+    date: event_date.value,
+    time: event_time.value,
     created_by: `${__boarderly.fname} ${__boarderly.lname}`,
+    created_on: d.toLocaleString(),
     token: __boarderly.token
-  });
+  })
 
-  //socket.emit('REFRESH_TASKS');
+  //socket.emit('REFRESH_eventS');
 }
 
-function completeTask(id) {
-  socket.emit('COMPLETE_TASK', { id: id });
+function completeevent(id) {
+  socket.emit('COMPLETE_PLANNER_EVENT', { id: id })
 }
 
 async function registerDevice() {
-  if (!fname.value || !lname.value) return false;
+  if (!fname.value || !lname.value) return false
   
   // go fetch a token
   let res = await fetch('/api/gettoken');

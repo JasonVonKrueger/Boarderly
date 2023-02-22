@@ -1926,17 +1926,17 @@
         var self = this;
   
         if (self._queue.length > 0) {
-          var task = self._queue[0];
+          var event = self._queue[0];
   
-          // Remove this task if a matching event was passed.
-          if (task.event === event) {
+          // Remove this event if a matching event was passed.
+          if (event.event === event) {
             self._queue.shift();
             self._loadQueue();
           }
   
-          // Run the task if no event type is passed.
+          // Run the event if no event type is passed.
           if (!event) {
-            task.action();
+            event.action();
           }
         }
   

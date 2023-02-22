@@ -13,6 +13,7 @@
   <script type="module" src='/resources/widgets/facename/FaceName.js'></script>
   <script type="module" src='/resources/widgets/aboutme/Me.js'></script>
   <script type="module" src='/resources/widgets/planner/Planner.js'></script>
+  <script type="module" src='/resources/widgets/weather/Weather.js'></script>
   <script src="/resources/js/csi.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>
@@ -25,17 +26,13 @@
   <!-- sidebar -->
   <div id="sidebar">
     <div class="brand">
-      <span class="material-symbols-outlined">dashboard</span>
-      <span>Boarderly</span>
+      <span class="material-symbols-outlined gradient-icon-brand">dashboard</span>
+      <span class="gradient-text-brand">Boarderly</span>
     </div>
     <div style="height: 1.5em; cursor: default; pointer-events: none;"></div>
     <div id="nav_home" class="active" onclick="return show(this)">
       <span class="material-symbols-outlined">home</span>
       <span>Home</span>
-    </div>
-    <div id="nav_news" onclick="return show(this)">
-      <span class="material-symbols-outlined">newspaper</span>
-      <span>News</span>
     </div>
     <div id="nav_gallery" onclick="openModal('gallery_modal')">
       <span class="material-symbols-outlined">photo_library</span>
@@ -45,10 +42,6 @@
       <span class="material-symbols-outlined">sports_esports</span>
       <span>Games</span>
     </div>
-    <!-- <div id="nav_jitsi" onclick="return show(this)">
-        <span class="material-symbols-outlined">video_call</span>
-        <span>Jitsi</span>
-      </div> -->
     <div id="nav_settings" onclick="return show(this)">
       <span class="material-symbols-outlined">settings</span>
       <span>Settings</span>
@@ -64,37 +57,20 @@
     <div id="section_home" class="section">
       <div class="content-grid col-3">
 
-        <div class="content-grid-item card taller messages boring">
+        <div class="content-grid-item card taller messages" tabindex="1">
           <div class="card-title">Messages</div>
           <div class="card-body" id="__message_block"></div>
           <div id="msg_anchor"></div>
         </div>
 
-        <div class="content-grid-item card taller boring">
-          <div class="card-title">Reminders</div>
-          <!-- <div class="card-body" id="__task_block"></div> -->
-
-          <div class="card-body tasks">
-            <div class="lines"></div>
-            <ul id="__task_block" class="list"> </ul>
-          </div>
-          <div id="task_anchor"></div>
-        </div>
-
-        <div class="content-grid-item card taller boring">
+        <div class="content-grid-item card taller" tabindex="2">
           <div class="card-title">Planner</div>
-          <event-planner></event-planner>
+          <div class="card-body">
+            <event-planner></event-planner>
+          </div>
         </div>
 
-      </div>
-    </div>
-    <!-- End section -->
-
-    <!-- News section -->
-    <div id="section_news" class="section hidden">
-      <div class="content-grid col-3">
-
-        <div class="content-grid-item card weather taller boring" tabindex="1">
+        <div class="content-grid-item card weather taller" tabindex="3">
           <div class="card-title">Weather</div>
           <div class="card-body" id="__weather_block"></div>
         </div>
@@ -107,21 +83,21 @@
     <div id="section_games" class="section hidden">
       <div class="content-grid col-4">
 
-        <div id="game_simon" class="content-grid-item card" onclick="openModal('simon_modal')">
-          <div class="card-title">Simon Says</div>
+        <div id="game_memblocks" class="content-grid-item card" onclick="openModal('memblocks_modal')" tabindex="1">
+          <div class="card-title">Memory Blocks</div>
           <div class="card-body">
-            <img src="/resources/widgets/simon/cover.png" style="cursor: pointer;" />
+            <img src="/resources/widgets/memoryblocks/cover.png" style="cursor: pointer;" />
           </div>
         </div>
 
-        <div class="content-grid-item card" onclick="facenameFlip()">
+        <div class="content-grid-item card" onclick="facenameFlip()" tabindex="2">
           <div class="card-title">Name that Face</div>
           <div class="card-body">
             <face-name name="Raelyn" path="/albums/Roger_and_family/Raelyn.png"></face-name>
           </div>
         </div>
 
-        <div id="game_memcards" class="content-grid-item card" onclick="openModal('memcards_modal')">
+        <div id="game_memcards" class="content-grid-item card" onclick="openModal('memcards_modal')" tabindex="3">
           <div class="card-title">Memory Cards</div>
           <div class="card-body">
             <img src="/resources/widgets/memorycards/cover.svg" class="cover-image" />
@@ -132,13 +108,6 @@
     </div>
     <!-- End section -->
 
-    <!-- Gallery section -->
-    <!--     <div id="section_gallery" class="section hidden">
-      <div id="__album_buttons"></div>
-      <div style="height: 2em;"></div>
-      <div class="content-grid col-1 xgallery" id="x__pictures_block"></div>
-    </div> -->
-    <!-- End section -->
 
     <!-- Jitsi section -->
     <!-- <div id="section_jitsi" class="section hidden">
@@ -156,7 +125,6 @@
     <!-- Settings section -->
     <div id="section_settings" class="section hidden">
       <div class="content-grid col-3">
-
         <div class="content-grid-item card taller boring">
           <div class="card-title">Remote Control Download</div>
           <div class="card-body">
@@ -171,14 +139,13 @@
           </div>
         </div>
 
-        <div class="content-grid-item card">
+        <div class="content-grid-item card" tabindex="1">
           <div class="card-title">Maintenance</div>
           <div class="card-body">
             <span id="reload" class="material-symbols-outlined">refresh</span>
             <div>Reload the board</div>
           </div>
         </div>
-
       </div>
     </div>
     <!-- End section -->
@@ -187,9 +154,9 @@
 
 
   <!-- Other stuff-->
-  <div id="simon_modal" class="modal hidden">
-    <span class="modal-close" onclick="closeModal('simon_modal');">&times;</span>
-    <iframe src="/resources/widgets/simon" title="Simon"></iframe>
+  <div id="memblocks_modal" class="modal hidden">
+    <span class="modal-close" onclick="closeModal('memblocks_modal');">&times;</span>
+    <iframe src="/resources/widgets/memoryblocks" title="Memory Blocks"></iframe>
   </div>
 
   <div id="pictures_modal" class="modal hidden">
@@ -207,6 +174,7 @@
   </div>
 
   <div id="screensaver_modal" class="modal hidden">
+    <span class="modal-close">&times;</span>
     <about-me></about-me>
   </div>
 
