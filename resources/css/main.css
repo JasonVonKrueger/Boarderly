@@ -8,6 +8,7 @@
 }
 
 :root {
+  --board-background: linear-gradient(to bottom, #08306c, #062b5e, #062550, #062043, #071a36);
   --font-main: 'Titillium Web', sans-serif;
   --font-main-color: rgb(255, 255, 255);
   --content-bgcolor: #313131;
@@ -15,9 +16,9 @@
   --card-bgcolor: rgb(103 109 162 / 31%);
   --brand-font-size: 2rem;
   --brand-font: 'cuprum';
-  --sidebar-bgcolor: #414141;
-  --sidebar-inactive: #555;
-  --sidebar-font-size: 1.2rem;
+  --navbar-bgcolor: #414141;
+  --navbar-inactive: #555;
+  --navbar-font-size: 1.2rem;
   --hightlight: rgb(122, 117, 117);
 }
 
@@ -38,14 +39,7 @@ body {
   overflow: hidden;
   font-family: var(--font-main);
   xbackground-image: url('/resources/images/mount-24.jpg');
-  xbackground-image: linear-gradient(to right bottom, #7c87f7, #6368d8, #4949b9, #2f2c9a, #0e0c7c);
-
-  xbackground: linear-gradient(to top, #3f4c6b, #606c88);
-
-  xbackground: linear-gradient(to top, #3f4c6b, #021030);
-
-
-  background-image: linear-gradient(to bottom, #08306c, #062b5e, #062550, #062043, #071a36);
+  background-image: var(--board-background);
 }
 
 .hidden {
@@ -77,40 +71,35 @@ body {
   pointer-events: none;
 }
 
-#top_container {
-  display: grid;
-  grid-template-columns: 210px auto;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  gap: 10px;
+.brand .material-symbols-outlined {
+  font-size: 2.2rem;
 }
 
-#sidebar {
+#navbar {
   display: flex;
   width: 100%;
   background-color: rgb(0 0 0 / 32%);
   color: var(--font-main-color);  
-  font-size: var(--sidebar-font-size);
+  font-size: var(--navbar-font-size);
   border-bottom: 1px solid rgba(0, 0, 0, 10%);
+  padding-top: .3rem;
 }
 
-#sidebar > div {
+#navbar > div {
   padding-left: 1.2rem;
   padding-right: 1.2rem;
   cursor: pointer;
 }
 
-#sidebar div:hover:not(.active) {
-  background-color: var(--sidebar-inactive);
+#navbar div:hover:not(.active) {
+  background-color: var(--navbar-inactive);
 }
 
-#sidebar div.active {
+#navbar div.active {
   background-color: var(--accent-color);
 }
 
-#sidebar div span {
+#navbar div span {
   vertical-align: middle;
 }
 
@@ -156,7 +145,7 @@ body {
 
 .content-grid-item {
   overflow: hidden;
-  transition: transform .2s;
+  transition: transform .2s ease-in;
 }
 
 .selected,
@@ -174,6 +163,7 @@ body {
   min-height: 350px;
   max-height: 350px;
   border-radius: 4px;;
+  transition: left 2s ease-out;
 }
 
 .card-title {
@@ -207,52 +197,9 @@ body {
   max-height: 220px;
 }
 
-
-/* .card-body.events {
-  background-color: #f5f5f5 !important;
-  margin: 0 auto;
-  padding: 0;
-  opacity: 1 !important;
-  text-align: left;
-  color: #555;
-} */
-
-/* .events.list {
-  color: #555;
-  padding: 0 !important;
-  border: 1px solid #dedede;
+.card.center {
+  left: calc(50% - 50px);
 }
- */
-/* .list li {
-  list-style: none;
-  border-bottom: 1px dashed #666;
-  text-indent: 25px;
-  height: auto;
-  padding: 10px;
-  text-transform: capitalize;
-} */
-
-/* .lines {
-  border-left: 1px solid #ffaa9f;
-  border-right: 1px solid #ffaa9f;
-  width: .3rem;
-  float: left;
-  height: 495px;
-  margin-left: 40px;
-} */
-
-/* .event-complete {
-  text-decoration: line-through;
-} */
-
-/* .event-date {
-  letter-spacing: -1px;
-  font-style: italic;
-  float: right;
-} */
-
-
-
 
 #content {
   display: grid;
@@ -404,7 +351,6 @@ iframe {
   top: 0;
   left: 0;
 }
-
 
 .gallery {
   position: absolute;

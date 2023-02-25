@@ -14,6 +14,7 @@
   <script type="module" src='/resources/widgets/aboutme/Me.js'></script>
   <script type="module" src='/resources/widgets/planner/Planner.js'></script>
   <script type="module" src='/resources/widgets/weather/Weather.js'></script>
+  <script type="module" src='/resources/widgets/numbergame/NumberGame.js'></script>
   <script src="/resources/js/csi.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>
@@ -23,8 +24,8 @@
 
 <body>
 
-  <!-- sidebar -->
-  <div id="sidebar">
+  <!-- navbar-->
+  <div id="navbar">
     <div class="brand">
       <span class="material-symbols-outlined gradient-icon-brand">dashboard</span>
       <span class="gradient-text-brand">Boarderly</span>
@@ -48,7 +49,7 @@
     </div>
 
   </div>
-  <!-- end sidebar -->
+  <!-- end navbar-->
 
   <!-- contents -->
   <div id="contents" tabindex="-1">
@@ -83,12 +84,12 @@
     <div id="section_games" class="section hidden">
       <div class="content-grid col-4">
 
-        <div id="game_memblocks" class="content-grid-item card" onclick="openModal('memblocks_modal')" tabindex="1">
+        <!-- <div id="game_memblocks" class="content-grid-item card" onclick="openModal('memblocks_modal')" tabindex="1">
           <div class="card-title">Memory Blocks</div>
           <div class="card-body">
             <img src="/resources/widgets/memoryblocks/cover.png" style="cursor: pointer;" />
           </div>
-        </div>
+        </div> -->
 
         <div class="content-grid-item card" onclick="facenameFlip()" tabindex="2">
           <div class="card-title">Name that Face</div>
@@ -97,12 +98,21 @@
           </div>
         </div>
 
-        <div id="game_memcards" class="content-grid-item card" onclick="openModal('memcards_modal')" tabindex="3">
+        <!-- <div id="game_memcards" class="content-grid-item card" onclick="openModal('memcards_modal')" tabindex="3">
           <div class="card-title">Memory Cards</div>
           <div class="card-body">
             <img src="/resources/widgets/memorycards/cover.svg" class="cover-image" />
           </div>
+        </div> -->
+
+        <div id="game_number" class="content-grid-item card" tabindex="4">
+          <div class="card-title">Number Game</div>
+          <div class="card-body">
+            <number-game></number-game>
+          </div>
         </div>
+
+        
 
       </div>
     </div>

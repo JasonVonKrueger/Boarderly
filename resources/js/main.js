@@ -7,7 +7,7 @@ const socket = io();
 const messages = [];
 
 let __selected_card_index = -1;
-let __sidebar = null;
+let __navbar= null;
 let __content = null;
 let countdown;
 
@@ -20,26 +20,26 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     //resetTimer(); 
 
-    __sidebar = document.getElementById('sidebar');
-    __content = document.getElementById('contents');
+    __navbar= document.getElementById('navbar')
+    __content = document.getElementById('contents')
 
-    socket.on('REFRESH_MESSAGES', refreshMessages);
-    socket.on('BUTTON_PUSHED', handleRemBtnPush);
-    socket.on('GET_ALBUMS', buildAlbumList);
-    socket.emit('GET_MESSAGES');
-    socket.emit('GET_ALBUMS');
+    socket.on('REFRESH_MESSAGES', refreshMessages)
+    socket.on('BUTTON_PUSHED', handleRemBtnPush)
+    socket.on('GET_ALBUMS', buildAlbumList)
+    socket.emit('GET_MESSAGES')
+    socket.emit('GET_ALBUMS')
 
-    getWeather();
-    showTime();
+    getWeather()
+    showTime()
 
     // add event listeners to modal close buttons
-    let m = document.querySelectorAll('.modal-close');
+    let m = document.querySelectorAll('.modal-close')
     m.forEach(function(n) {
         n.addEventListener('click', function(e) {
             this.parentElement.classList.add('hidden')
             //closeModal(this)
         })
-    });
+    })
 
     // add event listeners for screen saver
     //document.querySelector('#screensaver_modal').addEventListener('click', handleScrSavr);
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 });
 
-function getActiveSidebarButton() {
-    let b = document.querySelector('#sidebar .active');
+function getActiveNavbarButton() {
+    let b = document.querySelector('#navbar .active');
     return b.id;
 }
 
@@ -83,14 +83,14 @@ function getActiveCard() {
 // }
 
 function handleSound() {
-    var snd_newmessage = new Howl({
-        src: ['/resources/sounds/click.mp3'],
-        onplayerror: function() {
-            snd_newmessage.once('unlock', function() {
-                //snd_newmessage.play();
-          });
-        }
-      });
+    // var snd_newmessage = new Howl({
+    //     src: ['/resources/sounds/click.mp3'],
+    //     onplayerror: function() {
+    //         snd_newmessage.once('unlock', function() {
+    //             //snd_newmessage.play();
+    //       });
+    //     }
+    //   });
 
     //snd_newmessage.play();
 }
@@ -118,7 +118,7 @@ function handleRemBtnPush(data) {
     // turn off screen saver
     triggerEvent(document.body, 'mousemove')
 
-    let section = getActiveSidebarButton().replace('nav', 'section')
+    let section = getActiveNavbarButton().replace('nav', 'section')
     let cards = document.getElementById(section).querySelectorAll('.card')
 
     switch (data.button) {
@@ -171,9 +171,6 @@ function handleRemBtnPush(data) {
             //triggerEvent(document.querySelector('.modal-close.active'), 'click');
             break;
     }
-
-    // __sidebar.dispatchEvent(new Event('focus'));
-    // __sidebar.dispatchEvent(new KeyboardEvent('keydown', { 'key': data.button }));  
 }
 
 function handleKeydown(e) {
@@ -226,14 +223,14 @@ function refreshMessages(data) {
         //triggerEvent(btn_playsound, 'click');
     }
     
-    __message_block.innerHTML = markup + '<br /><br /><br />';
-    __message_block.scroll(0, 9999);
+    __message_block.innerHTML = markup + '<br /><br /><br />'
+    __message_block.scroll(0, 9999)
 
-    speak('You have a new message!');
+    speak('You have a new message!')
 }
 
 async function getWeather() {
-    const key = '8815275c285e40149bd222225222712';
+    const key = '8815275c285e40149bd222225222712'
     //const url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=30236&aqi=no`;
     const url = `https://api.weatherapi.com/v1/forecast.json?key=${key}&q=30236&days=3&aqi=no&alerts=no`;
 

@@ -159,8 +159,6 @@ class Planner extends HTMLElement {
     let today = new Date().toLocaleDateString('en-us', {
       weekday: "long", year: "numeric", month: "short", day: "numeric"
     })
-
-    
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

@@ -111,9 +111,9 @@ io.on('connection', function (socket) {
 		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events);
 	});
 
-	socket.on('COMPLETE_PLANNER_EVENT', function(data) {
+	socket.on('DELETE_PLANNER_EVENT', function(data) {
 		// update the event file event status
-		event_worker.complete(data.id);
+		event_worker.delete(data.id);
 
 		events = getSavedContent('events');
 		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events);
@@ -137,6 +137,10 @@ io.on('connection', function (socket) {
 		const path = `${__devices}/${data.token}/${data.file_name}`;
 		image_worker.shrink(buffer, path, 90, 90);
 	});
+
+	socket.on('CONNECT_REMOTE', function() {
+		io.to('poores').emit('CONNECT_REMOTE')
+	})
 });
 
 async function getSavedContent(c) {

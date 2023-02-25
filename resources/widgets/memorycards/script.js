@@ -1,8 +1,11 @@
-const cards = document.querySelectorAll('.memory-card');
+const socket = io()
+const cards = document.querySelectorAll('.memory-card')
 
 let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
+
+document.addEventListener('keydown', handleKeydown, false)
 
 function flipCard() {
   if (lockBoard) return;
@@ -50,7 +53,8 @@ function resetBoard() {
   [firstCard, secondCard] = [null, null];
 }
 
-function handleKeys(e) {
+function handleKeydown(e) {
+  alert(e.key)
   switch (e.key) {
     case 'ArrowLeft':
       calculateCardPosition();

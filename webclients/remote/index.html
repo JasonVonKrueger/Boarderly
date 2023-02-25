@@ -135,14 +135,35 @@
   <!-- End section -->
 
   <!-- Section -->
+  <div id="c_numpad" class="section hidden">
+    <div style="width: 100%; text-align: center;">
+      <span id="player_guess"></span>
+    </div>
+    <div class="inlay">
+      <div class="numpad">
+        <div class="numpad_button">1</div>
+        <div class="numpad_button">2</div>
+        <div class="numpad_button">3</div>
+        <div class="numpad_button">4</div>
+        <div class="numpad_button">5</div>
+        <div class="numpad_button">6</div>
+        <div class="numpad_button">7</div>
+        <div class="numpad_button">8</div>
+        <div class="numpad_button">9</div>
+        <div class="numpad_button">0</div>
+        <div class="numpad_button">Go</div>
+      </div>
+    </div>
+  </div>
+  <!-- End section -->
+
+  <!-- Section -->
   <div id="c_register" class="section hidden" style="margin-top: 10%;">
     <input type="text" id="fname" placeholder="First name..." />
     <input type="text" id="lname" placeholder="Last name..." />
     <!-- <input type="text" id="__board_code" placeholder="Board code..." /> -->
 
-    <p>
-      Add a contact picture to help with visual memory stimulation!
-    </p>
+    <p> Add a contact picture to help with visual memory stimulation!</p>
   
     <p><input type="file" id="contact_pic" accept="image/*"></p>
     <p><img src="" id="avatar_preview" class="preview hidden" alt="Image preview" style="width: auto; height: 120px;" /></p>
