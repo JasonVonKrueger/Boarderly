@@ -141,11 +141,11 @@ class Planner extends HTMLElement {
       })
 
       markup += `
-          <div class="event_item">
-          <div class="ei_Dot ${(today === d) ? 'dot_active' : ''}"></div>
-          <div class="ei_Title">${t} on ${d}</div>
-          <div class="ei_Copy">${data[i].event}</div>
-          </div>`;
+        <div class="event_item">
+        <div class="ei_Dot ${(today === d) ? 'dot_active' : ''}"></div>
+        <div class="ei_Title">${t} on ${d}</div>
+        <div class="ei_Copy">${data[i].event}</div>
+        </div>`;
     }
 
     __plnr_items.innerHTML = markup

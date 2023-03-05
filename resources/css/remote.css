@@ -233,24 +233,6 @@ fieldset {
   border: 4px solid #fff;
 }
 
-.modal {
-  position: fixed;
-  z-index: 10; 
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%; 
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.9);
-}
-
-
-
-#c_numpad {
-
-}
-
 .inlay {
   border: 1px inset var(--inlay-border-color);
   border-radius: 4px;
@@ -258,21 +240,28 @@ fieldset {
 }
 
 .numpad {
-  width: 420px;
   height: 500px;
   display: flex;
   flex-flow: row wrap;
 }
 
-.numpad_button {
+.numpad-button {
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1 0 33.3333%;
-  background-color: var(--button-bgcolor);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.25);
   font-size: 2rem;
+}
+
+.numpad-button.push-button {
+  transition: 0.5s;
+  box-shadow: none;
+}
+
+.numpad-button.push-button:active,
+.numpad-button.push-button.activated {
+  transform: translateY(8px);
 }
 
 .button:nth-of-type(10) {

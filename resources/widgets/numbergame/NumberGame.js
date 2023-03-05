@@ -5,135 +5,154 @@ class NumberGame extends HTMLElement {
 
     render() {
         const socket = io()
-        let keypress_count = 0
         const numbers = []
+        const player_guesses = []
         let level = 1
         const max_levels = 5
+        let pg
 
-        //   socket.emit('REFRESH_PLANNER_EVENTS');
-        //   socket.on('REFRESH_PLANNER_EVENTS', this.refreshPlnrEvents, false);
+        socket.on('NUMGAME_GUESS', handleGuess)
 
         const instructions = `I will show you a number and you type what you saw. Got it?`
-        //let rnd_number = Math.floor(Math.random() * 9)
 
-        let markup = `
+        let style_markup = `
             <link rel="stylesheet" href="/resources/css/main.css" />
+        `;
+
+        let card_markup = `
             <style>
-            .game-content p {
-                text-align: left;
-            }
-
-            #game_form {
-                
-            }
-
-            #number {
-                font-size: 2rem;
-            }
-
-            .game-content input {
-                outline: none;
-                border: none;
-                margin: 0 0 20px 3px;
-                padding: 8px 5px 0px 0;
-                background: transparent;
-                color: rgba(250,250,255,1);
-                font-size: 1.5rem;
-                border-bottom: 1px dotted rgba(91,114,127,1);
-                text-align: center;
-            }
-
-            .game-content button {
-                font-size: 1.5rem;
-                padding: .5rem;
-                background-color: var(--accent-color);
-                color: #ccc;
-                border: none;
-                border-radius: 6px;
-            }
-
+                #game_overview div { text-align: left; }
+                #game_overview #btn_start {
+                    font-size: 1rem;
+                    padding: 1rem 2rem 1rem 2rem;
+                }
             </style>
-             
-            <div class="game-content">
-                <p>${instructions}</p>
-                <div id="game_form" class="hidden">
-                    <div id="number"></div>
-                    <form>
-                    Enter the number you saw:
-                    <input type="text" id="player_guess" />
-                    </form>
-                </div>
-                <button id="btn_start">Start</button>
-                <div id="result_message"></div>
+
+            <div id="game_overview">
+                <div>${instructions}</div>
+                <button id="btn_start" focus="true">Start</button>
             </div>
-  
-          `;
+        `;
 
+        let modal_markup = `
+            <style>
+                * { box-sizing: border-box; }
 
-        this.innerHTML = markup;
+                .flex-container {
+                    display: flex;
+                    Xheight: 300px;
+                    margin-top: 12%;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .flex-container > div {
+                    background-color: #f1f1f1;
+                    color: white;
+                    border-radius: 6px;
+                    width: 400px;
+                }
 
-        document.querySelector('#btn_start').addEventListener('click', handleStartGame, false)
-        document.querySelector('#player_guess').addEventListener('keyup', handlePlayerInput, false)
+                #game_box { 
+                    text-align: center;
+                    background-color: #ddd; 
+                    padding: 2rem;
+                    color: #666;
+                    margin-left: auto;
+                    margin-right: auto;
+                    font-size: 1.5rem;
+                    opacity: 0;
+                    animation-name: do-it;
+                    animation-duration: 2s;
+                    animation-delay: .5s;
+                    animation-fill-mode: forwards;
+                }
+                @keyframes do-it {
+                    100% { opacity: 1; }
+                }
+
+                #game_box #number { font-size: 4rem; }
+                #game_box #player_guess {
+                    text-align: center;
+                    font-size: 1.5rem;
+                    width: 75px;
+                    border: 0px;
+                    border-bottom: 2px solid #bbb;
+                    padding: .5rem;
+                    color: #000;
+                    background: transparent;
+                }
+                #game_box #result_message {
+                    margin-top: 1rem;
+                }
+            </style>
+
+            <div class="flex-container">
+                <div id="game_box">
+                    <div id="number"></div>
+                    <div id="player_message" class="hidden">
+                    Enter the number you saw: 
+                    <input type="text" id="player_guess"></input>
+                    </div>
+                    <div id="result_message"></div>
+                </div>
+            </div>
+        `;
+
+        $('#modal_content').innerHTML = modal_markup
+        $('#modal_content').classList.remove('hidden')
+        this.innerHTML = card_markup
+
+        $('#btn_start').addEventListener('click', handleStartGame, false)
+
+        function $(element) { return document.querySelector(element) }
 
         function handleStartGame() {
-            document.querySelector('#game_form').classList.remove('hidden')
-            document.querySelector('#btn_start').classList.add('hidden')
-            document.querySelector('#player_guess').focus()
-
+            $('#btn_start').classList.add('hidden')
+            openModal('modal')
             socket.emit('CONNECT_REMOTE')
-            
             showNumber()
-    
-            // let number = document.getElementById('number')
-    
-            // setTimeout(function () {
-            //     number.innerHTML = number.innerHTML.replace(/\w|\W/gi, '*')
-            // }, 2200)
         }
 
-        function compare() {
-            const n_player = parseInt(document.querySelector('#player_guess').value)
-            const n_cpu = parseInt(numbers.join(''))
+        async function handleGuess(data) {
+            $('#player_guess').value += data.guess
+            player_guesses.push(parseInt(data.guess))
 
-            if (n_player === n_cpu) {
-                document.querySelector('#result_message').innerHTML = 'Good job!'
-                level++
-            }
-            else {
-                document.querySelector('#result_message').innerHTML = 'Nope! Try again.'
-                return false
-            }
-        }
-
-        async function handlePlayerInput(e) {
-            keypress_count++
-
-            if (keypress_count === numbers.length) {
-                keypress_count = 0
-                
-                if (!compare()) {
+            if (player_guesses.length === numbers.length) {
+                if (player_guesses.join('') === numbers.join('')) {
+                    $('#result_message').innerHTML = 'Good job!' 
                     await sleep(1200)
-                    reset()
+                    reset(true)               
+                }
+                else {
+                    $('#result_message').innerHTML = 'Nope! Try again.'
+                    await sleep(1200)
+                    reset(false)
                 }
             }
         }
 
-        function reset() {
-            level = 1
-            keypress_count = 0
+        function reset(result) {
+            if (result) level++
+            else level = 1
+
             numbers.length = 0
-            document.querySelector('#player_guess').value = ''
-            document.querySelector('#result_message').innerHTML = ''
+            player_guesses.length = 0
+            $('#player_message').classList.add('hidden')
+            $('#player_guess').value = ''
+            $('#result_message').innerHTML = ''
+
             showNumber()
         }
 
         async function showNumber() {
-            numbers.push(Math.floor(Math.random() * 9))
-
-            let number = document.getElementById('number')
-            number.innerHTML = numbers
-            await sleep(1000)
-            number.innerHTML = number.innerHTML.replace(/\w|\W/gi, '*')
+            for (let i=1; i<=level; i++) {
+                numbers.push(Math.floor(Math.random() * 9))
+            }
+           
+            $('#number').innerHTML = numbers.join('')
+            await sleep(1500)
+            $('#number').innerHTML = $('#number').innerHTML.replace(/\w|\W/gi, '*')
+            $('#player_message').classList.remove('hidden')
         }
 
         function sleep(ms) {

@@ -45,15 +45,14 @@ document.addEventListener('DOMContentLoaded', function(e) {
       b.addEventListener('click', handleButtonPush, false)
     })
 
-    document.querySelectorAll('.numpad_button').forEach(function(b) {
+    document.querySelectorAll('.numpad-button').forEach(function(b) {
       b.addEventListener('click', handleNumPadButton, false)
     })   
   }
 })
 
 function handlePushConnect(data) {
-  hideElement('section_top')
-  showElement('c_numpad')
+  showSection('c_numpad')
 }
 
 function handleButtonPush(e) {
@@ -61,8 +60,16 @@ function handleButtonPush(e) {
 }
 
 function handleNumPadButton(e) {
-  const g = document.querySelector('#player_guess')
-  g.innerHTML += this.innerHTML
+  const number = this.innerHTML
+
+  socket.emit('NUMGAME_GUESS', { guess: number })
+  // if (number === 'Go') {
+  //   socket.emit('NUMGAME_GUESS', { guess: document.querySelector('#player_guess').innerHTML })
+  // }
+  // else {
+  //   document.querySelector('#player_guess').innerHTML += this.innerHTML
+  // }
+  
 }
 
 function goHome() {

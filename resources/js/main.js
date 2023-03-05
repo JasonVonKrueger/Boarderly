@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
     document.body.addEventListener('click', resetScreenTimer, false)
     document.body.addEventListener('mousemove', resetScreenTimer, false)
 
+    // add listener to cards
+    // document.querySelectorAll('.content-grid-item.card').forEach(function(c) {
+    //     c.addEventListener('click', handleCardClick, false)
+    // })
+
     //resetTimer(); 
 
     __navbar= document.getElementById('navbar')
@@ -33,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     showTime()
 
     // add event listeners to modal close buttons
-    let m = document.querySelectorAll('.modal-close')
-    m.forEach(function(n) {
+    document.querySelectorAll('.modal-close').forEach(function(n) {
         n.addEventListener('click', function(e) {
             this.parentElement.classList.add('hidden')
             //closeModal(this)
@@ -76,6 +80,11 @@ function getActiveNavbarButton() {
 function getActiveCard() {
     let b = document.querySelector('.card .active');
     return b.id;
+}
+
+function handleCardClick(e) {
+    const card = e.target
+    alert(card.parentElement.innerHTML)
 }
 
 // function handleScrSavr() {

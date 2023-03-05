@@ -34,15 +34,15 @@ const image_worker = new ImageWorker(__albums);
 
 // load up the messages
 console.log('Fetching message list...');
-message_worker.load().then(function(results) { messages = results; });
+message_worker.load().then(function(results) { messages = results });
 
 // load up the events
 console.log('Fetching event list...');
-event_worker.load().then(function(results) { events = results; });
+event_worker.load().then(function(results) { events = results });
 
 // load up the photo albums
 console.log('Fetching photo album list...');
-getSavedContent('albums').then(function(results) { albums = results; });
+getSavedContent('albums').then(function(results) { albums = results });
 
 // create some extra routes
 const app = express();
@@ -93,7 +93,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('REFRESH_PLANNER_EVENTS', function() {
-		event_worker.load().then(function(results) { events = results; });
+		event_worker.load().then(function(results) { events = results });
 		
 		// return sorted by date
 		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events.sort(function(a, b) {
@@ -121,25 +121,29 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('GET_ALBUMS', function() {
-		io.to('poores').emit('GET_ALBUMS', albums);
+		io.to('poores').emit('GET_ALBUMS', albums)
 	});
 
 	// handle device registration
 	socket.on('REGISTER_DEVICE', function(data, callback) {
 		fs.mkdir(`${__devices}/${data.token}`, function(error) {
-			if (error) console.log(error); 
-		});
+			if (error) console.log(error)
+		})
 
 		// convert the base64 string and save as an image
-		const buffer = Buffer.from(data.image.split(';base64,')[1], 'base64');
+		const buffer = Buffer.from(data.image.split(';base64,')[1], 'base64')
 
 		// resize it
 		const path = `${__devices}/${data.token}/${data.file_name}`;
-		image_worker.shrink(buffer, path, 90, 90);
+		image_worker.shrink(buffer, path, 90, 90)
 	});
 
 	socket.on('CONNECT_REMOTE', function() {
 		io.to('poores').emit('CONNECT_REMOTE')
+	})
+
+	socket.on('NUMGAME_GUESS', function(data) {
+		io.to('poores').emit('NUMGAME_GUESS', data)
 	})
 });
 

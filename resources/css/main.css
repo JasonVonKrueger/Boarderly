@@ -149,7 +149,6 @@ body {
 }
 
 .selected,
-.content-grid-item:hover:not(.boring),
 .content-grid-item:focus {
   transform: scale(1.04);
 }
@@ -328,14 +327,6 @@ body {
   font-size: 40px;
   font-weight: bold;
   transition: transform .7s;
-}
-
-.modal-close:hover,
-.modal-close:focus {
-  color: #bbb;
-  text-decoration: none;
-  cursor: pointer;
-  transform: scale(1.04);
 }
 
 #screensaver_modal {
