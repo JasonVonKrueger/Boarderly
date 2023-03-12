@@ -14,6 +14,7 @@
   --content-bgcolor: #313131;
   --accent-color: #903925;
   --card-bgcolor: rgb(103 109 162 / 31%);
+  --card-header-font-size: 1.25em;
   --brand-font-size: 2rem;
   --brand-font: 'cuprum';
   --navbar-bgcolor: #414141;
@@ -153,11 +154,28 @@ body {
   transform: scale(1.04);
 }
 
-.card.active:not(.boring) {
-  transform: scale(1.04);
+.card::part(header) {
+  background-color: var(--accent-color);
+  font-size: var(--card-header-font-size);
 }
 
-.card {
+.card::part(base) {
+  background: rgba(10, 10, 10, 0.562);
+  text-align: center;
+}
+
+.card::part(base):active {
+  transform: scale(1.04);
+  background: rgba(15, 175, 39, 0.2);
+}
+
+
+
+.card.active:not(.boring) {
+  
+}
+
+.xcard {
   text-align: center;
   min-height: 350px;
   max-height: 350px;
@@ -165,14 +183,14 @@ body {
   transition: left 2s ease-out;
 }
 
-.card-title {
+.xcard-title {
   background-color: var(--accent-color);
   color: var(--font-main-color);
   font-size: 1.25em;
   padding: .15em;
 }
 
-.card-body {
+.xcard-body {
   background-color: var(--card-bgcolor);
   color: var(--font-main-color);
   padding: .5em;
@@ -180,6 +198,20 @@ body {
   max-height: inherit;
   overflow: auto;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .card.taller {
   min-height: 520px;
@@ -278,7 +310,6 @@ body {
 #reload {
   font-size: 10rem;
   cursor: pointer;
-  margin-top: 8%;
 }
 
 #reload.spin {
@@ -496,4 +527,3 @@ iframe {
     moveHorizontal 16s 21.5s 1;
   animation-fill-mode: forwards;
 }
-

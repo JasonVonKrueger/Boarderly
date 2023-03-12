@@ -1,4 +1,11 @@
 class Planner extends HTMLElement {
+  constructor() {
+    super();
+    // this.style.backgroundColor = "blue";
+    // this.style.color = "white";
+    // this.addEventListener("click", () => alert("Hello world!"));
+  }
+  
   render() {
     let d = new Date().toLocaleDateString('en-us', {
       weekday: "long", year: "numeric", month: "short", day: "numeric"

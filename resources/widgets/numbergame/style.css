@@ -1,0 +1,50 @@
+* { box-sizing: border-box; }
+
+body {
+    background-color: #000000e7;
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper > div {
+    xcolor: white;
+    width: 400px;
+}
+
+#game_box { 
+    text-align: center;
+    padding: 2rem;
+    color: #0cb828;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.5rem;
+    xopacity: 0;
+    xanimation-name: do-it;
+    xanimation-duration: 2s;
+    xanimation-delay: .5s;
+    xanimation-fill-mode: forwards;
+}
+
+@keyframes do-it {
+    100% { opacity: 1; }
+}
+
+#game_box #number { font-size: 4rem; }
+#game_box #player_guess {
+    text-align: center;
+    font-size: 1.5rem;
+    width: 75px;
+    border: 0px;
+    border-bottom: 2px solid #bbb;
+    padding: .5rem;
+    color: #b80a0a;
+    background: transparent;
+}
+#game_box #result_message {
+    margin-top: 1rem;
+}

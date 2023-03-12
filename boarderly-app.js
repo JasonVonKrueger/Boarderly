@@ -52,6 +52,7 @@ app.use('/message', express.static('./webclients/message'));
 app.use('/albums', express.static(__albums));
 app.use('/devices', express.static(__devices));
 app.use('/resources', express.static('./resources'));
+app.use('/shoelace', express.static('node_modules/@shoelace-style/shoelace'));
 app.get('/api/gettoken', function(req, res) { 
 	res.send( { answer: generateToken() }); 
 });

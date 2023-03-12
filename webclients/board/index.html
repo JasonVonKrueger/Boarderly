@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html class="sl-theme-dark">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/resources/images/favicon.ico" />
   <link rel="stylesheet" href="/resources/css/main.css" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <script type="module" src="/resources/js/classes/Game.js"></script>
   <script type="module" src='/resources/widgets/facename/FaceName.js'></script>
   <script type="module" src='/resources/widgets/aboutme/Me.js'></script>
   <script type="module" src='/resources/widgets/planner/Planner.js'></script>
   <script type="module" src='/resources/widgets/weather/Weather.js'></script>
   <script type="module" src='/resources/widgets/numbergame/NumberGame.js'></script>
+
+  <link rel="stylesheet" href="/shoelace/dist/themes/dark.css" />
+  <script type="module" src="/shoelace/dist/shoelace.js"></script>
+
   <script src="/resources/js/csi.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>
-  <script src="/resources/js/qrcode.js"></script>
   <script src="/resources/js/main.js"></script>
 </head>
 
@@ -58,23 +61,41 @@
     <div id="section_home" class="section">
       <div class="content-grid col-3">
 
-        <div class="content-grid-item card taller messages" tabindex="1">
+        <sl-card class="card">
+          <div slot="header">Messages</div>
+          <div class="card-body" id="__message_block"></div>
+          <div id="msg_anchor"></div>
+        </sl-card>
+
+        <!-- <div class="content-grid-item card taller messages" tabindex="1">
           <div class="card-title">Messages</div>
           <div class="card-body" id="__message_block"></div>
           <div id="msg_anchor"></div>
-        </div>
+        </div> -->
 
-        <div class="content-grid-item card taller" tabindex="2">
+        <!-- <div class="content-grid-item card taller" tabindex="2">
           <div class="card-title">Planner</div>
           <div class="card-body">
             <event-planner></event-planner>
           </div>
-        </div>
+        </div> -->
 
-        <div class="content-grid-item card weather taller" tabindex="3">
+        <sl-card class="card">
+          <div slot="header">Planner</div>
+          <div class="card-body">
+            <event-planner></event-planner>
+          </div>
+        </sl-card>
+
+        <sl-card class="card">
+          <div slot="header">Weather</div>
+          <div class="card-body" id="__weather_block"></div>
+        </sl-card>
+
+        <!-- <div class="content-grid-item card weather taller" tabindex="3">
           <div class="card-title">Weather</div>
           <div class="card-body" id="__weather_block"></div>
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -91,12 +112,28 @@
           </div>
         </div> -->
 
-        <div class="content-grid-item card" onclick="facenameFlip()" tabindex="2">
+        <sl-card class="card">
+          <div slot="header">Name that Face</div>
+          <div class="card-body">
+            <!-- <bly-game 
+                game="FaceName"
+                card-image="/resources/images/unknown-person.png">
+            </bly-game> -->
+            <!-- <face-name 
+              name="Raelyn"
+              card-face="/resources/images/unknown-person.png"
+              path="/albums/Roger_and_family/Raelyn.png">
+            </face-name> -->
+          </div>
+        </sl-card>
+
+
+        <!-- <div class="content-grid-item card" onclick="facenameFlip()" tabindex="2">
           <div class="card-title">Name that Face</div>
           <div class="card-body">
             <face-name name="Raelyn" path="/albums/Roger_and_family/Raelyn.png"></face-name>
           </div>
-        </div>
+        </div> -->
 
         <!-- <div id="game_memcards" class="content-grid-item card" onclick="openModal('memcards_modal')" tabindex="3">
           <div class="card-title">Memory Cards</div>
@@ -105,12 +142,27 @@
           </div>
         </div> -->
 
-        <div id="game_number" class="content-grid-item card" tabindex="4">
+        <!-- <div id="game_number" class="content-grid-item card" tabindex="4">
           <div class="card-title">Number Game</div>
           <div class="card-body">
             <number-game></number-game>
           </div>
-        </div>
+        </div> -->
+
+        <sl-card class="card">
+          <div slot="header">Number Game</div>
+          <div class="card-body">
+            <bly-game 
+              game="NumberGame"
+              card-text="I will show you a number and you type what you saw. Got it?">            
+            </bly-game>
+
+            <!-- <number-game></number-game> -->
+          </div>
+        </sl-card>
+
+
+
 
       </div>
     </div>
@@ -133,27 +185,41 @@
     <!-- Settings section -->
     <div id="section_settings" class="section hidden">
       <div class="content-grid col-3">
-        <div class="content-grid-item card taller boring">
-          <div class="card-title">Remote Control Download</div>
-          <div class="card-body">
-            <canvas id="qrcode"></canvas>
-            <div style="text-align: left; padding: 1.5em;">
-              For iPhone users:
-              <ol>
-                <li>Open your camera app and point it at the QR code above.</li>
-                <li>After your phone recogizes the QR code, click on the provided link.</li>
-              </ol>
-            </div>
-          </div>
-        </div>
 
-        <div class="content-grid-item card" tabindex="1">
+        <sl-card class="card">
+          <div slot="header">Remote Control</div>
+          <div style="text-align: center; padding-top: 5%;">
+            <sl-qr-code value="https://boarderly.mrmonster.me/remote" 
+                        label="Open your camera app and point it at the QR code above."
+                        fill="white">
+            </sl-qr-code>
+            </div>
+            <div style="text-align: left;">
+              <ol>
+              <li>Open your camera app and point it at the QR code above.</li>
+              <li>After your phone recogizes the QR code, click on the provided link.</li>
+              </ol>
+            </div>  
+        </sl-card>
+
+
+        <sl-card class="card">
+          <div slot="header">Restart</div>
+          <div style="text-align: center;">
+          <span id="reload" class="material-symbols-outlined">refresh</span>
+          <div>Reload the board</div>
+          </div>
+        </sl-card>
+
+
+
+        <!-- <div class="content-grid-item card" tabindex="1">
           <div class="card-title">Maintenance</div>
           <div class="card-body">
             <span id="reload" class="material-symbols-outlined">refresh</span>
             <div>Reload the board</div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- End section -->
@@ -162,27 +228,28 @@
 
 
   <!-- Other stuff-->
-  <div id="memblocks_modal" class="modal hidden">
-    <!-- <span class="modal-close" onclick="closeModal('memblocks_modal');">&times;</span> -->
+  <!-- <div id="memblocks_modal" class="modal hidden">
     <iframe src="/resources/widgets/memoryblocks" title="Memory Blocks"></iframe>
-  </div>
+  </div> -->
 
-  <div id="pictures_modal" class="modal hidden">
-    <!-- <span class="modal-close" onclick="closeModal('pictures_modal');">&times;</span> -->
+  <!-- <div id="pictures_modal" class="modal hidden">
     <iframe src="/resources/widgets/pictures" title="Pictures"></iframe>
-  </div>
+  </div> -->
 
-  <div id="memcards_modal" class="modal hidden">
-    <!-- <span class="modal-close">&times;</span> -->
+  <!-- <div id="memcards_modal" class="modal hidden">
     <iframe src="/resources/widgets/memorycards" title="Memory Cards"></iframe>
-  </div>
+  </div> -->
+
+ 
+
+  <sl-drawer placement="bottom" class="drawer-placement-bottom" style="--size: 100vh;">
+  </sl-drawer>
 
   <div id="gallery_modal" class="modal hidden">
     <div id="__pictures_block" class="gallery"></div>
   </div>
 
   <div id="screensaver_modal" class="modal hidden">
-    <!-- <span class="modal-close">&times;</span> -->
     <about-me></about-me>
   </div>
 
@@ -195,7 +262,8 @@
   <!-- hidden button to trigger audio -->
   <button id="btn_playsound" class="fff" style="display: none;">Play</button>
 
-  <script src='https://meet.jit.si/external_api.js'></script>
+  <!-- <script src='https://meet.jit.si/external_api.js'></script> -->
+  
 </body>
 
 </html>

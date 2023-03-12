@@ -1,0 +1,22 @@
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="game_box">
+            <div id="number"></div>
+            <div id="player_message" class="hidden">
+            Enter the number you saw: 
+            <input type="text" id="player_guess"></input>
+            </div>
+            <div id="result_message"></div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

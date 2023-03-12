@@ -1,9 +1,30 @@
 class FaceName extends HTMLElement {
-    render() {
-        let markup = '';
+    constructor() {
+        super();
+    }
 
-        markup = `
+    render() {
+        let card_markup = `
+            <img src="${this.getAttribute('card-face')}" />
+        `;
+
+        let modal_markup = `
                 <style>
+                .box {
+                    display: flex;
+                    height: 300px;
+                    margin-top: 12%;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .box > div {
+                    xbackground-color: #f1f1f1;
+                    color: white;
+                    border-radius: 6px;
+                    width: 400px;
+                }
+
                 .scene {
                     width: 320px;
                     height: 310px;
@@ -48,32 +69,52 @@ class FaceName extends HTMLElement {
                 }
             </style>
 
-            <div class="scene" onclick="facenameFlip()">
-            <div class="flip-card">
-                <div class="card-face card-face-front">
-                    <div class="card-body">
-                        <img src="${this.getAttribute('path')}" style="width: 100%" />
-                    </div> 
+            <div class="box">
+                <div class="scene" onclick="facenameFlip()">
+                <div class="flip-card">
+                    <div class="card-face card-face-front">
+                        <div class="card-body">
+                            <img src="${this.getAttribute('path')}" style="width: 100%" />
+                        </div> 
+                    </div>
+                    <div class="card-face card-face-back">
+                        <h2>${this.getAttribute('name') || ''}</h2>
+                    </div>
                 </div>
-                <div class="card-face card-face-back">
-                    <h2>${this.getAttribute('name') || ''}</h2>
-                </div>
+                </div> 
             </div>
-            </div> 
         `;
 
-        this.innerHTML = markup;
+        this.addEventListener('click', handleStartGame, false);
+
+       
+        //$('#modal_content').innerHTML = modal_markup;
+        //$('#modal_content').classList.remove('hidden');
+        this.innerHTML = card_markup;
+
+        function handleStartGame() {
+            //openModal('modal');
+            $('.drawer-placement-bottom').innerHTML = modal_markup;
+            $('.drawer-placement-bottom').show();
+        }
+
+        function $(element) { return document.querySelector(element); }
     }
 
     connectedCallback() {
-        if (!this.rendered) {
-          this.render();
-          this.rendered = true;
-        }
+        // if (!this.rendered) {
+        //   this.render();
+        //   this.rendered = true;
+        // }
       }
 
+    disconnectedCallback() {
+    // the browser calls this method, when the element is removed from the document
+    // (it can be called many times if an element is added/removed many times)
+    }
+
     static get observedAttributes() {
-        return ['name', 'path'];
+        return ['name', 'path', 'card-face'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

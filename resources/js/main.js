@@ -52,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
     //btn_playsound.addEventListener('click', handleSound);
 
     // load the qr code
-    QRCode.toCanvas(document.getElementById('qrcode'), `${window.location}remote`, function (error) {
-        if (error) console.error(error)
-    })
+    // QRCode.toCanvas(document.getElementById('qrcode'), `${window.location}remote`, function (error) {
+    //     if (error) console.error(error)
+    // })
 
     // const domain = 'meet.jit.si';
     // const options = {
@@ -71,6 +71,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
     //const api = new JitsiMeetExternalAPI(domain, options);
 
 });
+
+function $(element) { return document.querySelector(element); }
 
 function getActiveNavbarButton() {
     let b = document.querySelector('#navbar .active');
@@ -235,7 +237,7 @@ function refreshMessages(data) {
     __message_block.innerHTML = markup + '<br /><br /><br />'
     __message_block.scroll(0, 9999)
 
-    speak('You have a new message!')
+   // speak('Yasdfdsaou have a new message!')
 }
 
 async function getWeather() {
@@ -319,7 +321,7 @@ function speak(message) {
     talker.rate = .6;
     talker.pitch = 1;
 
-    window.speechSynthesis.speak(talker);
+    //window.speechSynthesis.speak(talker);
 }
 
 function buildAlbumList(data) {
