@@ -16,7 +16,7 @@ class Game extends HTMLElement {
 
         let markup = `
             <style>
-                #game_overview .start-game {
+                .game-overview .start-game {
                     margin-top: 5%;
                     font-size: 1rem;
                     padding: 1rem 2rem 1rem 2rem;
@@ -32,6 +32,7 @@ class Game extends HTMLElement {
                     overflow: auto;
                     background-color: rgb(0,0,0);
                     background-color: rgba(0,0,0,0.9);
+                    transition: transform .7s;
                   }
                   
                   .modal-content {
@@ -49,25 +50,24 @@ class Game extends HTMLElement {
                   }
             </style>
             
-            <div id="game_overview">
+            <div class="game-overview">
                 <div>${card_desc}</div>
-                <button class="start-game" focus="true">Play</button>
+                <div><i>Click or press Enter to play!</i></div>
+                <button class="start-game" style="display: none;">Play</button>
             </div>
 
             <div class="modal hidden">
-                <div class="modal_content">
-                    <iframe src="/resources/widgets/${this.getAttribute('game')}/index.html"></iframe>  
-                </div>
+                <div class="modal-content"></div>
             </div>
         `;
 
         this.innerHTML = markup;
-
-        $('.start-game').addEventListener('click', handleStartGame, false);
+        this.addEventListener('click', handleStartGame, false);
 
         function $(element) { return document.querySelector(element); }
 
         function handleStartGame() {
+            $('.modal-content').innerHTML = `<iframe src="/resources/widgets/${this.getAttribute('game')}/index.html"></iframe>`;
             $('.modal').classList.remove('hidden');
         }
     }
@@ -80,6 +80,7 @@ class Game extends HTMLElement {
     }
 
     disconnectedCallback() {
+        console.log('Game disconnected')
         // the browser calls this method, when the element is removed from the document
         // (it can be called many times if an element is added/removed many times)
     }

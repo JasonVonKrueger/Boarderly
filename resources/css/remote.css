@@ -61,21 +61,17 @@ body {
   text-align: center;
 }
 
-.section-buttons {
+.section {
   width: 100%;
-  display: grid;
-  grid-template-columns: auto;
-  column-gap: 2rem;
-  row-gap: 4rem;
   margin-left: auto;
   margin-right: auto; 
   border: 1px inset var(--inlay-border-color);
   background-color: var(--inlay-pit-color);
   border-radius: 4px;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
-.section-buttons div {
+.section div {
   color: #fff;
   margin-left: auto;
   margin-right: auto;
@@ -83,7 +79,26 @@ body {
   text-align: center;
 }
 
-#section_top {
+.section > .col-1 {
+  display: grid;
+  grid-template-columns: auto; 
+  row-gap: 4rem;
+}
+
+.section > .col-2 {
+  display: grid;
+  grid-template-columns: auto auto; 
+  row-gap: 2rem;
+}
+
+.section > .col-3 {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 1rem;
+  row-gap: 2rem;
+}
+
+#c_top {
   margin-top: 25%;
 }
 
@@ -94,16 +109,11 @@ body {
   margin-top: 10%;
 }
 
-#c_dpad .section-buttons {
-  grid-template-columns: auto auto; 
-  row-gap: 2rem;
-}
-
-#section_top .push-button {
+#c_top .push-button {
   padding: 1rem;
 }
 
-#function_buttons {
+#xfunction_buttons {
   width: 100%;
   margin-top: 20%;
   margin-left: auto;
@@ -137,7 +147,7 @@ button {
   font-size: 1rem;
 }
 
-.push-button {
+/* .push-button {
   width: 80px;
   text-align: center;
   cursor: pointer;
@@ -146,25 +156,25 @@ button {
   box-shadow: 0 0 0 1px #f25022 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #c93a12, 0 8px 0 1px rgba(0, 0, 0, 0.4), 0 8px 8px 1px rgba(0, 0, 0, 0.5);
   transition: 0.15s;
   font-size: 1rem;
-}
+} */
 
-.push-button > span {
+/* .push-button > span {
   vertical-align: middle;
   text-align: center;
-}
+} */
 
-.push-button .push-button:hover,
+/* .push-button .push-button:hover,
 .push-button:focus {
   background-color: #ff451a;
   box-shadow: 0 0 0 1px #FF3000 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 10px 0 0 #e62b00, 0 10px 0 1px rgba(0, 0, 0, 0.4), 0 10px 8px 1px rgba(0, 0, 0, 0.6);
-}
+} */
 
-.push-button:active,
+/* .push-button:active,
 .push-button.activated {
   box-shadow: 0 0 0 1px #ff5c36 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 0 0 1px rgba(0, 0, 0, 0.4);
   background-color: #ff5c36;
   transform: translateY(10px);
-}
+} */
 
 input[type=date],
 input[type=time],
@@ -182,6 +192,7 @@ textarea {
 input {
   width: 100% !important;
 }
+
 input:disabled {
   background-color: #ffffff;
   font-style: italic;

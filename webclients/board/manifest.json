@@ -8,8 +8,8 @@
         "sizes": "200x200"
       }
     ],
-    "id": "./board/index.html",
-    "start_url": "./board/index.html",
+    "id": "./index.html",
+    "start_url": "./index.html",
     "display": "fullscreen",
     "scope": "/",
     "description": "Message board for the elderly."

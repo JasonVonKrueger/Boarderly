@@ -1,7 +1,3 @@
-//const FaceName = require("./classes/FaceName");
-
-//import { FaceName } from './classes/FaceName'
-
 
 const socket = io();
 const messages = [];
@@ -18,14 +14,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
     document.body.addEventListener('click', resetScreenTimer, false)
     document.body.addEventListener('mousemove', resetScreenTimer, false)
 
-    // add listener to cards
-    // document.querySelectorAll('.content-grid-item.card').forEach(function(c) {
-    //     c.addEventListener('click', handleCardClick, false)
-    // })
-
     //resetTimer(); 
 
-    __navbar= document.getElementById('navbar')
+    __navbar = document.getElementById('navbar')
     __content = document.getElementById('contents')
 
     socket.on('REFRESH_MESSAGES', refreshMessages)
@@ -50,25 +41,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     // handle notification sounds
     //btn_playsound.addEventListener('click', handleSound);
-
-    // load the qr code
-    // QRCode.toCanvas(document.getElementById('qrcode'), `${window.location}remote`, function (error) {
-    //     if (error) console.error(error)
-    // })
-
-    // const domain = 'meet.jit.si';
-    // const options = {
-    //     roomName: 'JitsiMeetAPIExample',
-    //     width: 700,
-    //     height: 500,
-    //     parentNode: document.querySelector('#meet'),
-    //     lang: 'en',
-    //     userInfo: {
-    //         email: 'sherrypoore1939@gmail.com',
-    //         displayName: 'Sherry Poore'
-    //     }
-    // };
-    //const api = new JitsiMeetExternalAPI(domain, options);
 
 });
 
@@ -230,14 +202,10 @@ function refreshMessages(data) {
             <div class="bubble">${data[i].message}</div>
             </div>
         `;
-
-        //triggerEvent(btn_playsound, 'click');
     }
     
     __message_block.innerHTML = markup + '<br /><br /><br />'
     __message_block.scroll(0, 9999)
-
-   // speak('Yasdfdsaou have a new message!')
 }
 
 async function getWeather() {
@@ -310,20 +278,6 @@ function showTime() {
     setTimeout(showTime, 1000);
 }
 
-function speak(message) {
-    const talker = new SpeechSynthesisUtterance();
-    let voices = window.speechSynthesis.getVoices();
-
-    talker.voice = voices[20]; 
-    talker.voiceURI = 'native';
-    talker.text = message;
-    talker.lang = 'en-US';
-    talker.rate = .6;
-    talker.pitch = 1;
-
-    //window.speechSynthesis.speak(talker);
-}
-
 function buildAlbumList(data) {
     let button_markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;
     let pic_markup = '';
@@ -350,11 +304,6 @@ function getPicMarkup(album, name) {
     let markup = `<img src="/albums/${album}/${name}" />`;
 
     return markup;
-}
-
-function facenameFlip() {
-    let card = document.querySelector('.flip-card');
-    card.classList.toggle('is-flipped');
 }
 
 function resetScreenTimer() {

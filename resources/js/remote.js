@@ -13,7 +13,7 @@ const preview = document.querySelector('img.preview')
 const reader = new FileReader()
 
 fileInput.addEventListener('change', handleSelected)
-btn_todo.addEventListener('click', handleTodoClicked)
+//btn_todo.addEventListener('click', handleTodoClicked)
 
 document.addEventListener('DOMContentLoaded', function(e) {
   // see if the sender has used it before
@@ -92,18 +92,18 @@ function sendMessage() {
   setElementText('message_answer', 'Message sent!')
 }
 
-function showSection(section) {
-  hideElement('section_top')
-  showElement(section)
-  showElement('btn_back')
+// function showSection(section) {
+//   hideElement('section_top')
+//   showElement(section)
+//   showElement('btn_back')
 
-  return false
-}
+//   return false
+// }
 
-function sendPush(btn) {
-  snd_button_push.play()
-  socket.emit('BUTTON_PUSHED', { button: btn })
-}
+// function sendPush(btn) {
+//   snd_button_push.play()
+//   socket.emit('BUTTON_PUSHED', { button: btn })
+// }
 
 function handleTodoClicked() {
   socket.emit('REFRESH_PLANNER_EVENTS')

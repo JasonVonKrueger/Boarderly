@@ -39,8 +39,8 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: var(--font-main);
-  xbackground-image: url('/resources/images/mount-24.jpg');
-  background-image: var(--board-background);
+  background-image: url('/resources/images/mount-24.jpg');
+  xbackground-image: var(--board-background);
 }
 
 .hidden {
@@ -76,7 +76,36 @@ body {
   font-size: 2.2rem;
 }
 
-#navbar {
+#c_top.container {
+  display: grid;
+  grid-template-columns: 15% auto;
+}
+
+sl-menu.navbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  xmin-width: 400px;
+  xmax-width: 400px;
+  background-color: rgb(0 0 0 / 32%);
+}
+
+sl-menu-item::part(base) {
+  font-size: var(--navbar-font-size);
+  color: var(--font-main-color);  
+}
+
+sl-menu-item.active::part(base) {
+  background-color: var(--accent-color);
+}
+
+
+
+
+
+
+#Xnavbar {
   display: flex;
   width: 100%;
   background-color: rgb(0 0 0 / 32%);
@@ -86,27 +115,27 @@ body {
   padding-top: .3rem;
 }
 
-#navbar > div {
+#Xnavbar > div {
   padding-left: 1.2rem;
   padding-right: 1.2rem;
   cursor: pointer;
 }
 
-#navbar div:hover:not(.active) {
+#Xnavbar div:hover:not(.active) {
   background-color: var(--navbar-inactive);
 }
 
-#navbar div.active {
+/* #navbar div.active {
   background-color: var(--accent-color);
-}
+} */
 
-#navbar div span {
+#Xnavbar div span {
   vertical-align: middle;
 }
 
 #contents {
-  padding-top: 2.5em;
-  padding: 1rem;
+  padding-top: 1rem;
+  padding-right: 1rem;
 }
 
 .content-grid {
@@ -157,6 +186,7 @@ body {
 .card::part(header) {
   background-color: var(--accent-color);
   font-size: var(--card-header-font-size);
+  padding: 0;
 }
 
 .card::part(base) {
@@ -164,10 +194,18 @@ body {
   text-align: center;
 }
 
-.card::part(base):active {
+.card::part(body) {
+  height: 300px;
+}
+
+.card.taller::part(body) {
+  height: 450px;
+}
+
+/* .card::part(base):active {
   transform: scale(1.04);
   background: rgba(15, 175, 39, 0.2);
-}
+} */
 
 
 
@@ -350,7 +388,7 @@ body {
   max-width: 700px;
 }
 
-.modal-close {
+/* .modal-close {
   position: absolute;
   top: 15px;
   right: 35px;
@@ -358,7 +396,7 @@ body {
   font-size: 40px;
   font-weight: bold;
   transition: transform .7s;
-}
+} */
 
 #screensaver_modal {
   background-color: rgb(0,0,0);
