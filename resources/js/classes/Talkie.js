@@ -160,31 +160,31 @@ class Talkie extends HTMLElement {
             $('.usercount').innerHTML = usercount;
         });
     
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-            let mediaRecorder = new MediaRecorder(stream);
-            let audioChunks = [];
+        // navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        //     let mediaRecorder = new MediaRecorder(stream);
+        //     let audioChunks = [];
 
-            $('#btn_action').addEventListener('click', function(e) {
-                if (mediaRecorder.state === 'inactive') {
-                    $('#btn_action').classList.add('talking');
-                    mediaRecorder.start();
-                }
-                else {
-                    mediaRecorder.stop();      
-                }
-            });
+        //     $('#btn_action').addEventListener('click', function(e) {
+        //         if (mediaRecorder.state === 'inactive') {
+        //             $('#btn_action').classList.add('talking');
+        //             mediaRecorder.start();
+        //         }
+        //         else {
+        //             mediaRecorder.stop();      
+        //         }
+        //     });
 
-            mediaRecorder.addEventListener("dataavailable", event => {
-                audioChunks.push(event.data);
-            });
+        //     mediaRecorder.addEventListener("dataavailable", event => {
+        //         audioChunks.push(event.data);
+        //     });
 
-            mediaRecorder.addEventListener("stop", () => {
-                $('#btn_action').classList.remove('talking');
-                //socket.broadcast.emit('audioMessage', audioChunks);
-                socket.emit('TALKIE_MESSAGE', audioChunks);
-                audioChunks = [];
-            });
-        });
+        //     mediaRecorder.addEventListener("stop", () => {
+        //         $('#btn_action').classList.remove('talking');
+        //         //socket.broadcast.emit('audioMessage', audioChunks);
+        //         socket.emit('TALKIE_MESSAGE', audioChunks);
+        //         audioChunks = [];
+        //     });
+        // });
 
 
         //const shadow = this.attachShadow({ mode: 'open' });
