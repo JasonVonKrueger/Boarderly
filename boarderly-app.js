@@ -71,15 +71,15 @@ io.on('connection', function (socket) {
 
 
 	talkie_users++;
-	io.emit('TALKIE_USERS', talkie_users);
+	io.to('poores').emit('TALKIE_USERS', talkie_users);
 
 	socket.on('TALKIE_MESSAGE', function(msg) {
-		io.emit('TALKIE_MESSAGE', msg);
+		io.to('poores').emit('TALKIE_MESSAGE', msg);
 	});
 
 	socket.on('TALKIE_DISCONNECT', function() {
 		talkie_users--;
-		io.emit('TALKIE_USERS', talkie_users);
+		io.to('poores').emit('TALKIE_USERS', talkie_users);
 		console.log("user disconnected");
 	});
 
