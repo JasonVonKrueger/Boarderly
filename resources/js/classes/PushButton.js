@@ -36,10 +36,17 @@ class PushButton extends HTMLElement {
                     vertical-align: middle;
                     text-align: center;
                 }
+
+                .push-button sl-icon {
+                    font-size: 1.5rem;
+                    padding: 0px .5rem 0px .5rem;
+                    vertical-align: middle;
+                    text-align: center;
+                }
             </style>
 
-            <div class="push-button reg-req">
-                <span class="material-symbols-outlined">${this.getAttribute('icon')}</span>
+            <div class="push-button">
+                <span><sl-icon name="${this.getAttribute('icon')}"></sl-icon></span>
                 <span>${this.getAttribute('label')}</span>
             </div>
             
@@ -60,6 +67,7 @@ class PushButton extends HTMLElement {
                     $('#c_top').classList.add('hidden');
                     break;
                 case 'c_dpad':
+                    socket.emit('BUTTON_PUSHED', { button: this.getAttribute('for') })
                     break;
                 case 'c_planner':
                     break;
@@ -70,11 +78,6 @@ class PushButton extends HTMLElement {
                 case 'c_register':
                     break;
             }
-        }
-
-        function sendPush(btn) {
-            snd_button_push.play();
-            socket.emit('BUTTON_PUSHED', { button: btn })
         }
     }
 
@@ -91,7 +94,7 @@ class PushButton extends HTMLElement {
       }
 
     static get observedAttributes() {
-       // return ['name', 'class', 'icon', 'label', 'for']
+       //return ['name', 'class', 'icon', 'label', 'for']
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

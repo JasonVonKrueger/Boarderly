@@ -8,74 +8,79 @@
   <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /> -->
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="/resources/images/favicon.ico" />
   <link rel="apple-touch-icon" href="/resources/images/boarderly.png" />
   <link rel="apple-touch-icon" sizes="152x152" href="/resources/images/boarderly.png" />
   <link rel="apple-touch-startup-image" href="/resources/images/launch.png" />
   <link rel="stylesheet" href="/resources/css/remote.css" />
-
+  <link rel="stylesheet" href="/shoelace/dist/themes/dark.css" />
+  <script type="module" src="/shoelace/dist/shoelace.js"></script>
   <script type="module" src="/resources/js/classes/PushButton.js"></script>
+  <script type="module" src="/resources/js/classes/Talkie.js"></script>
 </head>
 
 <body>
   <div id="header">Boarderly :: Remote Control</div>
 
   <!-- Section -->
-  <div id="c_top" class="section">
+  <div id="c_top" class="container">
     <div class="col-1">
-      <push-button label="D-Pad" icon="remote_gen" for="c_dpad">
+      <push-button label="D-Pad" icon="dpad-fill" for="c_dpad">
       </push-button>
 
-      <push-button label="Planner" icon="event_note" for="c_planner">
+      <push-button label="Planner" icon="calendar2-date-fill" for="c_planner">
       </push-button>
 
-      <push-button label="Quick Message" icon="sms" for="c_message">
+      <push-button label="Quick Message" icon="chat-right-quote" for="c_message">
       </push-button>
 
-      <push-button label="Register this Device" icon="app_registration" for="c_register">
+      <push-button label="Talkie" icon="mic-fill" for="c_talkie">
+      </push-button>
+
+      <push-button label="Register this Device" icon="gear-wide-connected" for="c_register">
       </push-button>
     </div>
   </div>
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_dpad" class="section hidden">
+  <div id="c_dpad" class="container hidden">
     <div class="col-2">
-      <push-button label="Home" icon="home" for="home">
+      <push-button label="Home" icon="house-fill" for="home">
       </push-button>
 
-      <push-button label="Gallery" icon="photo_library" for="gallery">
+      <push-button label="Gallery" icon="images" for="gallery">
       </push-button>
 
-      <push-button label="Games" icon="sports_esports" for="games">
+      <push-button label="Games" icon="joystick" for="games">
       </push-button>
 
-      <push-button label="Settings" icon="settings" for="settings">
+      <push-button label="Settings" icon="sliders" for="settings">
       </push-button>
     </div>
 
     <div class="col-3" style="margin-top: 20%;">
       <div></div>
-      <push-button label="" icon="keyboard_arrow_up" for="ArrowUp">
+      <push-button label="" icon="caret-up-fill" for="ArrowUp">
       </push-button>
       <div></div>  
       
       <div>
-        <push-button label="" icon="keyboard_arrow_left" for="ArrowLeft">
+        <push-button label="" icon="caret-left-fill" for="ArrowLeft">
         </push-button>
       </div>
       <div></div>   
 
       <div>
-        <push-button label="" icon="keyboard_arrow_right" for="ArrowRight">
+        <push-button label="" icon="caret-right-fill" for="ArrowRight">
         </push-button>
       </div>
       <div></div>
 
       <div>
-        <push-button label="" icon="keyboard_arrow_down" for="ArrowDown">
+        <push-button label="" icon="caret-down-fill" for="ArrowDown">
         </push-button>
       </div>
       <div></div>
@@ -97,7 +102,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_planner" class="section hidden">
+  <div id="c_planner" class="container hidden">
     <fieldset>
       <legend>New Event</legend>
       <div id="newevent" class="fc-events">
@@ -112,6 +117,8 @@
         </div>
         <div style="margin-left: auto; order: 2;">
           <button onclick="addEvent()" class="clicker">Add</button>
+          <push-button label="Add Event" icon="calendar-plus-fill" for="c_planner">
+          </push-button>
         </div>
       </div>
     </fieldset>
@@ -121,7 +128,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_message" class="section hidden">
+  <div id="c_message" class="container hidden">
     <label for="__message">Message</label>
     <textarea id="__message" name="__message" placeholder="Write something.." style="height:200px"></textarea>
 
@@ -131,7 +138,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_numpad" class="section hidden">
+  <div id="c_numpad" class="container hidden">
     <div class="inlay">
       <div class="numpad">
         <div class="numpad-button push-button">1</div>
@@ -150,7 +157,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_register" class="section hidden" style="margin-top: 10%;">
+  <div id="c_register" class="container hidden" style="margin-top: 10%;">
     <input type="text" id="fname" placeholder="First name..." />
     <input type="text" id="lname" placeholder="Last name..." />
     <!-- <input type="text" id="__board_code" placeholder="Board code..." /> -->
@@ -172,7 +179,15 @@
   </div>
   <!-- End section -->
 
-  <div id="btn_back" class="hidden clicker" onclick="goHome()"><span class="material-symbols-outlined">arrow_back</span></div>
+  <!-- Section -->
+  <div id="c_talkie" class="container hidden">
+    <bdly-talkie></bdly-talkie>
+  </div>
+  <!-- End section -->
+
+  <div id="btn_back" class="hidden clicker" onclick="goHome()">
+    <sl-icon name="arrow-left-square"></sl-icon>
+  </div>
 
   <!-- MOBILE: rotate your device -->
   <div id="device-message">
@@ -180,8 +195,9 @@
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/resources/js/howler.js"></script>
+  <!-- <script src="/resources/js/howler.js"></script> -->
   <script src="/resources/js/remote.js"></script>
+
 </body>
 
 </html>

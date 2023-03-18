@@ -1,8 +1,8 @@
 /* Scripts for Boarderly remote */
 const socket = io({ forceBase64: true });
-const snd_button_push = new Howl({
-  src: ['/resources/sounds/click.mp3']
-})
+// const snd_button_push = new Howl({
+//   src: ['/resources/sounds/click.mp3']
+// })
 
 const __boarderly = JSON.parse(localStorage.getItem('boarderly'))
 const __fname = document.getElementById('fname')
@@ -12,43 +12,49 @@ const fileInput = document.querySelector('input[type="file"]')
 const preview = document.querySelector('img.preview')
 const reader = new FileReader()
 
-fileInput.addEventListener('change', handleSelected)
+//fileInput.addEventListener('change', handleSelected)
 //btn_todo.addEventListener('click', handleTodoClicked)
 
 document.addEventListener('DOMContentLoaded', function(e) {
   // see if the sender has used it before
-  if (__boarderly.fname && __boarderly.lname && __boarderly.token) {
+  // if (__boarderly.fname && __boarderly.lname && __boarderly.token) {
 
-    // enable the other buttons
-    document.querySelectorAll('.reg-req').forEach(function(b) {
-      b.classList.remove('reg-req')
-    })
+  //   // enable the other buttons
+  //   document.querySelectorAll('.reg-req').forEach(function(b) {
+  //     b.classList.remove('reg-req')
+  //   })
 
-    // pre-populate first and last name
-    __fname.value = __boarderly.fname
-    __lname.value = __boarderly.lname
-    __fname.setAttribute('disabled', 'true')
-    __lname.setAttribute('disabled', 'true')
+  //   // pre-populate first and last name
+  //   __fname.value = __boarderly.fname
+  //   __lname.value = __boarderly.lname
+  //   __fname.setAttribute('disabled', 'true')
+  //   __lname.setAttribute('disabled', 'true')
 
-    preview.src = __boarderly.image
-    showElement('btn_reset')
-    showElement('avatar_preview')
-    hideElement('btn_save')
-    hideElement('contact_pic')
+  //   preview.src = __boarderly.image
+  //   showElement('btn_reset')
+  //   showElement('avatar_preview')
+  //   hideElement('btn_save')
+  //   hideElement('contact_pic')
 
-    //socket.emit('REFRESH_PLANNER_EVENTS');
-    socket.on('REFRESH_PLANNER_EVENTS', refreshEvents)
-    socket.on('CONNECT_REMOTE', handlePushConnect)
+  //   //socket.emit('REFRESH_PLANNER_EVENTS');
+  //   socket.on('REFRESH_PLANNER_EVENTS', refreshEvents)
+  //   socket.on('CONNECT_REMOTE', handlePushConnect)
 
-    // add click handler for button sounds
-    document.querySelectorAll('.push-button').forEach(function(b) {
-      b.addEventListener('click', handleButtonPush, false)
-    })
+  //   // add click handler for button sounds
+  //   document.querySelectorAll('.push-button').forEach(function(b) {
+  //     b.addEventListener('click', handleButtonPush, false)
+  //   })
 
-    document.querySelectorAll('.numpad-button').forEach(function(b) {
-      b.addEventListener('click', handleNumPadButton, false)
-    })   
-  }
+  //   document.querySelectorAll('.numpad-button').forEach(function(b) {
+  //     b.addEventListener('click', handleNumPadButton, false)
+  //   })  
+  // }
+   // document.querySelector('c_register').addEventListener('load', handleRegisterLoad, false);
+   // document.querySelector('c_message').addEventListener('load', handleMessagesLoad, false);
+   // document.querySelector('c_planner').addEventListener('load', handlePlannerLoad, false);
+  document.querySelector('#c_dpad').addEventListener('focusin', handleDPadLoad, false);
+
+
 })
 
 function handlePushConnect(data) {
@@ -57,6 +63,22 @@ function handlePushConnect(data) {
 
 function handleButtonPush(e) {
   snd_button_push.play()
+}
+
+function handleDPadLoad() {
+  alert('yo')
+}
+
+function handleRegisterLoad() {
+
+}
+
+function handleMessagesLoad() {
+
+}
+
+function handlePlannerLoad() {
+
 }
 
 function handleNumPadButton(e) {

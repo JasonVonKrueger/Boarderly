@@ -19,6 +19,7 @@ const __boards = '.stores/boards';
 let messages = [];
 let events = [];
 let albums = [];
+let talkie_users = 0;
 
 // initialize the content folders
 console.log('Initializing content directories...');
@@ -65,6 +66,26 @@ const io = socket_io(server);
 io.on('connection', function (socket) {
 	// join the assigned room
 	socket.join('poores');
+
+
+
+
+	talkie_users++;
+	io.emit('TALKIE_USERS', talkie_users);
+
+	socket.on('TALKIE_MESSAGE', function(msg) {
+		io.emit('TALKIE_MESSAGE', msg);
+	});
+
+	socket.on('TALKIE_DISCONNECT', function() {
+		talkie_users--;
+		io.emit('TALKIE_USERS', talkie_users);
+		console.log("user disconnected");
+	});
+
+
+
+
 
 	socket.on('GET_MESSAGES', function() {
 		io.to('poores').emit('REFRESH_MESSAGES', messages);

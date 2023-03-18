@@ -52,7 +52,6 @@ class Game extends HTMLElement {
             
             <div class="game-overview">
                 <div>${card_desc}</div>
-                <div><i>Click or press Enter to play!</i></div>
                 <button class="start-game" style="display: none;">Play</button>
             </div>
 

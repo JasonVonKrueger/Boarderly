@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 function $(element) { return document.querySelector(element); }
 
 function getActiveNavbarButton() {
-    let b = document.querySelector('#navbar .active');
+    let b = document.querySelector('.navbar .active');
     return b.id;
 }
 
@@ -307,14 +307,14 @@ function getPicMarkup(album, name) {
 }
 
 function resetScreenTimer() {
-    if (countdown) {
-        document.getElementById('screensaver_modal').classList.remove('active');
-        document.getElementById('screensaver_modal').classList.add('hidden');
-        clearTimeout(countdown)
-    }
+    // if (countdown) {
+    //     document.getElementById('screensaver_modal').classList.remove('active');
+    //     document.getElementById('screensaver_modal').classList.add('hidden');
+    //     clearTimeout(countdown)
+    // }
 
-    countdown = setTimeout(function() {
-        document.getElementById('screensaver_modal').classList.add('active');
-        document.getElementById('screensaver_modal').classList.remove('hidden');
-    }, 50000);
+    // countdown = setTimeout(function() {
+    //     document.getElementById('screensaver_modal').classList.add('active');
+    //     document.getElementById('screensaver_modal').classList.remove('hidden');
+    // }, 50000);
 }

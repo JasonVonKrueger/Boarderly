@@ -22,14 +22,13 @@ class Planner extends HTMLElement {
               margin: 0;
               text-align: left;
               width: 100%;
-              font-family: "Roboto", sans-serif;
-              padding: 10px 20px;
+              xpadding: 10px 20px;
               color: #fff;
               display: inline-block;
             }
             
             .calendar_plan {
-              margin: 20px 0 40px;
+              xmargin: 20px 0 40px;
             }
           
             .cl_plan {
@@ -41,7 +40,7 @@ class Planner extends HTMLElement {
             }
             
             .cl_copy {
-              font-size: 2rem;
+              font-size: 1.5rem;
               display: inline-block;
             }
             

@@ -41,6 +41,8 @@ body {
   font-family: var(--font-main);
   background-image: url('/resources/images/mount-24.jpg');
   xbackground-image: var(--board-background);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .hidden {
@@ -284,6 +286,11 @@ sl-menu-item.active::part(base) {
   color: #ccc;
 }
 
+
+
+
+
+
 .bubble {
   position: relative;
   background: #e8dfdf;
@@ -346,18 +353,13 @@ sl-menu-item.active::part(base) {
 }
 
 #reload {
-  font-size: 10rem;
-  cursor: pointer;
-}
-
-#reload.spin {
-  animation:spin 1.5s linear infinite;
+  animation: spin 1.5s linear infinite;
 }
 
 @keyframes spin { 
   100% { 
       -webkit-transform: rotate(360deg); 
-      transform:rotate(360deg); 
+      transform: rotate(360deg); 
   } 
 }
 
