@@ -25,18 +25,18 @@
   <div id="header">Boarderly :: Remote Control</div>
 
   <!-- Section -->
-  <div id="c_top" class="container">
+  <div id="c_top" class="section">
     <div class="col-1">
-      <push-button label="D-Pad" icon="dpad-fill" for="c_dpad">
+      <push-button label="D-Pad" icon="dpad-fill" for="c_dpad" class="reg-req">
       </push-button>
 
-      <push-button label="Planner" icon="calendar2-date-fill" for="c_planner">
+      <push-button label="Planner" icon="calendar2-date-fill" for="c_planner" class="reg-req">
       </push-button>
 
-      <push-button label="Quick Message" icon="chat-right-quote" for="c_message">
+      <push-button label="Quick Message" icon="chat-right-quote" for="c_message" class="reg-req">
       </push-button>
 
-      <push-button label="Talkie" icon="mic-fill" for="c_talkie">
+      <push-button label="Talkie" icon="mic-fill" for="c_talkie" class="reg-req">
       </push-button>
 
       <push-button label="Register this Device" icon="gear-wide-connected" for="c_register">
@@ -46,7 +46,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_dpad" class="container hidden">
+  <div id="c_dpad" class="section hidden">
     <div class="col-2">
       <push-button label="Home" icon="house-fill" for="home">
       </push-button>
@@ -102,7 +102,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_planner" class="container hidden">
+  <div id="c_planner" class="section hidden">
     <fieldset>
       <legend>New Event</legend>
       <div id="newevent" class="fc-events">
@@ -128,7 +128,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_message" class="container hidden">
+  <div id="c_message" class="section hidden">
     <label for="__message">Message</label>
     <textarea id="__message" name="__message" placeholder="Write something.." style="height:200px"></textarea>
 
@@ -138,7 +138,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_numpad" class="container hidden">
+  <div id="c_numpad" class="section hidden">
     <div class="inlay">
       <div class="numpad">
         <div class="numpad-button push-button">1</div>
@@ -157,7 +157,7 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_register" class="container hidden" style="margin-top: 10%;">
+  <div id="c_register" class="section hidden" style="margin-top: 10%;">
     <input type="text" id="fname" placeholder="First name..." />
     <input type="text" id="lname" placeholder="Last name..." />
     <!-- <input type="text" id="__board_code" placeholder="Board code..." /> -->
@@ -180,8 +180,8 @@
   <!-- End section -->
 
   <!-- Section -->
-  <div id="c_talkie" class="container hidden">
-    <!-- <bdly-talkie></bdly-talkie> -->
+  <div id="c_talkie" class="section hidden">
+    <bdly-talkie></bdly-talkie>
   </div>
   <!-- End section -->
 

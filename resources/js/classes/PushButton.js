@@ -53,15 +53,25 @@ class PushButton extends HTMLElement {
         `;
 
         //const shadow = this.attachShadow({ mode: 'open' });
+        function $(element) { return document.querySelector(element) }
 
         this.innerHTML = markup;
         this.addEventListener('click', handleButtonClick, false);
 
-        function $(element) { return document.querySelector(element) }
+        
 
         function handleButtonClick() {
             switch (this.parentElement.parentElement.getAttribute('id')) {
                 case 'c_top':
+                    // deactivate all sections first
+                    Array.from(document.querySelectorAll('.section')).forEach(function(element) {
+                        element.classList.remove('active');
+                    })
+
+
+                    //showSection('#'+this.getAttribute('for'));
+                    
+                    $('#'+this.getAttribute('for')).classList.add('active');
                     $('#'+this.getAttribute('for')).classList.remove('hidden');
                     $('#btn_back').classList.remove('hidden');
                     $('#c_top').classList.add('hidden');
@@ -75,14 +85,27 @@ class PushButton extends HTMLElement {
                     break;
                 case 'c_numpad':
                     break;
+                case 'c_talkie':
+                    
+                    break;
                 case 'c_register':
                     break;
             }
         }
+
+        // function showSection(section) {
+        //     // deactivate all sections first
+        //     document.querySelectorAll('.section').forEach(function(section) {
+        //         $(section).classList.remove('active');
+        //     });
+
+        //     $(section).classList.remove('hidden');
+        //     $(section).classList.add('active');
+        // }
     }
 
     connectedCallback() {
-        if (!this.rendered) {
+        if (!this.rendered ) {
             this.render();
             this.rendered = true;
         }
