@@ -41,54 +41,66 @@ body {
   display: none !important;
 }
 
-.material-symbols-outlined {
+/* .material-symbols-outlined {
   font-size: 2rem !important;
+} */
+
+#c_page {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 5% auto;
+  row-gap: 2rem;
+  position: fixed;
+  margin: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
-#header {
+#c_page #contents {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+#c_page #header {
   background: #474344;
   background: linear-gradient(to top, #474344, #1B1C1C);
   color: #fff;
   text-shadow: 2px 2px 4px #272827;
   border-bottom: .1rem inset rgb(20, 19, 19);
-  position: fixed;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: .6rem;
-  width: 100%;
   font-size: 1.3rem;
   text-align: center;
 }
 
 .section {
   width: 100%;
-  margin-top: 10%;
-  margin-left: auto;
-  margin-right: auto; 
-  border: 1px inset var(--inlay-border-color);
-  background-color: var(--inlay-pit-color);
-  border-radius: 4px;
   padding: 2rem;
 }
 
 .section div {
   color: #fff;
-  margin-left: auto;
-  margin-right: auto;
   width: 100%;
   text-align: center;
+}
+
+.section.pit {
+  border: 1px inset var(--inlay-border-color);
+  background-color: var(--inlay-pit-color);
+  border-radius: 4px;
 }
 
 .section > .col-1 {
   display: grid;
   grid-template-columns: auto; 
+  align-content: center;
+  justify-content: space-evenly;
   row-gap: 4rem;
 }
 
 .section > .col-2 {
   display: grid;
   grid-template-columns: auto auto; 
+  column-gap: 2rem;
   row-gap: 2rem;
 }
 
@@ -100,60 +112,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
-/* .section {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto; 
-  border: 1px inset var(--inlay-border-color);
-  background-color: var(--inlay-pit-color);
-  border-radius: 4px;
-  padding: 1rem;
-} */
-
-/* .section div {
-  color: #fff;
-  margin-left: auto;
-  margin-right: auto;
-  width: 85%;
-  text-align: center;
-} */
-
-/* .section > .col-1 {
-  display: grid;
-  grid-template-columns: auto; 
-  row-gap: 4rem;
-} */
-
-/* .section > .col-2 {
-  display: grid;
-  grid-template-columns: auto auto; 
-  row-gap: 2rem;
-} */
-
-/* .section > .col-3 {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  column-gap: 1rem;
-  row-gap: 2rem;
-} */
-
-/* #c_top {
-  margin-top: 25%;
-} */
-
-/* #c_numpad,
-#c_dpad,
-#c_todo,
-#c_message {
-  margin-top: 10%;
-} */
 
 #c_top .push-button {
   padding: 1rem;
@@ -247,7 +205,7 @@ input:disabled {
 #btn_back {
   color: var(--card-bgcolor);
   position: absolute;
-  top: 1.5%;
+  top: 0.25rem;
   left: 8.5%;
   font-size: 1.5rem;
 }
@@ -289,12 +247,6 @@ fieldset {
 
 #avatar_preview {
   border: 4px solid #fff;
-}
-
-.inlay {
-  border: 1px inset var(--inlay-border-color);
-  border-radius: 4px;
-  padding: 2rem;
 }
 
 .numpad {

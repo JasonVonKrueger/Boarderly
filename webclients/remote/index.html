@@ -22,150 +22,174 @@
 </head>
 
 <body>
-  <div id="header">Boarderly :: Remote Control</div>
+  <div id="c_page">
+    <div id="header">Boarderly :: Remote Control</div>
+    <div id="contents">
 
-  <!-- Section -->
-  <div id="c_top" class="section">
-    <div class="col-1">
-      <push-button label="D-Pad" icon="dpad-fill" for="c_dpad" class="reg-req">
-      </push-button>
+      <!-- Section -->
+      <div id="c_top" class="section pit">
+        <div class="col-1">
+          <push-button label="D-Pad" icon="dpad-fill" for="c_dpad" class="reg-req">
+          </push-button>
 
-      <push-button label="Planner" icon="calendar2-date-fill" for="c_planner" class="reg-req">
-      </push-button>
+          <push-button label="Planner" icon="calendar2-date-fill" for="c_planner" class="reg-req">
+          </push-button>
 
-      <push-button label="Quick Message" icon="chat-right-quote" for="c_message" class="reg-req">
-      </push-button>
+          <push-button label="Quick Message" icon="chat-right-quote" for="c_message" class="reg-req">
+          </push-button>
 
-      <push-button label="Talkie" icon="mic-fill" for="c_talkie" class="reg-req">
-      </push-button>
+          <push-button label="Talkie" icon="mic-fill" for="c_talkie" class="reg-req">
+          </push-button>
 
-      <push-button label="Register this Device" icon="gear-wide-connected" for="c_register">
-      </push-button>
-    </div>
-  </div>
-  <!-- End section -->
-
-  <!-- Section -->
-  <div id="c_dpad" class="section hidden">
-    <div class="col-2">
-      <push-button label="Home" icon="house-fill" for="home">
-      </push-button>
-
-      <push-button label="Gallery" icon="images" for="gallery">
-      </push-button>
-
-      <push-button label="Games" icon="joystick" for="games">
-      </push-button>
-
-      <push-button label="Settings" icon="sliders" for="settings">
-      </push-button>
-    </div>
-
-    <div class="col-3" style="margin-top: 20%;">
-      <div></div>
-      <push-button label="" icon="caret-up-fill" for="ArrowUp">
-      </push-button>
-      <div></div>  
-      
-      <div>
-        <push-button label="" icon="caret-left-fill" for="ArrowLeft">
-        </push-button>
-      </div>
-      <div></div>   
-
-      <div>
-        <push-button label="" icon="caret-right-fill" for="ArrowRight">
-        </push-button>
-      </div>
-      <div></div>
-
-      <div>
-        <push-button label="" icon="caret-down-fill" for="ArrowDown">
-        </push-button>
-      </div>
-      <div></div>
-
-      <div>
-        <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('exit')">
-          <span style="font-size: 1.5rem; color: red;">exit</span>
-        </div>
-      </div>
-      <div></div>
-
-      <div>
-        <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('enter')">
-          <span style="font-size: 1.5rem; color: green;">enter</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End section -->
-
-  <!-- Section -->
-  <div id="c_planner" class="section hidden">
-    <fieldset>
-      <legend>New Event</legend>
-      <div id="newevent" class="fc-events">
-        <div style="flex: 100%;">
-          <input id="event_subject" type="text" placeholder="Description">
-        </div>
-        <div style="flex: 100%;">
-          <input type="date" id="event_date">
-        </div>
-        <div style="flex: 100%;">
-          <input type="time" id="event_time">
-        </div>
-        <div style="margin-left: auto; order: 2;">
-          <button onclick="addEvent()" class="clicker">Add</button>
-          <push-button label="Add Event" icon="calendar-plus-fill" for="c_planner">
+          <push-button label="Register this Device" icon="gear-wide-connected" for="c_register">
           </push-button>
         </div>
       </div>
-    </fieldset>
+      <!-- End section -->
 
-    <div id="event_block" style="flex: 100%; padding-top: 2rem;"></div>
-  </div>
-  <!-- End section -->
+      <!-- Section -->
+      <template id="c_dpad">
+        <div class="section pit">
+          <div class="col-2">
+            <push-button label="Home" icon="house-fill" for="home">
+            </push-button>
 
-  <!-- Section -->
-  <div id="c_message" class="section hidden">
-    <label for="__message">Message</label>
-    <textarea id="__message" name="__message" placeholder="Write something.." style="height:200px"></textarea>
+            <push-button label="Gallery" icon="images" for="gallery">
+            </push-button>
 
-    <button id="btn_send" onclick="sendMessage()">Send...</button>
-    <div id="message_answer"></div>
-  </div>
-  <!-- End section -->
+            <push-button label="Games" icon="joystick" for="games">
+            </push-button>
 
-  <!-- Section -->
-  <div id="c_numpad" class="section hidden">
-    <div class="inlay">
-      <div class="numpad">
-        <div class="numpad-button push-button">1</div>
-        <div class="numpad-button push-button">2</div>
-        <div class="numpad-button push-button">3</div>
-        <div class="numpad-button push-button">4</div>
-        <div class="numpad-button push-button">5</div>
-        <div class="numpad-button push-button">6</div>
-        <div class="numpad-button push-button">7</div>
-        <div class="numpad-button push-button">8</div>
-        <div class="numpad-button push-button">9</div>
-        <div class="numpad-button push-button">0</div>    
-      </div>
+            <push-button label="Settings" icon="sliders" for="settings">
+            </push-button>
+          </div>
+
+          <div class="col-3" style="margin-top: 20%;">
+            <div></div>
+            <push-button label="" icon="caret-up-fill" for="ArrowUp">
+            </push-button>
+            <div></div>
+
+            <div>
+              <push-button label="" icon="caret-left-fill" for="ArrowLeft">
+              </push-button>
+            </div>
+            <div></div>
+
+            <div>
+              <push-button label="" icon="caret-right-fill" for="ArrowRight">
+              </push-button>
+            </div>
+            <div></div>
+
+            <div>
+              <push-button label="" icon="caret-down-fill" for="ArrowDown">
+              </push-button>
+            </div>
+            <div></div>
+
+            <div>
+              <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('exit')">
+                <span style="font-size: 1.5rem; color: red;">exit</span>
+              </div>
+            </div>
+            <div></div>
+
+            <div>
+              <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('enter')">
+                <span style="font-size: 1.5rem; color: green;">enter</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+      <!-- End section -->
+
+      <!-- Section -->
+      <template id="c_planner">
+        <div class="section">
+          <fieldset>
+            <legend>New Event</legend>
+            <div id="newevent" class="fc-events">
+              <div style="flex: 100%;">
+                <input id="event_subject" type="text" placeholder="Description">
+              </div>
+              <div style="flex: 100%;">
+                <input type="date" id="event_date">
+              </div>
+              <div style="flex: 100%;">
+                <input type="time" id="event_time">
+              </div>
+              <div style="margin-left: auto; order: 2;">
+                <button onclick="addEvent()" class="clicker">Add</button>
+                <push-button label="Add Event" icon="calendar-plus-fill" for="c_planner">
+                </push-button>
+              </div>
+            </div>
+          </fieldset>
+
+          <div id="event_block" style="flex: 100%; padding-top: 2rem;"></div>
+        </div>
+      </template>
+      <!-- End section -->
+
+      <!-- Section -->
+      <template id="c_message">
+        <div class="section">
+          <label for="__message">Message</label>
+          <textarea id="__message" name="__message" placeholder="Write something.." style="height:200px"></textarea>
+
+          <button id="btn_send" onclick="sendMessage()">Send...</button>
+          <div id="message_answer"></div>
+        </div>
+      </template>
+      <!-- End section -->
+
+      <!-- Section -->
+      <template id="c_talkie">
+        <div class="section pit">
+          <bdly-talkie></bdly-talkie>
+        </div>
+      </template>
+      <!-- End section -->
+
+      <!-- Section -->
+      <template id="c_numpad">
+        <div class="section pit">
+          <div class="numpad">
+            <div class="numpad-button push-button">1</div>
+            <div class="numpad-button push-button">2</div>
+            <div class="numpad-button push-button">3</div>
+            <div class="numpad-button push-button">4</div>
+            <div class="numpad-button push-button">5</div>
+            <div class="numpad-button push-button">6</div>
+            <div class="numpad-button push-button">7</div>
+            <div class="numpad-button push-button">8</div>
+            <div class="numpad-button push-button">9</div>
+            <div class="numpad-button push-button">0</div>
+          </div>
+        </div>
+      </template>
+      <!-- End section -->
+
     </div>
   </div>
-  <!-- End section -->
+
+
+
 
   <!-- Section -->
+  <!-- <template> -->
   <div id="c_register" class="section hidden" style="margin-top: 10%;">
     <input type="text" id="fname" placeholder="First name..." />
     <input type="text" id="lname" placeholder="Last name..." />
     <!-- <input type="text" id="__board_code" placeholder="Board code..." /> -->
 
     <p> Add a contact picture to help with visual memory stimulation!</p>
-  
+
     <p><input type="file" id="contact_pic" accept="image/*"></p>
-    <p><img src="" id="avatar_preview" class="preview hidden" alt="Image preview" style="width: auto; height: 120px;" /></p>
+    <p><img src="" id="avatar_preview" class="preview hidden" alt="Image preview" style="width: auto; height: 120px;" />
+    </p>
 
     <button id="btn_save" class="hidden" onclick="registerDevice()">
       <span>Save</span>
@@ -177,13 +201,10 @@
 
     <div id="register_answer" class="hidden"></div>
   </div>
+  <!-- </template> -->
   <!-- End section -->
 
-  <!-- Section -->
-  <div id="c_talkie" class="section hidden">
-    <bdly-talkie></bdly-talkie>
-  </div>
-  <!-- End section -->
+
 
   <div id="btn_back" class="hidden clicker" onclick="goHome()">
     <sl-icon name="arrow-left-square"></sl-icon>

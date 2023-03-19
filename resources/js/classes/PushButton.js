@@ -63,18 +63,20 @@ class PushButton extends HTMLElement {
         function handleButtonClick() {
             switch (this.parentElement.parentElement.getAttribute('id')) {
                 case 'c_top':
-                    // deactivate all sections first
+                    $('#c_top').classList.add('hidden');
+
+                    // deactivate all sections
                     Array.from(document.querySelectorAll('.section')).forEach(function(element) {
                         element.classList.remove('active');
                     })
-
-
-                    //showSection('#'+this.getAttribute('for'));
                     
-                    $('#'+this.getAttribute('for')).classList.add('active');
-                    $('#'+this.getAttribute('for')).classList.remove('hidden');
-                    $('#btn_back').classList.remove('hidden');
-                    $('#c_top').classList.add('hidden');
+                    showSection(this.getAttribute('for'));
+                    
+                    
+                    // $('#'+this.getAttribute('for')).classList.add('active');
+                    // $('#'+this.getAttribute('for')).classList.remove('hidden');
+                    
+                    // $('#c_top').classList.add('hidden');
                     break;
                 case 'c_dpad':
                     socket.emit('BUTTON_PUSHED', { button: this.getAttribute('for') })
@@ -91,6 +93,14 @@ class PushButton extends HTMLElement {
                 case 'c_register':
                     break;
             }
+        }
+
+        function showSection(template) {
+            const t = document.getElementById(template);
+            const c = t.content.cloneNode(true);
+            document.body.appendChild(c);
+
+            $('#btn_back').classList.remove('hidden');
         }
 
         // function showSection(section) {
@@ -121,7 +131,7 @@ class PushButton extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        this.render()
+       // this.render()
     }
 }
 

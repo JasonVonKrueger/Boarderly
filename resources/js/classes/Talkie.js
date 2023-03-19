@@ -4,11 +4,21 @@ class Talkie extends HTMLElement {
     }
 
     render() {
-        const socket = io();
-        const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
-
         let markup = `
-            <style>          
+            <style>   
+                .col-1 {
+                    display: grid;
+                    grid-template-columns: auto; 
+                    row-gap: 4rem;
+                    width: 100%;
+                    justify-content: space-evenly;
+                    align-content: center;
+                }
+
+                .col-1 > div {
+                    width: 100%;
+                }
+
                 #btn_action {
                     background: #456BD9;
                     border: .5rem solid #ccc;
@@ -16,10 +26,9 @@ class Talkie extends HTMLElement {
                     box-shadow: 0.375em 0.375em 0 0 rgba(255, 28, 63, 0.125);
                     height: 7em;
                     width: 7em;
-                    margin-top: 4rem;
-                    display: flex;
-                    align-items: center;
-                    text-align: center;
+                    xmargin-top: 4rem;
+                    margin-left: auto;
+                    margin-right: auto;
                 }
 
                 #btn_action.talking{
@@ -32,9 +41,10 @@ class Talkie extends HTMLElement {
 
                 #speaker {
                     display: grid;
-                    grid-template-columns: auto auto auto auto auto auto;
-                    height: 6rem;
-                    width: 8rem;
+                    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+                    col-gap: 1rem;
+                    height: 8rem;
+                    width: 12rem;
                 }
 
                 #speaker > div {
@@ -44,38 +54,42 @@ class Talkie extends HTMLElement {
                     width: .3rem;
                     height: .3rem;
                 }
-
-                #talkers {
-                    align: left;
-                }
             </style>
 
-            <div style="min-height: 50vh;">
-                <div id="speaker">
-                    <div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div>
-                </div>
-
-                <div id="btn_action"><span id="action"></span></div>
-
+            <div class="col-1">
                 <div id="talkers">
                     <div>Talkers here now:&nbsp; <span id="talkers_block"></span></div>
+                </div>
+
+                <div>
+                    <div id="speaker">
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div id="btn_action"><span id="action"></span></div>
                 </div>
             </div>
             
         `;
-
+  
         this.innerHTML = markup;
 
-        if ($('#c_talkie').classList.contains('active')) {
-            alert('yo')
+        if (typeof socket === 'undefined') {
+            const socket = io();
+        }
+
+        if (typeof __boarderly === 'undefined') {
+            const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
         }
 
         socket.emit('NEW_TALKER', __boarderly.fname);
@@ -124,15 +138,14 @@ class Talkie extends HTMLElement {
         //const shadow = this.attachShadow({ mode: 'open' });
 
         function $(element) { return document.querySelector(element) }
+    
     }
 
     connectedCallback() {
-        //if (document.getElementById('c_talkie').classList.contains('active')) {
-            if (!this.rendered) {
-                this.render();
-                this.rendered = true;
-            }
-       // }
+        if (!this.rendered) {
+            this.render();
+            this.rendered = true;
+        }
     }
 
     disconnectedCallback() {
