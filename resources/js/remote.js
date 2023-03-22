@@ -37,13 +37,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
     hideElement('contact_pic')
 
     //socket.emit('REFRESH_PLANNER_EVENTS');
-    socket.on('REFRESH_PLANNER_EVENTS', refreshEvents)
+    //socket.on('REFRESH_PLANNER_EVENTS', refreshEvents)
     socket.on('CONNECT_REMOTE', handlePushConnect)
 
     // add click handler for button sounds
-    document.querySelectorAll('.push-button').forEach(function(b) {
-      b.addEventListener('click', handleButtonPush, false)
-    })
+    // document.querySelectorAll('.push-button').forEach(function(b) {
+    //   b.addEventListener('click', handleButtonPush, false)
+    // })
 
     document.querySelectorAll('.numpad-button').forEach(function(b) {
       b.addEventListener('click', handleNumPadButton, false)
@@ -59,26 +59,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 function handlePushConnect(data) {
   showSection('c_numpad')
-}
-
-function handleButtonPush(e) {
-  //snd_button_push.play()
-}
-
-function handleDPadLoad() {
-  alert('yo')
-}
-
-function handleRegisterLoad() {
-
-}
-
-function handleMessagesLoad() {
-
-}
-
-function handlePlannerLoad() {
-
 }
 
 function handleNumPadButton(e) {
@@ -98,28 +78,20 @@ function goHome() {
   window.location.reload()
 }
 
-function sendMessage() {
-  if (!__boarderly.fname || !__boarderly.lname || !__boarderly.token) return false
+// function sendMessage() {
+//   if (!__boarderly.fname || !__boarderly.lname || !__boarderly.token) return false
 
-  let d = new Date()
-  socket.emit('POST_MESSAGE', {
-    from: `${__boarderly.fname} ${__boarderly.lname}`,
-    message: __message.value,
-    date: d.toLocaleString(),
-    token: __boarderly.token,
-    file_name: __boarderly.file_name
-  })
+//   let d = new Date()
+//   socket.emit('POST_MESSAGE', {
+//     from: `${__boarderly.fname} ${__boarderly.lname}`,
+//     message: __message.value,
+//     date: d.toLocaleString(),
+//     token: __boarderly.token,
+//     file_name: __boarderly.file_name
+//   })
 
-  hideElement('btn_send')
-  setElementText('message_answer', 'Message sent!')
-}
-
-// function showSection(section) {
-//   hideElement('section_top')
-//   showElement(section)
-//   showElement('btn_back')
-
-//   return false
+//   hideElement('btn_send')
+//   setElementText('message_answer', 'Message sent!')
 // }
 
 // function sendPush(btn) {
@@ -127,60 +99,60 @@ function sendMessage() {
 //   socket.emit('BUTTON_PUSHED', { button: btn })
 // }
 
-function handleTodoClicked() {
-  socket.emit('REFRESH_PLANNER_EVENTS')
-  hideElement('section_top')
-  showElement('c_todo')
-  showElement('btn_back')
-}
+// function handleTodoClicked() {
+//   socket.emit('REFRESH_PLANNER_EVENTS')
+//   hideElement('section_top')
+//   showElement('c_todo')
+//   showElement('btn_back')
+// }
 
-function refreshEvents(data) {
-  const event_block = document.getElementById('event_block')
+// function refreshEvents(data) {
+//   const event_block = document.getElementById('event_block')
 
-  for (let i = 0; i < data.length; i++) {  
-    const event = document.createElement('div')
-    const l = document.createElement('span')
-    const r = document.createElement('span')
+//   for (let i = 0; i < data.length; i++) {  
+//     const event = document.createElement('div')
+//     const l = document.createElement('span')
+//     const r = document.createElement('span')
 
-    l.innerHTML = data[i].event;
-    r.innerHTML = `<span class="material-symbols-outlined" style="cursor: pointer; color: #cf5e5e;" onclick="deleteEvent('${data[i].id}')">delete</span>`
+//     l.innerHTML = data[i].event;
+//     r.innerHTML = `<span class="material-symbols-outlined" style="cursor: pointer; color: #cf5e5e;" onclick="deleteEvent('${data[i].id}')">delete</span>`
 
-    event.appendChild(l)
-    event.appendChild(r)
-    event.classList.add('event')
+//     event.appendChild(l)
+//     event.appendChild(r)
+//     event.classList.add('event')
 
-    event_block.appendChild(event)
-  }
-}
+//     event_block.appendChild(event)
+//   }
+// }
 
-function addEvent() {
-  // clear the list and rebuild
-  while (document.getElementById('event_block').firstChild) {
-    document.getElementById('event_block').removeChild(document.getElementById('event_block').firstChild)
-  }
+// function addEvent() {
+//   // clear the list and rebuild
+//   while (document.getElementById('event_block').firstChild) {
+//     document.getElementById('event_block').removeChild(document.getElementById('event_block').firstChild)
+//   }
 
-  const event_subject = document.getElementById('event_subject')
-  const event_date = document.getElementById('event_date')
-  const event_time = document.getElementById('event_time')
+//   const event_subject = document.getElementById('event_subject')
+//   const event_date = document.getElementById('event_date')
+//   const event_time = document.getElementById('event_time')
 
-  if (event_subject.value.length == 0) return;
+//   if (event_subject.value.length == 0) return;
 
-  let d = new Date()
-  socket.emit('POST_PLANNER_EVENT', {
-    event: event_subject.value,
-    date: event_date.value,
-    time: event_time.value,
-    created_by: `${__boarderly.fname} ${__boarderly.lname}`,
-    created_on: d.toLocaleString(),
-    token: __boarderly.token
-  })
+//   let d = new Date()
+//   socket.emit('POST_PLANNER_EVENT', {
+//     event: event_subject.value,
+//     date: event_date.value,
+//     time: event_time.value,
+//     created_by: `${__boarderly.fname} ${__boarderly.lname}`,
+//     created_on: d.toLocaleString(),
+//     token: __boarderly.token
+//   })
 
-  //socket.emit('REFRESH_eventS');
-}
+//   //socket.emit('REFRESH_eventS');
+// }
 
-function deleteEvent(id) {
-  socket.emit('DELETE_PLANNER_EVENT', { id: id })
-}
+// function deleteEvent(id) {
+//   socket.emit('DELETE_PLANNER_EVENT', { id: id })
+// }
 
 async function registerDevice() {
   if (!fname.value || !lname.value) return false

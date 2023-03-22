@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
     getWeather()
     showTime()
 
+    showToast('<sl-icon name="envelope-fill"></sl-icon> You have a new message!', 3000);
+
     // add event listeners to modal close buttons
     document.querySelectorAll('.modal-close').forEach(function(n) {
         n.addEventListener('click', function(e) {
@@ -100,6 +102,8 @@ function show(el) {
 function handleRemBtnPush(data) {
     // turn off screen saver
     triggerEvent(document.body, 'mousemove')
+
+    alert(data)
 
     let section = getActiveNavbarButton().replace('nav', 'section')
     let cards = document.getElementById(section).querySelectorAll('.card')
@@ -238,7 +242,7 @@ async function getWeather() {
             year: "numeric",
             month: "short",
             day: "numeric"
-          })
+        })
 
         markup += `<tr><td>${dd}</td>
             <td><img src="${d.day.condition.icon}" style="width: 50px" /></td>
@@ -276,6 +280,15 @@ function showTime() {
     document.getElementById("time").textContent = time;
     
     setTimeout(showTime, 1000);
+}
+
+function showToast(message, ms=3000) {
+    $('#toast').innerHTML = message;
+    $('#toast').classList.add('show');
+    
+    setTimeout(function(){ 
+        $('#toast').classList.remove('show');
+    }, ms);
 }
 
 function buildAlbumList(data) {

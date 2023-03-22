@@ -218,32 +218,15 @@ fieldset {
   border-radius: 6px;
 }
 
-.fc-events {
-  display: flex;
-  flex-direction: column;
-}
 
-.event {
-  border-radius: 5px;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid #939697;
-  background-color: #fcff9e;
-  height: 50px;
-  margin-bottom: 8px;
-  padding: 5px 10px;
-  display: flex;
-  color: #ddd;
-  background: rgba(255,255,255,0.1);
-}
 
-.event button {
+/* .event button {
   border: none;
   cursor: pointer;
   outline: none;
   height: 100%;
   border-radius: 5px;
-}
+} */
 
 #avatar_preview {
   border: 4px solid #fff;

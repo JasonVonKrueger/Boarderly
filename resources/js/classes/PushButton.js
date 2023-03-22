@@ -1,11 +1,10 @@
+/* Widget for Boarderly remote */
 class PushButton extends HTMLElement {
     constructor() {
         super();
     }
 
     render() {
-        const socket = io();
-
         let markup = `
             <style>
                 .push-button {
@@ -46,19 +45,26 @@ class PushButton extends HTMLElement {
             </style>
 
             <div class="push-button">
-                <span><sl-icon name="${this.getAttribute('icon')}"></sl-icon></span>
+                <span class="pb-icon"><sl-icon name="${this.getAttribute('icon') || ''}"></sl-icon></span>
                 <span>${this.getAttribute('label')}</span>
             </div>
             
         `;
 
-        //const shadow = this.attachShadow({ mode: 'open' });
-        function $(element) { return document.querySelector(element) }
-
         this.innerHTML = markup;
+
+        if (typeof socket === 'undefined') {
+            const socket = io();
+        }
+        
+        // take out the left span if no icon is provided
+        if (!this.getAttribute('icon')) {
+            this.querySelector('.pb-icon').classList.add('hidden');
+        }
+
         this.addEventListener('click', handleButtonClick, false);
 
-        
+        function $(element) { return document.querySelector(element); }
 
         function handleButtonClick() {
             switch (this.parentElement.parentElement.getAttribute('id')) {
@@ -71,24 +77,9 @@ class PushButton extends HTMLElement {
                     })
                     
                     showSection(this.getAttribute('for'));
-                    
-                    
-                    // $('#'+this.getAttribute('for')).classList.add('active');
-                    // $('#'+this.getAttribute('for')).classList.remove('hidden');
-                    
-                    // $('#c_top').classList.add('hidden');
                     break;
                 case 'c_dpad':
-                    socket.emit('BUTTON_PUSHED', { button: this.getAttribute('for') })
-                    break;
-                case 'c_planner':
-                    break;
-                case 'c_message':
-                    break;
-                case 'c_numpad':
-                    break;
-                case 'c_talkie':
-                    
+                    //socket.emit('BUTTON_PUSHED', { button: this.getAttribute('for') })
                     break;
                 case 'c_register':
                     break;
@@ -102,16 +93,6 @@ class PushButton extends HTMLElement {
 
             $('#btn_back').classList.remove('hidden');
         }
-
-        // function showSection(section) {
-        //     // deactivate all sections first
-        //     document.querySelectorAll('.section').forEach(function(section) {
-        //         $(section).classList.remove('active');
-        //     });
-
-        //     $(section).classList.remove('hidden');
-        //     $(section).classList.add('active');
-        // }
     }
 
     connectedCallback() {
@@ -127,7 +108,7 @@ class PushButton extends HTMLElement {
       }
 
     static get observedAttributes() {
-       //return ['name', 'class', 'icon', 'label', 'for']
+       return ['name', 'class', 'icon', 'label', 'for', 'handler']
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

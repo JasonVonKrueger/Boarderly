@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="/shoelace/dist/themes/dark.css" />
   <script type="module" src="/shoelace/dist/shoelace.js"></script>
   <script type="module" src="/resources/js/classes/PushButton.js"></script>
+  <script type="module" src="/resources/js/classes/DPad.js"></script>
+  <script type="module" src="/resources/js/classes/Planner.js"></script>
+  <script type="module" src="/resources/js/classes/Message.js"></script>
   <script type="module" src="/resources/js/classes/Talkie.js"></script>
 </head>
 
@@ -35,7 +38,7 @@
           <push-button label="Planner" icon="calendar2-date-fill" for="c_planner" class="reg-req">
           </push-button>
 
-          <push-button label="Quick Message" icon="chat-right-quote" for="c_message" class="reg-req">
+          <push-button label="Quick Message" icon="chat-right-text-fill" for="c_message" class="reg-req">
           </push-button>
 
           <push-button label="Talkie" icon="mic-fill" for="c_talkie" class="reg-req">
@@ -49,58 +52,8 @@
 
       <!-- Section -->
       <template id="c_dpad">
-        <div class="section pit">
-          <div class="col-2">
-            <push-button label="Home" icon="house-fill" for="home">
-            </push-button>
-
-            <push-button label="Gallery" icon="images" for="gallery">
-            </push-button>
-
-            <push-button label="Games" icon="joystick" for="games">
-            </push-button>
-
-            <push-button label="Settings" icon="sliders" for="settings">
-            </push-button>
-          </div>
-
-          <div class="col-3" style="margin-top: 20%;">
-            <div></div>
-            <push-button label="" icon="caret-up-fill" for="ArrowUp">
-            </push-button>
-            <div></div>
-
-            <div>
-              <push-button label="" icon="caret-left-fill" for="ArrowLeft">
-              </push-button>
-            </div>
-            <div></div>
-
-            <div>
-              <push-button label="" icon="caret-right-fill" for="ArrowRight">
-              </push-button>
-            </div>
-            <div></div>
-
-            <div>
-              <push-button label="" icon="caret-down-fill" for="ArrowDown">
-              </push-button>
-            </div>
-            <div></div>
-
-            <div>
-              <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('exit')">
-                <span style="font-size: 1.5rem; color: red;">exit</span>
-              </div>
-            </div>
-            <div></div>
-
-            <div>
-              <div class="push-button" style="background-color: #cfeedd;" onclick="sendPush('enter')">
-                <span style="font-size: 1.5rem; color: green;">enter</span>
-              </div>
-            </div>
-          </div>
+        <div class="section">
+          <bdly-dpad></bdly-dpad>
         </div>
       </template>
       <!-- End section -->
@@ -108,27 +61,7 @@
       <!-- Section -->
       <template id="c_planner">
         <div class="section">
-          <fieldset>
-            <legend>New Event</legend>
-            <div id="newevent" class="fc-events">
-              <div style="flex: 100%;">
-                <input id="event_subject" type="text" placeholder="Description">
-              </div>
-              <div style="flex: 100%;">
-                <input type="date" id="event_date">
-              </div>
-              <div style="flex: 100%;">
-                <input type="time" id="event_time">
-              </div>
-              <div style="margin-left: auto; order: 2;">
-                <button onclick="addEvent()" class="clicker">Add</button>
-                <push-button label="Add Event" icon="calendar-plus-fill" for="c_planner">
-                </push-button>
-              </div>
-            </div>
-          </fieldset>
-
-          <div id="event_block" style="flex: 100%; padding-top: 2rem;"></div>
+          <bdly-planner></bdly-planner>
         </div>
       </template>
       <!-- End section -->
@@ -136,11 +69,7 @@
       <!-- Section -->
       <template id="c_message">
         <div class="section">
-          <label for="__message">Message</label>
-          <textarea id="__message" name="__message" placeholder="Write something.." style="height:200px"></textarea>
-
-          <button id="btn_send" onclick="sendMessage()">Send...</button>
-          <div id="message_answer"></div>
+          <bdly-message></bdly-message>
         </div>
       </template>
       <!-- End section -->
@@ -174,9 +103,6 @@
 
     </div>
   </div>
-
-
-
 
   <!-- Section -->
   <!-- <template> -->

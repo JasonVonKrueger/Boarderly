@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/resources/images/favicon.ico" />
-  <link rel="stylesheet" href="/resources/css/main.css" />
+  <link rel="stylesheet" href="/resources/css/board.css" />
   <!-- <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /> -->
   <!-- <link rel="stylesheet"
@@ -114,12 +114,6 @@
                     src="/albums/Roger_and_family/Roger and Linda.jpg"
                   />
                 </sl-carousel-item>
-                <sl-carousel-item>
-                  <img
-                    alt="The sun is setting over a lavender field (by Leonard Cotte on Unsplash)"
-                    src="/assets/examples/carousel/sunset.jpg"
-                  />
-                </sl-carousel-item>
               </sl-carousel>
 
 
@@ -137,7 +131,7 @@
 
         <!-- Games section -->
         <div id="section_games" class="section hidden">
-          <div class="content-grid col-4">
+          <div class="content-grid col-3">
 
             <!-- <div id="game_memblocks" class="content-grid-item card" onclick="openModal('memblocks_modal')" tabindex="1">
           <div class="card-title">Memory Blocks</div>
@@ -225,9 +219,9 @@
   </div> -->
 
 
-  <!-- <div id="gallery_modal" class="modal hidden">
+  <div id="gallery_modal" class="modal hidden">
     <div id="__pictures_block" class="gallery"></div>
-  </div> -->
+  </div>
 
   <!-- <div id="screensaver_modal" class="modal hidden">
     <about-me></about-me>
@@ -239,10 +233,7 @@
 
   <div id="time" onload="showTime()"></div>
 
-  <!-- hidden button to trigger audio -->
-  <button id="btn_playsound" class="fff" style="display: none;">Play</button>
-
-  <!-- <script src='https://meet.jit.si/external_api.js'></script> -->
+  <div id="toast"></div>
 
 </body>
 
