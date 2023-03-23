@@ -1,5 +1,10 @@
 /* Scripts for Boarderly remote */
-const socket = io({ forceBase64: true });
+const socket = io({ 
+  forceBase64: false,
+  extraHeaders: {
+    'IO-Board-Key': '123'
+  } 
+});
 // const snd_button_push = new Howl({
 //   src: ['/resources/sounds/click.mp3']
 // })
@@ -15,15 +20,19 @@ const reader = new FileReader()
 fileInput.addEventListener('change', handleSelected);
 
 document.addEventListener('DOMContentLoaded', function(e) {
+  e.preventDefault();
+
   // handle button events for top page
   if ($('.active').id === 'c_top') {
     $('#c_top').querySelectorAll('push-button').forEach(function(btn) {
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+
         $('#c_top').classList.add('hidden');
 
         // deactivate all sections
         document.querySelectorAll('.section').forEach(function(element) {
-            element.classList.remove('active');
+          element.classList.remove('active');
         })
 
         const t = document.getElementById(btn.getAttribute('for'));

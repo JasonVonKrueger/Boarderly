@@ -200,10 +200,16 @@ function refreshMessages(data) {
     }
 
     for (let i = 0; i < data.length; i++) {
+        // get initials from dame
+        //const initials = data[i].from.match(/(\b\S)?/g).join('').toUpperCase();
+
         markup += `
-            <div style="display: flex; flex-direction: row;">
-            <div><img src="/devices/${data[i].token}/${data[i].file_name}" class="thumb-avatar" /></div>
-            <div class="bubble">${data[i].message}</div>
+            <div class="message-container">
+                <div class="message-props">
+                    ${data[i].from}
+                    ${data[i].date}
+                </div>
+                <div class="message">${data[i].message}</div>
             </div>
         `;
     }
