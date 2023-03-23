@@ -36,7 +36,7 @@ body {
   overflow: hidden;
 }
 
-.reg-req,
+.xreg-req,
 .hidden {
   display: none !important;
 }

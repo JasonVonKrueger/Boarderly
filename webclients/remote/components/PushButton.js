@@ -61,38 +61,6 @@ class PushButton extends HTMLElement {
         if (!this.getAttribute('icon')) {
             this.querySelector('.pb-icon').classList.add('hidden');
         }
-
-        this.addEventListener('click', handleButtonClick, false);
-
-        function $(element) { return document.querySelector(element); }
-
-        function handleButtonClick() {
-            switch (this.parentElement.parentElement.getAttribute('id')) {
-                case 'c_top':
-                    $('#c_top').classList.add('hidden');
-
-                    // deactivate all sections
-                    Array.from(document.querySelectorAll('.section')).forEach(function(element) {
-                        element.classList.remove('active');
-                    })
-                    
-                    showSection(this.getAttribute('for'));
-                    break;
-                case 'c_dpad':
-                    //socket.emit('BUTTON_PUSHED', { button: this.getAttribute('for') })
-                    break;
-                case 'c_register':
-                    break;
-            }
-        }
-
-        function showSection(template) {
-            const t = document.getElementById(template);
-            const c = t.content.cloneNode(true);
-            document.body.appendChild(c);
-
-            $('#btn_back').classList.remove('hidden');
-        }
     }
 
     connectedCallback() {
@@ -101,11 +69,6 @@ class PushButton extends HTMLElement {
             this.rendered = true;
         }
     }
-
-    disconnectedCallback() {
-        // the browser calls this method, when the element is removed from the document
-        // (it can be called many times if an element is added/removed many times)
-      }
 
     static get observedAttributes() {
        return ['name', 'class', 'icon', 'label', 'for', 'handler']

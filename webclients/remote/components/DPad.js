@@ -6,12 +6,23 @@ class DPad extends HTMLElement {
 
     render() {
         let markup = `
-            <link rel="stylesheet" href="/resources/css/remote.css" />
-
             <style>
+                #quick_buttons {
+                    display: grid;
+                    grid-template-columns: auto auto; 
+                    column-gap: 2rem;
+                    row-gap: 2rem;
+                }
+
+                #d_buttons {
+                    display: grid;
+                    grid-template-columns: auto auto auto;
+                    column-gap: 1rem;
+                    row-gap: 2rem;
+                }
             </style>
 
-            <div class="section col-2">
+            <div id="quick_buttons">
                 <push-button label="Home" icon="house-fill" for="home">
                 </push-button>
 
@@ -25,7 +36,7 @@ class DPad extends HTMLElement {
                 </push-button>
             </div>
 
-            <div class="col-3" style="margin-top: 20%;">
+            <div id="d_buttons" style="margin-top: 20%;">
                 <div></div>
                     <push-button label="" icon="caret-up-fill" for="ArrowUp">
                     </push-button>
@@ -74,7 +85,15 @@ class DPad extends HTMLElement {
             const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
         }
 
-        // socket.emit('BUTTON_PUSHED', { button: this.getAttribute('for') })
+        this.querySelectorAll('push-button').forEach(function(btn) {
+            btn.addEventListener('click', handleButtonClick, false);
+        })
+
+        function $(element) { return document.querySelector(element) }
+
+        function handleButtonClick(e) {
+            socket.emit('BUTTON_PUSHED', { button: this.getAttribute('for') })
+        }
     }
 
     connectedCallback() {

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/resources/images/favicon.ico" />
-  <link rel="stylesheet" href="/resources/css/board.css" />
+  <link rel="stylesheet" href="./css/board.css" />
   <!-- <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /> -->
   <!-- <link rel="stylesheet"
@@ -24,7 +24,7 @@
   <!-- <script src="/resources/js/csi.js"></script> -->
   <script src="/socket.io/socket.io.js"></script>
   <script src="/resources/js/howler.js"></script>
-  <script src="/resources/js/main.js"></script>
+  <script src="./js/board.js"></script>
 </head>
 
 <body>
@@ -95,30 +95,22 @@
 
        <!-- Gallery section -->
        <div id="section_gallery" class="section hidden">
-        <div class="content-grid col-1">
+        <div class="content-grid col-1" style="height: auto;">
 
-          <sl-card class="card">
+          <sl-card class="card taller">
             <div slot="header">Picture Gallery</div>
             <div style="text-align: center;">
 
-              <sl-carousel pagination navigation mouse-dragging loop>
+              <sl-carousel class="aspect-ratio" autoplay loop pagination style="--aspect-ratio: 3/2;">
                 <sl-carousel-item>
-                  <img
-                    alt="The sun shines on the mountains and trees (by Adam Kool on Unsplash)"
-                    src="/albums/Roger_and_family/Linda in the canyon.jpg"
-                  />
+                  <img src="/albums/Roger_and_family/Linda in the canyon.jpg" />
                 </sl-carousel-item>
+
                 <sl-carousel-item>
-                  <img
-                    alt="A waterfall in the middle of a forest (by Thomas Kelly on Unsplash)"
-                    src="/albums/Roger_and_family/Roger and Linda.jpg"
-                  />
+                  <img src="/albums/Roger_and_family/Roger and Linda.jpg" />
                 </sl-carousel-item>
               </sl-carousel>
 
-
-
-              
               <!-- <div id="gallery_modal" class="modal">
                   <div id="__pictures_block" class="gallery"></div>
               </div> -->

@@ -58,10 +58,10 @@ function getActiveCard() {
     return b.id;
 }
 
-function handleCardClick(e) {
-    const card = e.target
-    alert(card.parentElement.innerHTML)
-}
+// function handleCardClick(e) {
+//     const card = e.target
+//     //alert(card.parentElement.innerHTML)
+// }
 
 // function handleScrSavr() {
 //     closeModal('screensaver_modal');
@@ -103,7 +103,7 @@ function handleRemBtnPush(data) {
     // turn off screen saver
     triggerEvent(document.body, 'mousemove')
 
-    alert(data)
+    //alert(data)
 
     let section = getActiveNavbarButton().replace('nav', 'section')
     let cards = document.getElementById(section).querySelectorAll('.card')

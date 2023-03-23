@@ -16,9 +16,9 @@ const __events = '.stores/events';
 const __albums = '.stores/albums';
 const __boards = '.stores/boards';
 
-let messages = [];
-let events = [];
-let albums = [];
+const messages = [];
+const events = [];
+const albums = [];
 
 // initialize the content folders
 console.log('Initializing content directories...');
@@ -60,29 +60,27 @@ app.use(express.json());
 
 const server = http.Server(app);
 const io = socket_io(server);
+const talkers = [];
 
 // fire up the sockets...
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
 	// join the assigned room
-	socket.join('poores');
-
-
+	//socket.join('poores');
 
 	// handle talkie events
-	const talkers = [];
 	socket.on('NEW_TALKER', function(data) {
 		console.log(`${data} joined to talk.`);
 		talkers.push(data);
-		io.to('poores').emit('NEW_TALKER', talkers.join(','));
+		io.emit('NEW_TALKER', data);
 	});
 
 	socket.on('TALKIE_MESSAGE', function(msg) {
 		console.log('got talkie message')
-		io.to('poores').emit('TALKIE_MESSAGE', msg);
+		io.emit('TALKIE_MESSAGE', msg);
 	});
 
 	socket.on('TALKIE_DISCONNECT', function() {
-		// io.to('poores').emit('TALKIE_USERS', talkie_users);
+		// io.emit('TALKIE_USERS', talkie_users);
 		// console.log("user disconnected");
 	});
 
@@ -91,12 +89,12 @@ io.on('connection', function (socket) {
 
 
 	socket.on('GET_MESSAGES', function() {
-		io.to('poores').emit('REFRESH_MESSAGES', messages);
+		io.emit('REFRESH_MESSAGES', messages);
 	});
 
 	socket.on('REFRESH_MESSAGES', function() {
 		// return sorted by date
-		io.to('poores').emit('REFRESH_MESSAGES', messages.sort(function(a, b) {
+		io.emit('REFRESH_MESSAGES', messages.sort(function(a, b) {
 			if (b.date < a.date) return 1;
 			else if (a.date < b.date) return -1;
 			else return 0;
@@ -108,12 +106,12 @@ io.on('connection', function (socket) {
 		message_worker.create(id, data);
 		//message_worker.load().then(function(results) { messages = results; });
 		messages.push(data);
-		io.to('poores').emit('REFRESH_MESSAGES', messages);
+		io.emit('REFRESH_MESSAGES', messages);
 	});
 
 	socket.on('BUTTON_PUSHED', function(data) {
 		console.log('button pushed ' + data.button);
-		io.to('poores').emit('BUTTON_PUSHED', data);
+		io.emit('BUTTON_PUSHED', data);
 		//socket.broadcast.emit('BUTTON_PUSHED', data);
 	});
 
@@ -121,7 +119,7 @@ io.on('connection', function (socket) {
 		event_worker.load().then(function(results) { events = results });
 		
 		// return sorted by date
-		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events.sort(function(a, b) {
+		io.emit('REFRESH_PLANNER_EVENTS', events.sort(function(a, b) {
 			if (b.date < a.date) return 1;
 			else if (a.date < b.date) return -1;
 			else return 0;
@@ -133,7 +131,7 @@ io.on('connection', function (socket) {
 		event_worker.create(id, data);
 
 		events.push(data);
-		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events);
+		io.emit('REFRESH_PLANNER_EVENTS', events);
 	});
 
 	socket.on('DELETE_PLANNER_EVENT', function(data) {
@@ -141,12 +139,12 @@ io.on('connection', function (socket) {
 		event_worker.delete(data.id);
 
 		events = getSavedContent('events');
-		io.to('poores').emit('REFRESH_PLANNER_EVENTS', events);
+		io.emit('REFRESH_PLANNER_EVENTS', events);
 		//socket.broadcast.emit('REFRESH_eventS', events);
 	});
 
 	socket.on('GET_ALBUMS', function() {
-		io.to('poores').emit('GET_ALBUMS', albums)
+		io.emit('GET_ALBUMS', albums)
 	});
 
 	// handle device registration
@@ -164,11 +162,11 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('CONNECT_REMOTE', function() {
-		io.to('poores').emit('CONNECT_REMOTE')
+		io.emit('CONNECT_REMOTE')
 	})
 
 	socket.on('NUMGAME_GUESS', function(data) {
-		io.to('poores').emit('NUMGAME_GUESS', data)
+		io.emit('NUMGAME_GUESS', data)
 	})
 });
 
