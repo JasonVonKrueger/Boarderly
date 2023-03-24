@@ -13,6 +13,7 @@
   --font-main-color: rgb(255, 255, 255);
   --content-bgcolor: #313131;
   --accent-color: #903925;
+  --box-background: rgb(0 0 0 / 32%);
   --card-bgcolor: rgb(103 109 162 / 31%);
   --card-header-font-size: 1.25em;
   --brand-font-size: 2rem;
@@ -88,9 +89,8 @@ sl-menu.navbar {
   left: 0;
   top: 0;
   height: 100vh;
-  xmin-width: 400px;
-  xmax-width: 400px;
-  background-color: rgb(0 0 0 / 32%);
+  max-width: 200px;
+  background-color: var(--box-background);
 }
 
 sl-menu-item::part(base) {
@@ -165,7 +165,7 @@ sl-menu-item.active::part(base) {
 }
 
 .card::part(base) {
-  background: rgba(10, 10, 10, 0.562);
+  background-color: var(--box-background);
   text-align: center;
 }
 
@@ -268,19 +268,19 @@ sl-menu-item.active::part(base) {
 
 .message-props {
   text-align: left;
-  background: #e8dfdf;
+  background: #fff;
   color: #666;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  height: 1rem;
-  max-width: 10rem;
   font-size: .8rem;
+  padding: .25rem;
+  border-bottom: 1px solid #ccc;
 }
 
 .message {
   position: relative;
-  background: #e8dfdf;
-  color: #666;
+  background: #fff;
+  color: #000;
   text-align: left;
   height: 3rem;
   padding: .6em;
