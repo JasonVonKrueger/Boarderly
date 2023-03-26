@@ -1,6 +1,8 @@
 class Talkie extends HTMLElement {
     constructor() {
         super();
+
+        this.boarderly = JSON.parse(localStorage.getItem('boarderly'));
     }
 
     render() {
@@ -79,7 +81,6 @@ class Talkie extends HTMLElement {
                     <div id="btn_action"><span id="action"></span></div>
                 </div>
             </div>
-            
         `;
   
         this.innerHTML = markup;
@@ -88,11 +89,7 @@ class Talkie extends HTMLElement {
             const socket = io();
         }
 
-        if (typeof __boarderly === 'undefined') {
-            const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
-        }
-
-        socket.emit('NEW_TALKER', __boarderly.fname);
+        socket.emit('NEW_TALKER', this.boarderly.fname);
         socket.on('NEW_TALKER', function(data) {
             let talker_markup = `${data}`;
             // data.split(',').forEach(function(talker) {

@@ -76,8 +76,8 @@ io.on('connection', function(socket) {
 
 	socket.on('TALKIE_MESSAGE', function(msg) {
 		console.log('got talkie message')
-		//io.emit('TALKIE_MESSAGE', msg);
-		socket.broadcast.emit('TALKIE_MESSAGE', msg);
+		io.emit('TALKIE_MESSAGE', msg);
+		//socket.broadcast.emit('TALKIE_MESSAGE', msg);
 	});
 
 	socket.on('TALKIE_DISCONNECT', function() {

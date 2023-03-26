@@ -7,7 +7,7 @@ let __navbar= null;
 let __content = null;
 let countdown;
 
-document.addEventListener('keydown', handleKeydown, false)
+//document.addEventListener('keydown', handleKeydown, false)
 
 document.addEventListener('DOMContentLoaded', function(e) {
     // stuff for the screen saver
@@ -161,13 +161,13 @@ function handleRemBtnPush(data) {
 }
 
 function handleKeydown(e) {
-    switch (e.key) {
-        case 'Escape':
-            document.querySelectorAll('.modal').forEach(function(m) {
-                m.classList.add('hidden')
-            })
-            break;
-    }
+    // switch (e.key) {
+    //     case 'Escape':
+    //         document.querySelectorAll('.modal').forEach(function(m) {
+    //             m.classList.add('hidden')
+    //         })
+    //         break;
+    // }
 
     // 9 is tab
     // 40 is down

@@ -2,6 +2,8 @@
 class Message extends HTMLElement {
     constructor() {
         super();
+
+        this.boarderly = JSON.parse(localStorage.getItem('boarderly'));
     }
 
     render() {
@@ -24,22 +26,18 @@ class Message extends HTMLElement {
             const socket = io();
         }
 
-        if (typeof __boarderly === 'undefined') {
-            const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
-        }
-
         this.querySelector('#btn_send_message').addEventListener('click', handleSendMessage, false);
 
         function handleSendMessage() {
-            if (!__boarderly.fname || !__boarderly.lname || !__boarderly.token) return false
+            if (!this.boarderly.fname || !this.boarderly.lname || !this.boarderly.token) return false
           
             let d = new Date()
             socket.emit('POST_MESSAGE', {
-              from: `${__boarderly.fname} ${__boarderly.lname}`,
+              from: `${this.boarderly.fname} ${this.boarderly.lname}`,
               message: __message.value,
               date: d.toLocaleString(),
-              token: __boarderly.token,
-              file_name: __boarderly.file_name
+              token: this.boarderly.token,
+              file_name: this.boarderly.file_name
             })
           
             this.classList.add('hidden');

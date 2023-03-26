@@ -153,10 +153,10 @@ sl-menu-item.active::part(base) {
   transition: transform .2s ease-in;
 }
 
-.selected,
+/* .selected,
 .content-grid-item:focus {
   transform: scale(1.04);
-}
+} */
 
 .card::part(header) {
   background-color: var(--accent-color);
@@ -188,43 +188,6 @@ sl-menu-item.active::part(base) {
 .card.active:not(.boring) {
   
 }
-
-.xcard {
-  text-align: center;
-  min-height: 350px;
-  max-height: 350px;
-  border-radius: 4px;;
-  transition: left 2s ease-out;
-}
-
-.xcard-title {
-  background-color: var(--accent-color);
-  color: var(--font-main-color);
-  font-size: 1.25em;
-  padding: .15em;
-}
-
-.xcard-body {
-  background-color: var(--card-bgcolor);
-  color: var(--font-main-color);
-  padding: .5em;
-  height: 100%;
-  max-height: inherit;
-  overflow: auto;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .card.taller {
@@ -350,7 +313,7 @@ sl-menu-item.active::part(base) {
 }
 
 /* Modal */
-.modal {
+/* .modal {
   position: fixed;
   z-index: 10; 
   left: 0;
@@ -360,21 +323,21 @@ sl-menu-item.active::part(base) {
   overflow: auto;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.9);
-}
+} */
 
-.modal-caption {
+/* .modal-caption {
   color: var(--font-main-color);
   font-size: 1.6em;
   width: 100%;
   text-align: center;
-}
+} */
 
-.modal-content {
+/* .modal-content {
   margin: auto;
   display: block;
   width: 80%;
   max-width: 700px;
-}
+} */
 
 /* .modal-close {
   position: absolute;
