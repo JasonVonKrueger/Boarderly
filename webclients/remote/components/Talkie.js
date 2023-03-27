@@ -137,6 +137,8 @@ class Talkie extends HTMLElement {
             let audioChunks = [];
 
             $('#btn_action').addEventListener('click', function(e) {
+                e.preventDefault();
+                
                 if (mediaRecorder.state === 'inactive') {
                     $('#btn_action').classList.add('talking');
                     mediaRecorder.start();
