@@ -139,7 +139,7 @@ class Talkie extends HTMLElement {
         });
 
         audio.addEventListener('error', function(e) {
-            alert('error: ' + e.message)
+            alert('error: ' + JSON.stringify(e))
         })
 
         navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
