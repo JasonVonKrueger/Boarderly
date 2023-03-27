@@ -125,6 +125,7 @@ class Talkie extends HTMLElement {
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio('/resources/sounds/din-ding-89718.mp3');
             audio.play();
+            alert('got ess')
         });
     
         navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
