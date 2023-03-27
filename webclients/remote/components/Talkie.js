@@ -127,14 +127,20 @@ class Talkie extends HTMLElement {
             $('#talkers_block').innerHTML = talker_markup;
         });
         
+        const audio = new Audio();
+
         socket.on('TALKIE_MESSAGE', function (audioChunks) {
             const audioBlob = new Blob(audioChunks);
             const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio(audioUrl);
+            
             audio.autoplay = true;
-            //snd_button_push.play()
+            audio.src = audioUrl;
             audio.play();
         });
+
+        audio.addEventListener('error', function(e) {
+            alert('error: ' + e.message)
+        })
 
         navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
             let mediaRecorder = new MediaRecorder(stream);
