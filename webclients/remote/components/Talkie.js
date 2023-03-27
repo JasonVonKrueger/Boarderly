@@ -110,6 +110,10 @@ class Talkie extends HTMLElement {
             const socket = io();
         }
 
+        const snd_button_push = new Howl({
+            src: ['/resources/sounds/click.mp3']
+        })
+
         socket.emit('NEW_TALKER', this.boarderly.fname);
         socket.on('NEW_TALKER', function(data) {
             let talker_markup = `${data}`;
@@ -124,8 +128,8 @@ class Talkie extends HTMLElement {
             const audioBlob = new Blob(audioChunks);
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio('/resources/sounds/din-ding-89718.mp3');
+            snd_button_push.play()
             audio.play();
-            alert('got ess')
         });
     
         navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
