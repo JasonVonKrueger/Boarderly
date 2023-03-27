@@ -111,7 +111,7 @@ class Talkie extends HTMLElement {
         }
 
         const snd_button_push = new Howl({
-            src: ['/resources/sounds/click.mp3']
+            src: ['/resources/sounds/din-ding-89718.mp3']
         })
 
         socket.emit('NEW_TALKER', this.boarderly.fname);
@@ -127,7 +127,7 @@ class Talkie extends HTMLElement {
         socket.on('TALKIE_MESSAGE', function (audioChunks) {
             const audioBlob = new Blob(audioChunks);
             const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio('/resources/sounds/din-ding-89718.mp3');
+            const audio = new Audio(audioUrl);
             snd_button_push.play()
             audio.play();
         });
