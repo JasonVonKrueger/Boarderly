@@ -136,7 +136,7 @@ class Talkie extends HTMLElement {
             audio.play();
         });
 
-        navigator.getUserMedia({ audio: true }, true, true).then(stream => {
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
             let mediaRecorder = new MediaRecorder(stream);
             let audioChunks = [];
 
