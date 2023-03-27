@@ -6,6 +6,27 @@ class Talkie extends HTMLElement {
     }
 
     render() {
+        var peer = new Peer();
+        peer.on('open', function(id) {
+            console.log('My peer ID is: ' + id);
+        });
+
+        var conn = peer.connect('663cf26e-84af-4111-ab77-8a70decf3c3d');
+        // on open will be launch when you successfully connect to PeerServer
+        conn.on('open', function(){
+          // here you have conn.id
+          conn.send('hi!');
+        });
+
+
+        peer.on('connection', function(conn) {
+            conn.on('data', function(data){
+              // Will print 'hi!'
+              console.log(data);
+            });
+          });
+
+
         let markup = `
             <style>   
                 .col-1 {
@@ -102,7 +123,7 @@ class Talkie extends HTMLElement {
         socket.on('TALKIE_MESSAGE', function (audioChunks) {
             const audioBlob = new Blob(audioChunks);
             const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio(audioUrl);
+            const audio = new Audio('/resources/sounds/din-ding-89718.mp3');
             audio.play();
         });
     
