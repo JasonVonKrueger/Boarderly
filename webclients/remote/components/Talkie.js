@@ -102,6 +102,9 @@ class Talkie extends HTMLElement {
                     <div id="btn_action"><span id="action"></span></div>
                 </div>
             </div>
+
+
+
         `;
   
         this.innerHTML = markup;
@@ -110,9 +113,9 @@ class Talkie extends HTMLElement {
             const socket = io();
         }
 
-        const snd_button_push = new Howl({
-            src: ['/resources/sounds/din-ding-89718.mp3']
-        })
+        // const snd_button_push = new Howl({
+        //     src: ['/resources/sounds/din-ding-89718.mp3']
+        // })
 
         socket.emit('NEW_TALKER', this.boarderly.fname);
         socket.on('NEW_TALKER', function(data) {
@@ -128,17 +131,18 @@ class Talkie extends HTMLElement {
             const audioBlob = new Blob(audioChunks);
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio(audioUrl);
-            snd_button_push.play()
+            audio.autoplay = true;
+            //snd_button_push.play()
             audio.play();
         });
-    
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+
+        navigator.getUserMedia({ audio: true }, true, true).then(stream => {
             let mediaRecorder = new MediaRecorder(stream);
             let audioChunks = [];
 
             $('#btn_action').addEventListener('click', function(e) {
                 e.preventDefault();
-                
+
                 if (mediaRecorder.state === 'inactive') {
                     $('#btn_action').classList.add('talking');
                     mediaRecorder.start();
