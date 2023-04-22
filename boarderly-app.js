@@ -107,6 +107,7 @@ io.on('connection', function(socket) {
 		message_worker.create(id, data);
 		//message_worker.load().then(function(results) { messages = results; });
 		messages.push(data);
+		io.emit('POST_MESSAGE');
 		io.emit('REFRESH_MESSAGES', messages);
 	});
 

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     getWeather()
     showTime()
 
-    showToast('<sl-icon name="envelope-fill"></sl-icon> You have a new message!', 3000);
+    //showToast('<sl-icon name="envelope-fill"></sl-icon> You have a new message!', 3000);
 
     // add event listeners to modal close buttons
     document.querySelectorAll('.modal-close').forEach(function(n) {
@@ -323,14 +323,14 @@ function showTime() {
     setTimeout(showTime, 1000);
 }
 
-function showToast(message, ms=3000) {
-    $('#toast').innerHTML = message;
-    $('#toast').classList.add('show');
+// function showToast(message, ms=3000) {
+//     $('#toast').innerHTML = message;
+//     $('#toast').classList.add('show');
     
-    setTimeout(function(){ 
-        $('#toast').classList.remove('show');
-    }, ms);
-}
+//     setTimeout(function(){ 
+//         $('#toast').classList.remove('show');
+//     }, ms);
+// }
 
 // function buildAlbumList(data) {
 //     let button_markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;

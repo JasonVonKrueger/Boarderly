@@ -12,6 +12,10 @@ class Messages extends HTMLElement {
 
         socket.emit('GET_MESSAGES');
 
+        socket.on('POST_MESSAGE', function() {
+          showToast('<sl-icon name="envelope-fill"></sl-icon> You have a new message!', 3000);
+        });
+
         socket.on('REFRESH_MESSAGES', function(data) {
           let markup = `
             <style>
@@ -100,6 +104,17 @@ class Messages extends HTMLElement {
           
           return rtf.format(Math.floor(deltaSeconds / divisor), units[unitIndex]);
         }
+
+        function showToast(message, ms=3000) {
+          $('#toast').innerHTML = message;
+          $('#toast').classList.add('show');
+          
+          setTimeout(function(){ 
+              $('#toast').classList.remove('show');
+          }, ms);
+        }
+
+        function $(element) { return document.querySelector(element); }
     }
 
     connectedCallback() {

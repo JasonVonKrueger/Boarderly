@@ -72,6 +72,10 @@ body {
   text-align: center;
 }
 
+#header .section {
+  padding-bottom: 4rem;
+}
+
 .section {
   width: 100%;
   padding: 2rem;
