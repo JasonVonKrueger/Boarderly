@@ -7,12 +7,8 @@
   <link rel="icon" href="/resources/images/favicon.ico" />
   <link rel="stylesheet" href="/shoelace/dist/themes/dark.css" />
   <link rel="stylesheet" href="./css/board.css" />
-  <!-- <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /> -->
-  <!-- <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> -->
-
   <script type="module" src="./components/Game.js"></script>
+  <script type="module" src="./components/Gallery.js"></script>
   <script type="module" src='./components/Messages.js'></script>
   <!-- <script type="module" src='/resources/widgets/facename/FaceName.js'></script> -->
   <script type="module" src='./components/Me.js'></script>
@@ -49,12 +45,12 @@
         </sl-menu-item>
         <sl-divider></sl-divider>
 
-        <sl-menu-item id="nav_home" value="home" class="active" onclick="return show(this)">
+        <sl-menu-item id="nav_home" value="home" class="active" onclick="show(this)">
           Home
           <sl-icon slot="prefix" name="house-fill"></sl-icon>
         </sl-menu-item>
 
-        <sl-menu-item id="nav_gallery" value="gallery" onclick="return show(this)">
+        <sl-menu-item id="nav_gallery" value="gallery" onclick="show(this)">
           Gallery
           <sl-icon slot="prefix" name="images"></sl-icon>
         </sl-menu-item>
@@ -105,36 +101,11 @@
 
        <!-- Gallery section -->
        <div id="section_gallery" class="section hidden">
-        <div class="content-grid col-1" style="height: 900px;">
-
-
-          <div id="gallery_modal" class="modal">
-            <div id="__pictures_block" class="gallery"></div>
-          </div>
-
-          <sl-card class="card taller" style="height: 100%;">
-            <div slot="header">Picture Gallery</div>
-            <div style="text-align: center;">
-
-              <!-- <sl-carousel class="aspect-ratio" autoplay loop pagination style="--aspect-ratio: 3/2;">
-                <sl-carousel-item>
-                  <img src="/albums/Roger_and_family/Linda in the canyon.jpg" />
-                </sl-carousel-item>
-
-                <sl-carousel-item>
-                  <img src="/albums/Roger_and_family/Roger and Linda.jpg" />
-                </sl-carousel-item>
-              </sl-carousel> -->
-
-              <!-- <div id="gallery_modal" class="modal">
-                  <div id="__pictures_block" class="gallery"></div>
-              </div> -->
-            </div>
-          </sl-card>
-
-        </div>
-      </div>
-      <!-- End section -->
+         <div class="content-grid col-1">
+           <bdly-gallery></bdly-gallery>
+         </div>
+       </div>
+       <!-- End section -->
 
         <!-- Games section -->
         <div id="section_games" class="section hidden">

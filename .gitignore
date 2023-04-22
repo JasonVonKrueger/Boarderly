@@ -4,5 +4,4 @@ node_modules
 .DS_Store
 sounds
 pictures
-_ALBUMS_/*/*.jpg
-_ALBUMS_/*/*.png
+

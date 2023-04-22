@@ -9,7 +9,6 @@ let countdown;
 
 document.addEventListener('keydown', handleKeydown, false)
 
-
 document.addEventListener('DOMContentLoaded', function(e) {
     // stuff for the screen saver
     document.body.addEventListener('click', resetScreenTimer, false)
@@ -22,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     //socket.on('REFRESH_MESSAGES', refreshMessages)
     socket.on('BUTTON_PUSHED', handleRemBtnPush)
-    socket.on('GET_ALBUMS', buildAlbumList)
+    // socket.on('GET_ALBUMS', buildAlbumList)
     //socket.emit('GET_MESSAGES')
-    socket.emit('GET_ALBUMS')
+    // socket.emit('GET_ALBUMS')
 
     getWeather()
     showTime()
@@ -197,13 +196,13 @@ function handleRemBtnPush(data) {
 }
 
 function handleKeydown(e) {
-    // switch (e.key) {
-    //     case 'Escape':
-    //         document.querySelectorAll('.modal').forEach(function(m) {
-    //             m.classList.add('hidden')
-    //         })
-    //         break;
-    // }
+    switch (e.key) {
+        case 'Escape':
+            document.querySelectorAll('.modal').forEach(function(m) {
+                m.classList.add('hidden')
+            })
+            break;
+    }
 
     // 9 is tab
     // 40 is down
@@ -333,33 +332,33 @@ function showToast(message, ms=3000) {
     }, ms);
 }
 
-function buildAlbumList(data) {
-    let button_markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;
-    let pic_markup = '';
-    let a = [];
+// function buildAlbumList(data) {
+//     let button_markup = `<button class="btn active" onclick="filterSelection('all')"> Show all</button>`;
+//     let pic_markup = '';
+//     let a = [];
 
-    data.forEach(function(o) {
-        let album_name = o.album;
+//     data.forEach(function(o) {
+//         let album_name = o.album;
 
-        if (!a.includes(album_name)) {
-            a.push(album_name);
-            button_markup += `
-                <button class="btn" onclick="filterSelection('${o.css_name}')">${o.album.replaceAll('_', ' ')}</button>
-            `;   
-        }
+//         if (!a.includes(album_name)) {
+//             a.push(album_name);
+//             button_markup += `
+//                 <button class="btn" onclick="filterSelection('${o.css_name}')">${o.album.replaceAll('_', ' ')}</button>
+//             `;   
+//         }
 
-        pic_markup += getPicMarkup(o.album, o.name);
-    });
+//         pic_markup += getPicMarkup(o.album, o.name);
+//     });
    
-   // __album_buttons.innerHTML = button_markup;
-    __pictures_block.innerHTML = pic_markup;
-}
+//    // __album_buttons.innerHTML = button_markup;
+//     __pictures_block.innerHTML = pic_markup;
+// }
 
-function getPicMarkup(album, name) {
-    let markup = `<img src="/albums/${album}/${name}" />`;
+// function getPicMarkup(album, name) {
+//     let markup = `<img src="/albums/${album}/${name}" />`;
 
-    return markup;
-}
+//     return markup;
+// }
 
 function resetScreenTimer() {
     // if (countdown) {
