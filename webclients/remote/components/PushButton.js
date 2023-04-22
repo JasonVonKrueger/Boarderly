@@ -5,6 +5,9 @@ class PushButton extends HTMLElement {
     }
 
     render() {
+        const clicker = new Audio();
+        clicker.src = '/resources/sounds/cork-85200.mp3';
+
         let markup = `
             <style>
                 .push-button {
@@ -52,6 +55,10 @@ class PushButton extends HTMLElement {
         `;
 
         this.innerHTML = markup;
+
+        // this.addEventListener('mousedown', function(e) {
+        //     clicker.play();
+        // }, false);
 
         if (typeof socket === 'undefined') {
             const socket = io();

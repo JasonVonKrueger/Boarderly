@@ -53,9 +53,9 @@ app.use('/albums', express.static(__albums));
 app.use('/devices', express.static(__devices));
 app.use('/resources', express.static('./resources'));
 app.use('/shoelace', express.static('node_modules/@shoelace-style/shoelace'));
-app.get('/api/gettoken', function(req, res) { 
-	res.send( { answer: generateToken() }); 
-});
+app.get('/api/gettoken', getToken);
+app.get('/api/getmessages', getMessages);
+
 app.use(express.json());
 
 const server = http.Server(app);
@@ -168,8 +168,16 @@ io.on('connection', function(socket) {
 
 	socket.on('NUMGAME_GUESS', function(data) {
 		io.emit('NUMGAME_GUESS', data)
-	})
+	});
 });
+
+function getMessages(req, res) {
+	res.send( { answer: messages });
+}
+
+function getToken(req, res) {
+	res.send( { answer: generateToken() }); 
+}
 
 async function getSavedContent(c) {
 	const { readdir } = require('fs').promises;

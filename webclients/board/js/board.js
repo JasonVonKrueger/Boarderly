@@ -7,7 +7,8 @@ let __navbar= null;
 let __content = null;
 let countdown;
 
-//document.addEventListener('keydown', handleKeydown, false)
+document.addEventListener('keydown', handleKeydown, false)
+
 
 document.addEventListener('DOMContentLoaded', function(e) {
     // stuff for the screen saver
@@ -19,10 +20,10 @@ document.addEventListener('DOMContentLoaded', function(e) {
     __navbar = document.getElementById('navbar')
     __content = document.getElementById('contents')
 
-    socket.on('REFRESH_MESSAGES', refreshMessages)
+    //socket.on('REFRESH_MESSAGES', refreshMessages)
     socket.on('BUTTON_PUSHED', handleRemBtnPush)
     socket.on('GET_ALBUMS', buildAlbumList)
-    socket.emit('GET_MESSAGES')
+    //socket.emit('GET_MESSAGES')
     socket.emit('GET_ALBUMS')
 
     getWeather()
@@ -80,7 +81,42 @@ function handleSound() {
     //snd_newmessage.play();
 }
 
-function show(el) {
+// function show2(section) {
+//     // clear active nav selections
+//     Array.from(document.querySelectorAll("[id^='nav_']")).forEach(function(element) {
+//         element.classList.remove('active');
+//     })
+
+//     document.getElementById(section.id).classList.add('active');
+
+//     //let t = document.getElementById(section.value).innerHTML;
+  
+    
+//     let template = document.getElementById(section.value);
+//     //template = template.replace('{{bob}}', 'fred')
+//     let templateContent = template.content.cloneNode(true);
+    
+//     //document.body.appendChild(templateContent);  
+//    // alert(templateContent.innerHTML) //= templateContent.innerHTML.replace('{{bob}}', 'fred')
+//     document.getElementById('contents').appendChild(templateContent);
+
+
+//     // deactivate all sections
+//     // document.querySelectorAll('.active').forEach(function(element) {
+//     //     element.classList.remove('active');
+//     // });
+
+
+//     //const t = document.getElementById(section.value);
+//     //const c = s.content.cloneNode(true);
+//    // document.body.appendChild(c);
+
+ 
+    
+//    //template.classList.add('active');
+// }
+
+function show(section) {
     // reset selected card
     __selected_card_index = -1;
 
@@ -94,9 +130,9 @@ function show(el) {
         element.classList.remove('active');
     })
 
-    document.getElementById(el.id).classList.add('active');
-    document.getElementById(el.id).focus();
-    document.getElementById(el.id.replace('nav_', 'section_')).classList.remove('hidden');
+    document.getElementById(section.id).classList.add('active');
+    document.getElementById(section.id).focus();
+    document.getElementById(section.id.replace('nav_', 'section_')).classList.remove('hidden');
 }
 
 function handleRemBtnPush(data) {
@@ -191,32 +227,32 @@ function triggerEvent(el, e) {
     el.dispatchEvent(new Event(e));
 }
 
-function refreshMessages(data) {
-    let markup = '';
+// function refreshMessages(data) {
+//     let markup = '';
 
-    // clear the list and rebuild
-    while (__message_block.firstChild) {
-        __message_block.removeChild(__message_block.firstChild);
-    }
+//     // clear the list and rebuild
+//     while (__message_block.firstChild) {
+//         __message_block.removeChild(__message_block.firstChild);
+//     }
 
-    for (let i = 0; i < data.length; i++) {
-        // get initials from dame
-        //const initials = data[i].from.match(/(\b\S)?/g).join('').toUpperCase();
+//     for (let i = 0; i < data.length; i++) {
+//         // get initials from dame
+//         //const initials = data[i].from.match(/(\b\S)?/g).join('').toUpperCase();
 
-        markup += `
-            <div class="message-container">
-                <div class="message-props">
-                    ${data[i].from}
-                    ${data[i].date}
-                </div>
-                <div class="message">${data[i].message}</div>
-            </div>
-        `;
-    }
+//         markup += `
+//             <div class="message-container">
+//                 <div class="message-props">
+//                     ${data[i].from}
+//                     ${data[i].date}
+//                 </div>
+//                 <div class="message">${data[i].message}</div>
+//             </div>
+//         `;
+//     }
     
-    __message_block.innerHTML = markup + '<br /><br /><br />'
-    __message_block.scroll(0, 9999)
-}
+//     __message_block.innerHTML = markup + '<br /><br /><br />'
+//     __message_block.scroll(0, 9999)
+// }
 
 async function getWeather() {
     const key = '8815275c285e40149bd222225222712'

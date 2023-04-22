@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/resources/images/favicon.ico" />
+  <link rel="stylesheet" href="/shoelace/dist/themes/dark.css" />
   <link rel="stylesheet" href="./css/board.css" />
   <!-- <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /> -->
@@ -12,24 +13,33 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> -->
 
   <script type="module" src="./components/Game.js"></script>
+  <script type="module" src='./components/Messages.js'></script>
   <!-- <script type="module" src='/resources/widgets/facename/FaceName.js'></script> -->
   <script type="module" src='./components/Me.js'></script>
-  <script type="module" src='/resources/widgets/planner/Planner.js'></script>
+  <script type="module" src='./components/Planner.js'></script>
   <script type="module" src='/resources/widgets/weather/Weather.js'></script>
+  
   <!-- <script type="module" src='/resources/widgets/numbergame/NumberGame.js'></script> -->
-
-  <link rel="stylesheet" href="/shoelace/dist/themes/dark.css" />
   <script type="module" src="/shoelace/dist/shoelace.js"></script>
-
-  <!-- <script src="/resources/js/csi.js"></script> -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/resources/js/howler.js"></script>
   <script src="./js/board.js"></script>
+
+  <script type="module">
+    import { registerIconLibrary } from '/shoelace/dist/utilities/icon-library.js';
+  
+    registerIconLibrary('material', {
+      resolver: name => {
+        const match = name.match(/^(.*?)(_(round|sharp))?$/);
+        return `https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.5/svg/${match[1]}/${match[3] || 'outline'}.svg`;
+      },
+      mutator: svg => svg.setAttribute('fill', 'currentColor')
+    });
+  </script>
 </head>
 
-<body>
-
+<body> 
   <div id="c_top" class="container">
+
     <div id="c_navbar">
       <!-- navbar-->
       <sl-menu class="navbar">
@@ -42,7 +52,6 @@
         <sl-menu-item id="nav_home" value="home" class="active" onclick="return show(this)">
           Home
           <sl-icon slot="prefix" name="house-fill"></sl-icon>
-          <sl-badge slot="suffix" variant="primary" pill>12</sl-badge>
         </sl-menu-item>
 
         <sl-menu-item id="nav_gallery" value="gallery" onclick="return show(this)">
@@ -73,8 +82,9 @@
 
             <sl-card class="card taller">
               <div slot="header">Messages</div>
-              <div class="card-body" id="__message_block"></div>
-              <div id="msg_anchor"></div>
+              <div class="card-body">
+                <bdly-messages></bdly-messages>
+              </div>
             </sl-card>
 
             <sl-card class="card taller">
@@ -95,13 +105,18 @@
 
        <!-- Gallery section -->
        <div id="section_gallery" class="section hidden">
-        <div class="content-grid col-1" style="height: auto;">
+        <div class="content-grid col-1" style="height: 900px;">
 
-          <sl-card class="card taller">
+
+          <div id="gallery_modal" class="modal">
+            <div id="__pictures_block" class="gallery"></div>
+          </div>
+
+          <sl-card class="card taller" style="height: 100%;">
             <div slot="header">Picture Gallery</div>
             <div style="text-align: center;">
 
-              <sl-carousel class="aspect-ratio" autoplay loop pagination style="--aspect-ratio: 3/2;">
+              <!-- <sl-carousel class="aspect-ratio" autoplay loop pagination style="--aspect-ratio: 3/2;">
                 <sl-carousel-item>
                   <img src="/albums/Roger_and_family/Linda in the canyon.jpg" />
                 </sl-carousel-item>
@@ -109,7 +124,7 @@
                 <sl-carousel-item>
                   <img src="/albums/Roger_and_family/Roger and Linda.jpg" />
                 </sl-carousel-item>
-              </sl-carousel>
+              </sl-carousel> -->
 
               <!-- <div id="gallery_modal" class="modal">
                   <div id="__pictures_block" class="gallery"></div>
@@ -211,9 +226,9 @@
   </div> -->
 
 
-  <div id="gallery_modal" class="modal hidden">
+  <!-- <div id="gallery_modal" class="modal hidden">
     <div id="__pictures_block" class="gallery"></div>
-  </div>
+  </div> -->
 
   <!-- <div id="screensaver_modal" class="modal hidden">
     <about-me></about-me>

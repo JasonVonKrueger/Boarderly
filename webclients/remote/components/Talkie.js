@@ -6,27 +6,6 @@ class Talkie extends HTMLElement {
     }
 
     render() {
-        var peer = new Peer();
-        peer.on('open', function(id) {
-            console.log('My peer ID is: ' + id);
-        });
-
-        var conn = peer.connect('663cf26e-84af-4111-ab77-8a70decf3c3d');
-        // on open will be launch when you successfully connect to PeerServer
-        conn.on('open', function(){
-          // here you have conn.id
-          conn.send('hi!');
-        });
-
-
-        peer.on('connection', function(conn) {
-            conn.on('data', function(data){
-              // Will print 'hi!'
-              console.log(data);
-            });
-          });
-
-
         let markup = `
             <style>   
                 .col-1 {
@@ -102,9 +81,6 @@ class Talkie extends HTMLElement {
                     <div id="btn_action"><span id="action"></span></div>
                 </div>
             </div>
-
-
-
         `;
   
         this.innerHTML = markup;
@@ -112,10 +88,6 @@ class Talkie extends HTMLElement {
         if (typeof socket === 'undefined') {
             const socket = io();
         }
-
-        // const snd_button_push = new Howl({
-        //     src: ['/resources/sounds/din-ding-89718.mp3']
-        // })
 
         socket.emit('NEW_TALKER', this.boarderly.fname);
         socket.on('NEW_TALKER', function(data) {
@@ -127,28 +99,25 @@ class Talkie extends HTMLElement {
             $('#talkers_block').innerHTML = talker_markup;
         });
         
-        const audio = new Audio();
-
         socket.on('TALKIE_MESSAGE', function (audioChunks) {
-            const audioBlob = new Blob(audioChunks);
-            const audioUrl = URL.createObjectURL(audioBlob);
-            
-            audio.autoplay = true;
-            audio.src = audioUrl;
-            audio.play();
+            // const audioBlob = new Blob(audioChunks);
+            // const audioUrl = URL.createObjectURL(audioBlob);
+            // let audio = new Audio(audioUrl);
+            // audio = new Audio(audioUrl);
+            // audio.play();
         });
 
-        audio.addEventListener('error', function(e) {
-            alert('error: ' + JSON.stringify(e))
-        })
+        // audio.addEventListener('error', function(e) {
+        //     alert('error: ' + JSON.stringify(e))
+        // })
 
         navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
             let mediaRecorder = new MediaRecorder(stream);
             let audioChunks = [];
 
             $('#btn_action').addEventListener('click', function(e) {
-                e.preventDefault();
-
+                //e.preventDefault();
+               
                 if (mediaRecorder.state === 'inactive') {
                     $('#btn_action').classList.add('talking');
                     mediaRecorder.start();
@@ -162,11 +131,18 @@ class Talkie extends HTMLElement {
                 audioChunks.push(event.data);
             });
 
-            mediaRecorder.addEventListener("stop", () => {
+            mediaRecorder.addEventListener('stop', function() {
                 $('#btn_action').classList.remove('talking');
+
+                const audioBlob = new Blob(audioChunks);
+                const audioUrl = URL.createObjectURL(audioBlob);
+                let audio = new Audio(audioUrl);
+                audio = new Audio(audioUrl);
+                audio.play();
+
                 //socket.broadcast.emit('TALKIE_MESSAGE', audioChunks);
-                socket.emit('TALKIE_MESSAGE', audioChunks);
-                audioChunks = [];
+                //socket.emit('TALKIE_MESSAGE', audioChunks);
+                //audioChunks = [];
             });
         });
 

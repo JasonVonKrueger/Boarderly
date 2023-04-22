@@ -5,13 +5,6 @@ const socket = io({
     'IO-Board-Key': '123'
   } 
 });
-// const snd_button_push = new Howl({
-//   src: ['/resources/sounds/click.mp3']
-// })
-
-// const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
-// const __fname = document.getElementById('fname')
-// const __lname = document.getElementById('lname')
 
 document.addEventListener('DOMContentLoaded', function(e) {
   if (!localStorage.getItem('boarderly')) {
