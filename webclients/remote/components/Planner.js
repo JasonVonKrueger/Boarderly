@@ -54,8 +54,8 @@ class Planner extends HTMLElement {
             const socket = io();
         }
 
-        if (typeof __boarderly === 'undefined') {
-            const __boarderly = JSON.parse(localStorage.getItem('boarderly'));
+        if (typeof boarderly === 'undefined') {
+            const boarderly = JSON.parse(localStorage.getItem('boarderly'));
         }
 
         const event_subject = this.querySelector('#event_subject');
@@ -70,7 +70,7 @@ class Planner extends HTMLElement {
         push_button.addEventListener('click', handleNewEvent, false);
 
         function handleNewEvent() {
-            if (!__boarderly.fname || !__boarderly.lname || !__boarderly.token) return false;
+            if (!boarderly.fname || !boarderly.lname || !boarderly.token) return false;
             if (event_subject.value.length == 0) return;
 
             push_button.classList.add('hidden');
@@ -85,9 +85,9 @@ class Planner extends HTMLElement {
                 event: event_subject.value,
                 date: event_date.value,
                 time: event_time.value,
-                created_by: `${__boarderly.fname} ${__boarderly.lname}`,
+                created_by: `${boarderly.fname} ${boarderly.lname}`,
                 created_on: d.toLocaleString(),
-                token: __boarderly.token
+                token: boarderly.token
             })
 
             socket.emit('REFRESH_PLANNER_EVENTS');
