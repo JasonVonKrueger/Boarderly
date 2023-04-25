@@ -7,26 +7,32 @@ let __navbar= null;
 let __content = null;
 let countdown;
 
-document.addEventListener('keydown', handleKeydown, false)
+document.addEventListener('keydown', handleKeydown, false);
 
 document.addEventListener('DOMContentLoaded', function(e) {
+    let d = new Date().toLocaleDateString('en-us', {
+        weekday: "long", year: "numeric", month: "short", day: "numeric"
+    })
+
+    $('#date_today').innerHTML = d;
+
     // stuff for the screen saver
-    document.body.addEventListener('click', resetScreenTimer, false)
-    document.body.addEventListener('mousemove', resetScreenTimer, false)
+    document.body.addEventListener('click', resetScreenTimer, false);
+    document.body.addEventListener('mousemove', resetScreenTimer, false);
 
     //resetTimer(); 
 
-    __navbar = document.getElementById('navbar')
-    __content = document.getElementById('contents')
+    __navbar = document.getElementById('navbar');
+    __content = document.getElementById('contents');
 
     //socket.on('REFRESH_MESSAGES', refreshMessages)
-    socket.on('BUTTON_PUSHED', handleRemBtnPush)
+    socket.on('BUTTON_PUSHED', handleRemBtnPush);
     // socket.on('GET_ALBUMS', buildAlbumList)
     //socket.emit('GET_MESSAGES')
     // socket.emit('GET_ALBUMS')
 
-    getWeather()
-    showTime()
+    getWeather();
+    showTime();
 
     //showToast('<sl-icon name="envelope-fill"></sl-icon> You have a new message!', 3000);
 
@@ -130,7 +136,7 @@ function show(section) {
     })
 
     document.getElementById(section.id).classList.add('active');
-    document.getElementById(section.id).focus();
+    //document.getElementById(section.id).focus();
     document.getElementById(section.id.replace('nav_', 'section_')).classList.remove('hidden');
 }
 
@@ -317,8 +323,8 @@ function showTime() {
     s = (s < 10) ? "0" + s : s;
     
     var time = h + ":" + m + ":" + s + " " + session;
-    document.getElementById("time").innerText = time;
-    document.getElementById("time").textContent = time;
+    document.getElementById('time_now').innerText = time;
+    document.getElementById('time_now').textContent = time;
     
     setTimeout(showTime, 1000);
 }

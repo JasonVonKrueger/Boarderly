@@ -8,17 +8,17 @@
 }
 
 :root {
-  --board-background: linear-gradient(to bottom, #08306c, #062b5e, #062550, #062043, #071a36);
+  --board-background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
   --font-main: 'Titillium Web', sans-serif;
   --font-main-color: rgb(255, 255, 255);
-  --content-bgcolor: #313131;
   --accent-color: #903925;
   --box-background: rgb(0 0 0 / 32%);
   --card-bgcolor: rgb(103 109 162 / 31%);
   --card-header-font-size: 1.25em;
   --brand-font-size: 2rem;
   --brand-font: 'cuprum';
-  --navbar-bgcolor: #414141;
+  --content-bgcolor: #191D2C;
+  --navbar-bgcolor: #2E3750;
   --navbar-inactive: #555;
   --navbar-font-size: 1.2rem;
   --hightlight: rgb(122, 117, 117);
@@ -40,14 +40,75 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: var(--font-main);
-  background-image: url('/resources/images/mount-24.jpg');
-  xbackground-image: var(--board-background);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  xbackground-image: url('/resources/images/mount-24.jpg');
+  
+  xbackdrop-filter: blur(5px);
+  x-webkit-backdrop-filter: blur(5px);
 }
 
 .hidden {
   display: none !important;
+}
+
+#c_top {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+#c_top > div {
+  border: 2px solid #fff;
+}
+
+#c_header { 
+  grid-column: 1 / span 12;
+  grid-row: 1;
+  padding-left: 1rem;
+  background-color: var(--navbar-bgcolor);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 0;
+}
+
+#c_navbar {
+  grid-column: 1;
+  grid-row: 2 / span 11;
+  padding: .8rem;
+  font-size: var(--navbar-font-size);
+  line-height: 2rem;
+  background-color: var(--navbar-bgcolor);
+  color: #aaa;
+  margin: 0;
+}
+
+#c_content {
+  grid-column: 2 / span 11;
+  grid-row: 2 / span 11;
+  background-color: var(--content-bgcolor);
+  padding: 1rem;
+  margin: 0;
+}
+
+#c_navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#c_navbar li {
+  padding: .5rem;
+}
+
+#c_navbar li.active {
+  background-color: var(--accent-color); 
+  cursor: pointer;
+  color: #fff;
+}
+
+#c_navbar li:hover { 
+  background-color: var(--box-background); 
+  cursor: pointer;
 }
 
 .gradient-text-brand {
@@ -66,6 +127,7 @@ body {
   -webkit-text-fill-color: transparent; 
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
+  font-size: 1.5rem;
 }
 
 .brand {
@@ -79,18 +141,25 @@ body {
   font-size: 2.2rem;
 }
 
-#c_top.container {
+/* #content {
   display: grid;
-  grid-template-columns: 15% auto;
-}
+} */
 
-sl-menu.navbar {
+
+/* #c_top.container {
+  display: none;
+  xdisplay: grid;
+  grid-template-columns: 15% auto;
+} */
+
+/* xl-menu.navbar {
   position: fixed;
   left: 0;
   top: 0;
   height: 100vh;
   max-width: 200px;
-  background-color: var(--box-background);
+  xbackground-color: var(--box-background);
+  background-color: #2E3750;
 }
 
 sl-menu-item::part(base) {
@@ -100,7 +169,7 @@ sl-menu-item::part(base) {
 
 sl-menu-item.active::part(base) {
   background-color: var(--accent-color);
-}
+} */
 
 
 /* #navbar div.active {
@@ -108,15 +177,15 @@ sl-menu-item.active::part(base) {
 } */
 
 
-#contents {
+/* #contents {
   padding-top: 1rem;
   padding-right: 1rem;
-}
+} */
 
 .content-grid {
   display: grid;
   column-gap: 1.5em;
-  row-gap: 1em;
+  xrow-gap: 1em;
   gap: 1em;
 }
 
@@ -165,7 +234,7 @@ sl-menu-item.active::part(base) {
 }
 
 .card::part(base) {
-  background-color: var(--box-background);
+  background-color: var(--navbar-bgcolor);
   text-align: center;
 }
 
@@ -208,22 +277,6 @@ sl-menu-item.active::part(base) {
 .card.center {
   left: calc(50% - 50px);
 }
-
-#content {
-  display: grid;
-}
-
-#time {
-  position: fixed;
-  bottom: 0;
-  font-size: 2rem;
-  letter-spacing: .2rem;
-  text-align: center;
-  width: 100%;
-  color: #ccc;
-}
-
-
 
 
 

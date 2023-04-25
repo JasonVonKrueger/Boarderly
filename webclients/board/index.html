@@ -6,6 +6,8 @@
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/resources/images/favicon.ico" />
   <link rel="stylesheet" href="/shoelace/dist/themes/dark.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="./css/board.css" />
   <script type="module" src="./components/Game.js"></script>
   <script type="module" src="./components/Gallery.js"></script>
@@ -14,7 +16,7 @@
   <script type="module" src='./components/Me.js'></script>
   <script type="module" src='./components/Planner.js'></script>
   <script type="module" src='/resources/widgets/weather/Weather.js'></script>
-  
+
   <!-- <script type="module" src='/resources/widgets/numbergame/NumberGame.js'></script> -->
   <script type="module" src="/shoelace/dist/shoelace.js"></script>
   <script src="/socket.io/socket.io.js"></script>
@@ -33,17 +35,61 @@
   </script>
 </head>
 
-<body> 
-  <div id="c_top" class="container">
+<body>
 
+  <div id="c_top">
+    <!-- header -->
+    <div id="c_header">
+      <div style="flex: auto;">
+        <span class="gradient-icon-brand">
+          <sl-icon class="gradient-icon-brand" slot="prefix" name="grid-1x2"></sl-icon>
+        </span>
+        <span class="brand gradient-text-brand">Boarderly</span>
+      </div>
+
+      <div style="padding-right: 2rem;">
+        <div id="date_today"></div>
+        <div id="time_now" onload="showTime()"></div>
+      </div>
+      
+    </div>
+    <!-- end header -->
+
+    <!-- navbar-->
     <div id="c_navbar">
+      <ul>
+        <li id="nav_home" class="active" onclick="show(this)">
+          <span>
+            <sl-icon slot="prefix" name="house-fill"></sl-icon>
+          </span>
+          <span>Home</span>
+        </li>
+
+        <li id="nav_gallery" onclick="show(this)">
+          <span>
+            <sl-icon slot="prefix" name="images"></sl-icon>
+          </span>
+          <span>Gallery</span>
+        </li>
+
+        <li id="nav_games" onclick="show(this)">
+          <span>
+            <sl-icon slot="prefix" name="joystick"></sl-icon>
+          </span>
+          <span>Games</span>
+        </li>
+
+        <li id="nav_settings" onclick="show(this)">
+          <span>
+            <sl-icon slot="prefix" name="sliders"></sl-icon>
+          </span>
+          <span>Settings</span>
+        </li>
+      </ul>
+      <!-- end navbar-->
+
       <!-- navbar-->
-      <sl-menu class="navbar">
-        <sl-menu-item value="paste">
-          <span class="gradient-icon-brand"><sl-icon class="gradient-icon-brand" slot="prefix" name="grid-1x2"></sl-icon></span>
-          <span class="brand gradient-text-brand">Boarderly</span>
-        </sl-menu-item>
-        <sl-divider></sl-divider>
+      <!-- <sl-menu class="navbar">
 
         <sl-menu-item id="nav_home" value="home" class="active" onclick="show(this)">
           Home
@@ -64,48 +110,95 @@
           Settings
           <sl-icon slot="prefix" name="sliders"></sl-icon>
         </sl-menu-item>
-      </sl-menu>
+      </sl-menu> -->
       <!-- end navbar-->
     </div>
 
+    <!-- content -->
     <div id="c_content">
+
+      <!-- Home section -->
+      <div id="section_home" class="section">
+        <div class="content-grid col-3">
+
+          <sl-card class="card taller">
+            <div slot="header">Messages</div>
+            <div class="card-body">
+              <bdly-messages></bdly-messages>
+            </div>
+          </sl-card>
+
+          <sl-card class="card taller">
+            <div slot="header">Planner</div>
+            <div class="card-body">
+              <event-planner></event-planner>
+            </div>
+          </sl-card>
+
+          <sl-card class="card taller">
+            <div slot="header">Weather</div>
+            <div class="card-body" id="__weather_block"></div>
+          </sl-card>
+
+        </div>
+      </div>
+      <!-- End section -->
+
+      <!-- Gallery section -->
+      <div id="section_gallery" class="section hidden">
+        <div class="content-grid col-1">
+          <bdly-gallery></bdly-gallery>
+        </div>
+      </div>
+      <!-- End section -->
+
+      <!-- Settings section -->
+      <div id="section_settings" class="section hidden">
+        <div class="content-grid col-3">
+
+          <sl-card class="card">
+            <div slot="header">Remote Control</div>
+            <div style="text-align: center; padding-top: 5%;">
+              <sl-qr-code value="https://boarderly.nervoussow.com/remote"
+                label="Open your camera app and point it at the QR code above." fill="white">
+              </sl-qr-code>
+            </div>
+            <div style="text-align: left;">
+              <ol>
+                <li>Open your camera app and point it at the QR code above.</li>
+                <li>After your phone recogizes the QR code, click on the provided link.</li>
+              </ol>
+            </div>
+          </sl-card>
+
+          <sl-card class="card">
+            <div slot="header">Restart</div>
+            <div style="text-align: center;">
+              <div style="font-size: 8rem;">
+                <sl-icon id="reload" name="arrow-clockwise"></sl-icon>
+              </div>
+              <div>Reload the board</div>
+            </div>
+          </sl-card>
+
+        </div>
+      </div>
+      <!-- End section -->
+
+    </div>
+    <!-- end content -->
+  </div>
+
+
+  <div id="Xc_top" class="container">
+
+    <!-- <div id="c_navbar">
+
+    </div> -->
+
+    <div id="Xc_content">
       <!-- contents -->
       <div id="contents" tabindex="-1">
-
-        <!-- Home section -->
-        <div id="section_home" class="section">
-          <div class="content-grid col-3">
-
-            <sl-card class="card taller">
-              <div slot="header">Messages</div>
-              <div class="card-body">
-                <bdly-messages></bdly-messages>
-              </div>
-            </sl-card>
-
-            <sl-card class="card taller">
-              <div slot="header">Planner</div>
-              <div class="card-body">
-                <event-planner></event-planner>
-              </div>
-            </sl-card>
-
-            <sl-card class="card taller">
-              <div slot="header">Weather</div>
-              <div class="card-body" id="__weather_block"></div>
-            </sl-card>
-
-          </div>
-        </div>
-        <!-- End section -->
-
-       <!-- Gallery section -->
-       <div id="section_gallery" class="section hidden">
-         <div class="content-grid col-1">
-           <bdly-gallery></bdly-gallery>
-         </div>
-       </div>
-       <!-- End section -->
 
         <!-- Games section -->
         <div id="section_games" class="section hidden">
@@ -147,36 +240,7 @@
         </div>
         <!-- End section -->
 
-        <!-- Settings section -->
-        <div id="section_settings" class="section hidden">
-          <div class="content-grid col-3">
 
-            <sl-card class="card">
-              <div slot="header">Remote Control</div>
-              <div style="text-align: center; padding-top: 5%;">
-                <sl-qr-code value="https://boarderly.mrmonster.me/remote"
-                  label="Open your camera app and point it at the QR code above." fill="white">
-                </sl-qr-code>
-              </div>
-              <div style="text-align: left;">
-                <ol>
-                  <li>Open your camera app and point it at the QR code above.</li>
-                  <li>After your phone recogizes the QR code, click on the provided link.</li>
-                </ol>
-              </div>
-            </sl-card>
-
-            <sl-card class="card">
-              <div slot="header">Restart</div>
-              <div style="text-align: center;">
-                <div style="font-size: 8rem;"><sl-icon id="reload" name="arrow-clockwise"></sl-icon></div>
-                <div>Reload the board</div>
-              </div>
-            </sl-card>
-
-          </div>
-        </div>
-        <!-- End section -->
 
       </div>
     </div>
@@ -209,7 +273,7 @@
     <div id="modal_content"></div>
   </div>
 
-  <div id="time" onload="showTime()"></div>
+
 
   <div id="toast"></div>
 

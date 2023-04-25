@@ -100,7 +100,7 @@ class Planner extends HTMLElement {
             
             <div class="calendar">
               <div class="calendar_plan">
-                <div class="cl_plan">
+                <div class="cl_plan" style="display: none;">
                   <div class="cl_title">Today</div>
                   <div class="cl_copy">${d}</div>
                 </div>
