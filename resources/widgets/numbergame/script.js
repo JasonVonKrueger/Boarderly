@@ -4,22 +4,23 @@ const player_guesses = []
 let level = 1
 const max_levels = 5
 
-socket.on('NUMGAME_GUESS', handleGuess)
+// start the game
+showNumber();
 
-function $(element) { return document.querySelector(element) }
+socket.on('NUMPAD_BUTTON_CLICK', handleGuess);
 
 async function handleGuess(data) {
-    $('#player_guess').value += data.guess;
-    player_guesses.push(parseInt(data.guess));
+    document.querySelector('#player_guess').value += data.number;
+    player_guesses.push(parseInt(data.number));
 
     if (player_guesses.length === numbers.length) {
         if (player_guesses.join('') === numbers.join('')) {
-            $('#result_message').innerHTML = 'Good job!';
+            document.querySelector('#result_message').innerHTML = 'Good job!';
             await sleep(1200);
             reset(true);              
         }
         else {
-            $('#result_message').innerHTML = 'Nope! Try again.';
+            document.querySelector('#result_message').innerHTML = 'Nope! Try again.';
             await sleep(1200);
             reset(false);
         }
@@ -32,9 +33,9 @@ function reset(result) {
 
     numbers.length = 0;
     player_guesses.length = 0;
-    $('#player_message').classList.add('hidden');
-    $('#player_guess').value = '';
-    $('#result_message').innerHTML = '';
+    document.querySelector('#player_message').classList.add('hidden');
+    document.querySelector('#player_guess').value = '';
+    document.querySelector('#result_message').innerHTML = '';
 
     showNumber();
 }
@@ -44,10 +45,10 @@ async function showNumber() {
         numbers.push(Math.floor(Math.random() * 9));
     }
    
-    $('#number').innerHTML = numbers.join('');
+    document.querySelector('#number').innerHTML = numbers.join('');
     await sleep(1500);
-    $('#number').innerHTML = $('#number').innerHTML.replace(/\w|\W/gi, '*');
-    $('#player_message').classList.remove('hidden');
+    document.querySelector('#number').innerHTML = document.querySelector('#number').innerHTML.replace(/\w|\W/gi, '*');
+    document.querySelector('#player_message').classList.remove('hidden');
 }
 
 function sleep(ms) {

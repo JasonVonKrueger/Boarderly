@@ -4,14 +4,20 @@ class Game extends HTMLElement {
     }
 
     render() {
-        let card_desc = '<i>No description provided.</i>';
+        const __component = this;
 
-        if (this.getAttribute('card-text')){
-            card_desc = `<div style="text-align: left;">${this.getAttribute('card-text')}</div>`;
+        if (typeof socket === 'undefined') {
+            const socket = io();
         }
 
-        if (this.getAttribute('card-image')) {
-            card_desc = `<img src="${this.getAttribute('card-image')}" />`;
+        let card_desc = '<i>No description provided.</i>';
+
+        if (__component.getAttribute('card-text')){
+            card_desc = `<div style="text-align: left;">${__component.getAttribute('card-text')}</div>`;
+        }
+
+        if (__component.getAttribute('card-image')) {
+            card_desc = `<img src="${__component.getAttribute('card-image')}" />`;
         }
 
         let markup = `
@@ -46,7 +52,7 @@ class Game extends HTMLElement {
                 }
 
                 #game-box {
-                    background-color: #fff;
+                    xbackground-color: #fff;
                     z-index: 20;
                     xposition: absolute;
                     xtop: 50%;
@@ -99,23 +105,25 @@ class Game extends HTMLElement {
             </div>
         `;
 
-        this.innerHTML = markup;
+        __component.innerHTML = markup;
 
         document.addEventListener('keydown', handleKeyDown, false);
-        this.querySelector('.overlay').addEventListener('click', handleStartGame, false);
+        __component.querySelector('.overlay').addEventListener('click', handleStartGame, false);
 
         function $(element) { return document.querySelector(element); }
 
         function handleStartGame() {
-            this.querySelector('.overlay').classList.add('show');
-            $('#game-box').innerHTML = `<iframe src="/resources/widgets/${this.getAttribute('game')}/index.html"></iframe>`;
-            //$('.modal').classList.remove('hidden'); 
+            __component.querySelector('.overlay').classList.add('show');
+            $('#game-box').innerHTML = `<iframe src="/resources/widgets/${__component.getAttribute('game')}/index.html"></iframe>`;
+            $('.modal').classList.remove('hidden'); 
+
+            socket.emit('CONNECT_REMOTE', { game: __component.getAttribute('game') })
         }
 
         function handleKeyDown(e) {
             switch (e.key) {
                 case 'Escape':
-                    this.querySelector('.overlay').classList.remove('show');
+                    __component.querySelector('.overlay').classList.remove('show');
                     break;
             }
         }
@@ -143,4 +151,4 @@ class Game extends HTMLElement {
     }
 }
 
-customElements.define('bly-game', Game);
+customElements.define('bdly-game', Game);

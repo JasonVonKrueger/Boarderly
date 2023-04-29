@@ -10,11 +10,11 @@ let countdown;
 document.addEventListener('keydown', handleKeydown, false);
 
 document.addEventListener('DOMContentLoaded', function(e) {
-    let d = new Date().toLocaleDateString('en-us', {
+    $('#date_today').innerHTML = new Date().toLocaleDateString('en-us', {
         weekday: "long", year: "numeric", month: "short", day: "numeric"
     })
 
-    $('#date_today').innerHTML = d;
+    //$('#date_today').innerHTML = d;
 
     // stuff for the screen saver
     document.body.addEventListener('click', resetScreenTimer, false);
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 function $(element) { return document.querySelector(element); }
 
 function getActiveNavbarButton() {
-    let b = document.querySelector('.navbar .active');
+    let b = document.querySelector("[id^='nav_'][class^='active'");
     return b.id;
 }
 

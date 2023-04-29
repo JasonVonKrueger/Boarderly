@@ -52,29 +52,14 @@ body {
 
 #c_top {
   display: grid;
-  width: 100%;
+  grid-template-columns: 12% auto;
   height: 100%;
-}
-
-#c_top > div {
-  border: 2px solid #fff;
-}
-
-#c_header { 
-  grid-column: 1 / span 12;
-  grid-row: 1;
-  padding-left: 1rem;
-  background-color: var(--navbar-bgcolor);
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  margin: 0;
+  width: 100%;
 }
 
 #c_navbar {
-  grid-column: 1;
-  grid-row: 2 / span 11;
   padding: .8rem;
+  padding-right: 0;
   font-size: var(--navbar-font-size);
   line-height: 2rem;
   background-color: var(--navbar-bgcolor);
@@ -83,8 +68,6 @@ body {
 }
 
 #c_content {
-  grid-column: 2 / span 11;
-  grid-row: 2 / span 11;
   background-color: var(--content-bgcolor);
   padding: 1rem;
   margin: 0;
@@ -101,7 +84,7 @@ body {
 }
 
 #c_navbar li.active {
-  background-color: var(--accent-color); 
+  background-color: var(--box-background); 
   cursor: pointer;
   color: #fff;
 }
@@ -141,16 +124,18 @@ body {
   font-size: 2.2rem;
 }
 
-/* #content {
-  display: grid;
-} */
+#date_time {
+  position: fixed;
+  bottom: 0;
+  font-size: 2rem;
+  letter-spacing: .2rem;
+  text-align: center;
+  width: 100%;
+  color: #ccc;
+  padding-bottom: .5rem;
+}
 
 
-/* #c_top.container {
-  display: none;
-  xdisplay: grid;
-  grid-template-columns: 15% auto;
-} */
 
 /* xl-menu.navbar {
   position: fixed;
@@ -177,15 +162,9 @@ sl-menu-item.active::part(base) {
 } */
 
 
-/* #contents {
-  padding-top: 1rem;
-  padding-right: 1rem;
-} */
 
 .content-grid {
   display: grid;
-  column-gap: 1.5em;
-  xrow-gap: 1em;
   gap: 1em;
 }
 
@@ -279,27 +258,12 @@ sl-menu-item.active::part(base) {
 }
 
 
-
-/* .xbubble:after {
-  content: '';
-  position: absolute;
-  display: block;
-  width: 0;
-  z-index: 1;
-  border-style: solid;
-  border-color: transparent #e8dfdf;
-  border-width: 9px 19px 9px 0;
-  top: 35%;
-  left: -19px;
-} */
-
 /* .thumb-avatar {
   max-width: 90px;
   max-height: 90px;
   xborder-radius: 50%;
   padding-right: 1.5rem;
 } */
-
 
 
 .pic-thumb {

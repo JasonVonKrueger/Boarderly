@@ -38,8 +38,8 @@
 <body>
 
   <div id="c_top">
-    <!-- header -->
-    <div id="c_header">
+    <!-- navbar-->
+    <div id="c_navbar">
       <div style="flex: auto;">
         <span class="gradient-icon-brand">
           <sl-icon class="gradient-icon-brand" slot="prefix" name="grid-1x2"></sl-icon>
@@ -47,17 +47,7 @@
         <span class="brand gradient-text-brand">Boarderly</span>
       </div>
 
-      <div style="padding-right: 2rem;">
-        <div id="date_today"></div>
-        <div id="time_now" onload="showTime()"></div>
-      </div>
-      
-    </div>
-    <!-- end header -->
-
-    <!-- navbar-->
-    <div id="c_navbar">
-      <ul>
+      <ul style="margin-top: 2rem;">
         <li id="nav_home" class="active" onclick="show(this)">
           <span>
             <sl-icon slot="prefix" name="house-fill"></sl-icon>
@@ -86,33 +76,13 @@
           <span>Settings</span>
         </li>
       </ul>
-      <!-- end navbar-->
 
-      <!-- navbar-->
-      <!-- <sl-menu class="navbar">
-
-        <sl-menu-item id="nav_home" value="home" class="active" onclick="show(this)">
-          Home
-          <sl-icon slot="prefix" name="house-fill"></sl-icon>
-        </sl-menu-item>
-
-        <sl-menu-item id="nav_gallery" value="gallery" onclick="show(this)">
-          Gallery
-          <sl-icon slot="prefix" name="images"></sl-icon>
-        </sl-menu-item>
-
-        <sl-menu-item id="nav_games" value="games" onclick="return show(this)">
-          Games
-          <sl-icon slot="prefix" name="joystick"></sl-icon>
-        </sl-menu-item>
-
-        <sl-menu-item id="nav_settings" value="settings" onclick="return show(this)">
-          Settings
-          <sl-icon slot="prefix" name="sliders"></sl-icon>
-        </sl-menu-item>
-      </sl-menu> -->
-      <!-- end navbar-->
+      <div id="date_time" style="padding-right: 2rem; margin-top: 4rem;">
+        <div id="date_today" style="font-size: 1rem;"></div>
+        <div id="time_now" onload="showTime()"></div>
+      </div>
     </div>
+      <!-- end navbar-->
 
     <!-- content -->
     <div id="c_content">
@@ -148,6 +118,47 @@
       <div id="section_gallery" class="section hidden">
         <div class="content-grid col-1">
           <bdly-gallery></bdly-gallery>
+        </div>
+      </div>
+      <!-- End section -->
+
+      <!-- Games section -->
+      <div id="section_games" class="section hidden">
+        <div class="content-grid col-3">
+
+        <!-- <div id="game_memblocks" class="content-grid-item card" onclick="openModal('memblocks_modal')" tabindex="1">
+          <div class="card-title">Memory Blocks</div>
+          <div class="card-body">
+            <img src="/resources/widgets/memoryblocks/cover.png" style="cursor: pointer;" />
+          </div>
+        </div> -->
+
+          <!-- <sl-card class="card">
+            <div slot="header">Name that Face</div>
+            <div slot="footer">Click or press Enter to play!</div>
+            <div class="card-body">
+              <bly-game game="FaceName" card-image="/resources/images/unknown-person.png">
+              </bly-game> -->
+              <!-- <face-name 
+            name="Raelyn"
+            card-face="/resources/images/unknown-person.png"
+            path="/albums/Roger_and_family/Raelyn.png">
+          </face-name> -->
+            <!-- </div>
+          </sl-card> -->
+
+          <sl-card class="card">
+            <div slot="header">Number Game</div>
+            <div slot="footer">Click or press Enter to play!</div>
+            <div class="card-body">
+              <bdly-game game="NumberGame" 
+                        card-text="I will show you a number and you type what you saw. Got it?">
+              </bdly-game>
+
+              <!-- <number-game></number-game> -->
+            </div>
+          </sl-card>
+
         </div>
       </div>
       <!-- End section -->
@@ -189,94 +200,11 @@
     <!-- end content -->
   </div>
 
-
-  <div id="Xc_top" class="container">
-
-    <!-- <div id="c_navbar">
-
-    </div> -->
-
-    <div id="Xc_content">
-      <!-- contents -->
-      <div id="contents" tabindex="-1">
-
-        <!-- Games section -->
-        <div id="section_games" class="section hidden">
-          <div class="content-grid col-3">
-
-            <!-- <div id="game_memblocks" class="content-grid-item card" onclick="openModal('memblocks_modal')" tabindex="1">
-          <div class="card-title">Memory Blocks</div>
-          <div class="card-body">
-            <img src="/resources/widgets/memoryblocks/cover.png" style="cursor: pointer;" />
-          </div>
-        </div> -->
-
-            <sl-card class="card">
-              <div slot="header">Name that Face</div>
-              <div slot="footer">Click or press Enter to play!</div>
-              <div class="card-body">
-                <bly-game game="FaceName" card-image="/resources/images/unknown-person.png">
-                </bly-game>
-                <!-- <face-name 
-              name="Raelyn"
-              card-face="/resources/images/unknown-person.png"
-              path="/albums/Roger_and_family/Raelyn.png">
-            </face-name> -->
-              </div>
-            </sl-card>
-
-            <sl-card class="card">
-              <div slot="header">Number Game</div>
-              <div slot="footer">Click or press Enter to play!</div>
-              <div class="card-body">
-                <bly-game game="NumberGame" card-text="I will show you a number and you type what you saw. Got it?">
-                </bly-game>
-
-                <!-- <number-game></number-game> -->
-              </div>
-            </sl-card>
-
-          </div>
-        </div>
-        <!-- End section -->
-
-
-
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Other stuff-->
-  <!-- <div id="memblocks_modal" class="modal hidden">
-    <iframe src="/resources/widgets/memoryblocks" title="Memory Blocks"></iframe>
-  </div> -->
-
-  <!-- <div id="pictures_modal" class="modal hidden">
-    <iframe src="/resources/widgets/pictures" title="Pictures"></iframe>
-  </div> -->
-
-  <!-- <div id="memcards_modal" class="modal hidden">
-    <iframe src="/resources/widgets/memorycards" title="Memory Cards"></iframe>
-  </div> -->
-
-
-  <!-- <div id="gallery_modal" class="modal hidden">
-    <div id="__pictures_block" class="gallery"></div>
-  </div> -->
-
-  <!-- <div id="screensaver_modal" class="modal hidden">
-    <about-me></about-me>
-  </div> -->
-
   <div id="modal" class="modal hidden">
     <div id="modal_content"></div>
   </div>
 
-
-
   <div id="toast"></div>
 
 </body>
-
 </html>

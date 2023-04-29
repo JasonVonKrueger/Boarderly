@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function(e) {
           })
         }, false);
       }   
+
+      //socket.on('NUMGAME_GUESS', handleGuess, false);
+     socket.on('CONNECT_REMOTE', handlePushConnect, false);
        
   }
 
@@ -77,21 +80,28 @@ document.addEventListener('DOMContentLoaded', function(e) {
 function $(element) { return document.querySelector(element); }
 
 function handlePushConnect(data) {
-  showSection('c_numpad')
+  console.log('Remote connected');
+
+  document.getElementById('c_top').classList.add('hidden')
+
+  const t = document.getElementById('c_numpad');
+  const c = t.content.cloneNode(true);
+  document.body.appendChild(c);
+  //showSection('c_numpad')
 }
 
-function handleNumPadButton(e) {
-  const number = this.innerHTML
+// function handleNumPadButton(e) {
+//   const number = this.innerHTML
 
-  socket.emit('NUMGAME_GUESS', { guess: number })
-  // if (number === 'Go') {
-  //   socket.emit('NUMGAME_GUESS', { guess: document.querySelector('#player_guess').innerHTML })
-  // }
-  // else {
-  //   document.querySelector('#player_guess').innerHTML += this.innerHTML
-  // }
+//   socket.emit('NUMGAME_GUESS', { guess: number })
+//   // if (number === 'Go') {
+//   //   socket.emit('NUMGAME_GUESS', { guess: document.querySelector('#player_guess').innerHTML })
+//   // }
+//   // else {
+//   //   document.querySelector('#player_guess').innerHTML += this.innerHTML
+//   // }
   
-}
+// }
 
 function goHome() {
   window.location.reload()

@@ -167,8 +167,8 @@ io.on('connection', function(socket) {
 		io.emit('CONNECT_REMOTE')
 	})
 
-	socket.on('NUMGAME_GUESS', function(data) {
-		io.emit('NUMGAME_GUESS', data)
+	socket.on('NUMPAD_BUTTON_CLICK', function(data) {
+		io.emit('NUMPAD_BUTTON_CLICK', data)
 	});
 });
 

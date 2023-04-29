@@ -5,6 +5,10 @@ body {
     margin: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
@@ -34,7 +38,11 @@ body {
     100% { opacity: 1; }
 }
 
-#game_box #number { font-size: 4rem; }
+#game_box #number { 
+    color: #fff;
+    font-size: 4rem; 
+}
+
 #game_box #player_guess {
     text-align: center;
     font-size: 1.5rem;
