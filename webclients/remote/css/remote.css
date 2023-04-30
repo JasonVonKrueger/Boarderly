@@ -32,8 +32,13 @@ html {
 
 body {
   background-color: #232324;
-  padding: 2rem;
   overflow: hidden;
+  xpadding: 2rem;
+  
+  /* display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center; */
 }
 
 .reg-req,
@@ -57,10 +62,10 @@ body {
   width: 100%;
 }
 
-#c_page #contents {
-  padding-left: 3rem;
-  padding-right: 3rem;
-}
+/* #c_page #contents {
+  xpadding-left: 3rem;
+  xpadding-right: 3rem;
+} */
 
 #c_page #header {
   background: #474344;
@@ -72,8 +77,8 @@ body {
   text-align: center;
 }
 
-#header .section {
-  padding-bottom: 4rem;
+.pit {
+  margin-top: 5rem;
 }
 
 .section {
@@ -121,7 +126,7 @@ body {
   padding: 1rem;
 }
 
-#xfunction_buttons {
+/* #xfunction_buttons {
   width: 100%;
   margin-top: 20%;
   margin-left: auto;
@@ -135,7 +140,7 @@ body {
   border-radius: 4px;
   text-align: center;
   background-color: var(--inlay-pit-color);
-}
+} */
 
 .arrow {
   font-size: 3rem;
@@ -236,7 +241,7 @@ fieldset {
   border: 4px solid #fff;
 }
 
-.numpad {
+/* .numpad {
   height: 500px;
   display: flex;
   flex-flow: row wrap;
@@ -249,9 +254,9 @@ fieldset {
   flex: 1 0 33.3333%;
   color: white;
   font-size: 2rem;
-}
+} */
 
-.numpad-button.push-button {
+/* .numpad-button.push-button {
   transition: 0.5s;
   box-shadow: none;
 }
@@ -263,7 +268,7 @@ fieldset {
 
 .button:nth-of-type(10) {
   flex-basis: 66.6667%;
-}
+} */
 
 
 

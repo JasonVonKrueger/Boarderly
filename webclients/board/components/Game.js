@@ -53,7 +53,7 @@ class Game extends HTMLElement {
 
                 #game-box {
                     xbackground-color: #fff;
-                    z-index: 20;
+                    xz-index: 20;
                     xposition: absolute;
                     xtop: 50%;
                     xtransform: translateY(-50%);

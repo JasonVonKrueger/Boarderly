@@ -7,17 +7,18 @@ class NumPad extends HTMLElement {
     render() {
         let markup = `
             <style>
-            .numpad {
+              .numpad {
                 height: 500px;
                 display: flex;
                 flex-flow: row wrap;
+                gap: .25rem;
               }
               
               .numpad-button {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                flex: 1 0 33.3333%;
+                flex: 1 0 31.3333%;
                 color: white;
                 font-size: 2rem;
               }
@@ -30,10 +31,6 @@ class NumPad extends HTMLElement {
               .numpad-button.push-button:active,
               .numpad-button.push-button.activated {
                 transform: translateY(8px);
-              }
-              
-              .button:nth-of-type(10) {
-                flex-basis: 66.6667%;
               }
             </style>
 
@@ -65,16 +62,7 @@ class NumPad extends HTMLElement {
             const number = this.innerHTML
           
             socket.emit('NUMPAD_BUTTON_CLICK', { number: number });
-
-            // if (number === 'Go') {
-            //   socket.emit('NUMGAME_GUESS', { guess: document.querySelector('#player_guess').innerHTML })
-            // }
-            // else {
-            //   document.querySelector('#player_guess').innerHTML += this.innerHTML
-            // }
-            
-          }
-
+        }
     }
 
     connectedCallback() {

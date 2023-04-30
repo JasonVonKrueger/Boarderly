@@ -9,7 +9,7 @@ const socket = io({
 document.addEventListener('DOMContentLoaded', function(e) {
   if (!localStorage.getItem('boarderly')) {
       // register the device
-      const reg = $('#c_register').content.cloneNode(true);
+      const reg = document.querySelector('#c_register').content.cloneNode(true);
       document.body.appendChild(reg);
   }
   else {
@@ -19,30 +19,19 @@ document.addEventListener('DOMContentLoaded', function(e) {
       });
 
       // handle button events for top page
-      if ($('.active').id === 'c_top') {
-        $('#c_top').querySelectorAll('push-button').forEach(function(btn) {
+      if (document.querySelector('.active').id === 'c_top') {
+        document.querySelector('#c_top').querySelectorAll('push-button').forEach(function(btn) {
           btn.addEventListener('click', function(e) {
             e.preventDefault();
 
-            $('#c_top').classList.add('hidden');
-
-            // deactivate all sections
-            document.querySelectorAll('.section').forEach(function(element) {
-              element.classList.remove('active');
-            })
-
-            const t = document.getElementById(btn.getAttribute('for'));
-            const c = t.content.cloneNode(true);
-            document.body.appendChild(c);
-
-            $('#btn_back').classList.remove('hidden');
-
+            const sectiion = btn.getAttribute('for');
+            renderSection(sectiion);
           })
         }, false);
       }   
 
       //socket.on('NUMGAME_GUESS', handleGuess, false);
-     socket.on('CONNECT_REMOTE', handlePushConnect, false);
+     socket.on('CONNECT_REMOTE', handleBoardConnect, false);
        
   }
 
@@ -77,17 +66,29 @@ document.addEventListener('DOMContentLoaded', function(e) {
   // }
 });
 
-function $(element) { return document.querySelector(element); }
+// function triggerEvent(el, e) {
+//   el.dispatchEvent(new Event(e));
+// }
 
-function handlePushConnect(data) {
-  console.log('Remote connected');
+function renderSection(section) {
+  document.querySelector('#c_top').classList.add('hidden');
 
-  document.getElementById('c_top').classList.add('hidden')
+  // deactivate all sections
+  document.querySelectorAll('.section').forEach(function(section) {
+    section.classList.remove('active');
+  })
 
-  const t = document.getElementById('c_numpad');
+  const t = document.getElementById(section);
   const c = t.content.cloneNode(true);
   document.body.appendChild(c);
-  //showSection('c_numpad')
+
+  document.querySelector('#btn_back').classList.remove('hidden');
+}
+
+function handleBoardConnect(data) {
+  console.log('Remote connected');
+
+  renderSection('c_numpad');
 }
 
 // function handleNumPadButton(e) {
