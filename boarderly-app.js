@@ -241,6 +241,6 @@ function initContentDir(dir) {
 	}
 }
 
-server.listen(process.env.PORT, function () {
+server.listen(process.env.PORT || 9980, function () {
 	console.log('Boarderly app is now listening for connections...');
 });
